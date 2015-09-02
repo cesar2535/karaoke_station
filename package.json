@@ -1,0 +1,30 @@
+{
+  "name": "karaoke_station",
+  "version": "0.0.0",
+  "description": "Karaoke Station with QTS",
+  "main": "entry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "cesar2535, roth1002",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.34",
+    "isomorphic-fetch": "^2.1.1",
+    "lodash": "^3.10.1",
+    "normalize.css": "^3.0.3",
+    "normalizr": "^1.0.0",
+    "react": "^0.13.3",
+    "react-document-title": "^2.0.0",
+    "react-redux": "^2.0.0",
+    "react-router": "^1.0.0-beta4",
+    "redux": "^2.0.0",
+    "redux-logger": "^1.0.6",
+    "redux-thunk": "^0.1.0",
+    "suitcss-utils-display": "^0.4.2"
+  },
+  "devDependencies": {
+    "isparta": "^3.0.4"
+  }
+}
