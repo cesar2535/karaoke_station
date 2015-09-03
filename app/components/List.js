@@ -9,6 +9,11 @@ export default class List extends Component {
     isFetching: PropTypes.bool.isRequired
   }
 
+  static defaultProps = {
+    isFetching: true,
+    loadingLabel: `Loading...`
+  }
+
   render() {
     const {
       isFetching, pageCount, items, renderItem, loadingLabel
