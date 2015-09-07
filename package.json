@@ -9,6 +9,9 @@
   },
   "author": "cesar2535, roth1002",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cesar2535/karaoke_station_qts/issues"
+  },
   "dependencies": {
     "bluebird": "^2.9.34",
     "humps": "^0.6.0",

@@ -12,7 +12,7 @@ function fetchSongsList(keyword, nsong, queryWho, artistNation) {
   };
 }
 
-export function loadSongsList(keyword, nsong, queryWho, artistNation) {
+export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
   return (dispatch, getState) => {
 
     return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
