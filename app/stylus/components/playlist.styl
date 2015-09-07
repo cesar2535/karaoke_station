@@ -1,3 +1,34 @@
 @css {
   @import "suitcss-utils-display";
 }
+
+$Playlist-bgColor = #222222;
+$Playlist-color = #fff;
+
+.Playlist {
+  display block
+  background-color $Playlist-bgColor
+  color $Playlist-color
+  width 300px
+  height 100%
+}
+
+.Playlist-item {
+  display flex
+  justify-content space-between
+  width 100%
+  padding 5px 10px
+  box-sizing border-box
+
+  &:nth-child(even) {
+    background-color rgba($Playlist-bgColor, 0.4)
+  }
+}
+
+.Playlist-item-title {
+  
+}
+
+.Playlist-item-artist {
+
+}
