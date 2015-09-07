@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 
 export default class List extends Component {
   static propTypes = {
-    className: PropType.string,
-    loadingLabel: PropType.string.isRequired,
+    className: PropTypes.string,
+    loadingLabel: PropTypes.string.isRequired,
     pageCount: PropTypes.number,
     renderItem: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
@@ -11,6 +11,7 @@ export default class List extends Component {
   }
 
   static defaultProps = {
+    className: '',
     isFetching: true,
     loadingLabel: `Loading...`
   }
@@ -29,7 +30,7 @@ export default class List extends Component {
 
     return (
       <div className={className}>
-        {item.map(renderItem)}
+        {items.map(renderItem)}
       </div>
     );
   }

@@ -31,7 +31,7 @@ module.exports = {
       loader: 'style!css?sourceMap!cssnext!stylus?sourceMap'
     }, {
       test: /\.(png|jpg)$/,
-      loader: 'url?limit=100000'
+      loader: 'url?limit=1000000'
     }]
   }
 };

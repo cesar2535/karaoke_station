@@ -5,6 +5,8 @@
 $Playlist-bgColor = #222222;
 $Playlist-color = #fff;
 
+$Playlist-item-bgColor = #000000;
+
 .Playlist {
   display block
   background-color $Playlist-bgColor
@@ -16,17 +18,18 @@ $Playlist-color = #fff;
 .Playlist-item {
   display flex
   justify-content space-between
+  background-color rgba($Playlist-item-bgColor, 0.7)
   width 100%
   padding 5px 10px
   box-sizing border-box
 
   &:nth-child(even) {
-    background-color rgba($Playlist-bgColor, 0.4)
+    background-color rgba($Playlist-item-bgColor, 0.4)
   }
 }
 
 .Playlist-item-title {
-  
+
 }
 
 .Playlist-item-artist {
