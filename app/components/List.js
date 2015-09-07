@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 export default class List extends Component {
   static propTypes = {
+    className: PropType.string,
     loadingLabel: PropType.string.isRequired,
     pageCount: PropTypes.number,
     renderItem: PropTypes.func.isRequired,
@@ -16,7 +17,7 @@ export default class List extends Component {
 
   render() {
     const {
-      isFetching, pageCount, items, renderItem, loadingLabel
+      isFetching, pageCount, items, renderItem, loadingLabel, className
     } = this.props;
 
     const isEmpty = items.length === 0;
@@ -27,7 +28,7 @@ export default class List extends Component {
     }
 
     return (
-      <div>
+      <div className={className}>
         {item.map(renderItem)}
       </div>
     );

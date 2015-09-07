@@ -1,0 +1,27 @@
+@css {
+  @import "suitcss-utils-display";
+}
+
+$Header-bgColor = #ffffff;
+$Header-borderColor = #e7007f
+$Logo-color = $Header-borderColor
+
+.Header {
+  display flex
+  justify-content space-between
+  background-color $Header-bgColor
+  width 100%
+  // height 7vh
+  // min-height 55px
+  border-top 1vh solid $Header-borderColor
+}
+
+.Header-logo {
+  color $Logo-color
+  font-size 2em
+  padding 5px 20px
+
+  &:before {
+    content url('http://172.17.34.8/qts/images/logo.png')
+  }
+}
