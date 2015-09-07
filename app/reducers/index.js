@@ -1,6 +1,9 @@
-import * as ActionTypes from './actions';
+// import * as ActionTypes from './actions';
 import { combineReducers } from 'redux';
+import entities from './entities';
 
-export default rootReducer = combineReducers({
-
+const rootReducer = combineReducers({
+  entities
 });
+
+export default rootReducer;

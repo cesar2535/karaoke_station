@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
+import apiMiddleware from '../middleware/api';
+import rootReducer from '../reducers';
 
 const loggerMiddleware = createLogger({
   level: 'info',
