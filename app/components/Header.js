@@ -9,10 +9,10 @@ export default class Header extends Component {
     return (
       <header className="Header">
         <div className="Header-left">
-          <div className="Header-logo">
+          <a className="Header-logo" href="/">
             <b>KTV</b>
             <span>Station</span>
-          </div>
+          </a>
         </div>
         <div className="Header-right"></div>
       </header>
