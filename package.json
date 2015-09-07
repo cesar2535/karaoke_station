@@ -9,6 +9,9 @@
   },
   "author": "cesar2535, roth1002",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cesar2535/karaoke_station_qts/issues"
+  },
   "dependencies": {
     "bluebird": "^2.9.34",
     "humps": "^0.6.0",
@@ -39,6 +42,7 @@
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.12.3",
     "stylus-loader": "^1.2.1",
+    "url-loader": "^0.5.6",
     "webpack": "^1.12.0",
     "webpack-dev-server": "^1.10.1"
   }

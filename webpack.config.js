@@ -29,6 +29,9 @@ module.exports = {
     }, {
       test: /\.styl$/,
       loader: 'style!css?sourceMap!cssnext!stylus?sourceMap'
+    }, {
+      test: /\.(png|jpg)$/,
+      loader: 'url?limit=1000000'
     }]
   }
 };

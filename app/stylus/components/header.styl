@@ -17,11 +17,14 @@ $Logo-color = $Header-borderColor
 }
 
 .Header-logo {
+  display block
   color $Logo-color
   font-size 2em
+  text-decoration none
   padding 5px 20px
 
   &:before {
-    content url('http://172.17.34.8/qts/images/logo.png')
+    // content url('http://localhost:3000/assets/images/logo.png')
+    content url("../assets/images/logo.png")
   }
 }
