@@ -1,0 +1,27 @@
+@css {
+  @import "suitcss-utils-display";
+}
+
+$FavoritesList-bgColor = #000000;
+
+$FavoritesList-item-borderColor = #c3006d;
+
+.FavoritesList {
+  background-color alpha($FavoritesList-bgColor, 0.7);
+
+  &--home {
+    display flex
+    flex-wrap wrap
+  }
+}
+
+.FavoritesList-item {
+  display block
+
+  &--home {
+
+    &:hover {
+      border 3px solid $FavoritesList-item-borderColor
+    }
+  }
+}
