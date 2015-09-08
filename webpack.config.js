@@ -30,7 +30,7 @@ module.exports = {
       test: /\.styl$/,
       loader: 'style!css?sourceMap!cssnext!stylus?sourceMap'
     }, {
-      test: /\.(png|jpg)$/,
+      test: /\.(png|jpg|svg|ttf|woff|eot)$/,
       loader: 'url?limit=1000000'
     }]
   }
