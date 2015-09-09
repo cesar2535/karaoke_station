@@ -3,6 +3,7 @@
 }
 
 $Footer-bgColor = #000000;
+$Footer-button-color = #fff;
 
 .Footer {
   display flex
@@ -13,4 +14,30 @@ $Footer-bgColor = #000000;
   height 70px
   position fixed
   bottom 0
+}
+
+.Footer-button {
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  color $Footer-button-color
+  width 120px
+  padding 10px 5px
+  transition-duration 0.3s
+
+  &:hover {
+    background-color alpha(#fff, 0.3)
+  }
+}
+
+.Footer-button-icon {
+  flex 2 0 0
+  font-size 1.25em
+}
+
+.Footer-button-text {
+  flex 1 0 0
+  font-size 1em
+  text-transform capitalize
 }

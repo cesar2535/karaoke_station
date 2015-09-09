@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 class FooterButton extends Component {
   static propTypes = {
     icon: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
-  }
-
-  static defaultProps = {
-
   }
 
   constructor(props) {
@@ -16,10 +13,12 @@ class FooterButton extends Component {
 
   render() {
     const { icon, text } = this.props;
+    const btnClass = classnames('Footer-button-icon', 'ic', icon);
+
     return (
       <div className="Footer-button">
-        <span className={`ic ${icon}`} />
-        <span>{text}</span>
+        <span className={btnClass} />
+        <span className="Footer-button-text">{text}</span>
       </div>
     );
   }
