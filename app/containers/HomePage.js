@@ -18,7 +18,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="Main-wrapper">
-        {this._renderPlaylist()}
+        {/* this._renderPlaylist() */}
       </div>
     );
   }
