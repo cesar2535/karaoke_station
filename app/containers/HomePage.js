@@ -46,7 +46,7 @@ class HomePage extends Component {
   _renderFavoritesList(list, index, array) {
     if (index === array.length - 1) {
       return (
-        <div key={list.title} className="FavoritesCollection-item" style={{ backgroundColor: `rgba(0,0,0,0.2)`}}>
+        <div key={list.title} className="FavoritesCollection-item" style={{ backgroundColor: "rgba(0,0,0,0.2)"}}>
           <span className="FavoritesCollection-item-title">{list.title}</span>
         </div>
       );
