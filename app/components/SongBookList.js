@@ -4,7 +4,7 @@ import List from './List';
 export default class SongBookList extends Component {
 	render() {
     	const { className, songs, artists, type } = this.props;
-    	const renderItem = type === 'language' ? this.renderArtistlistItem.bind(this) : this.renderPlaylistItem.bind(this)
+    	const renderItem = type === 'language' ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
 	    const items = type === 'language' ? artists : songs
 	    // console.log(renderItem, items)
 	    return (
