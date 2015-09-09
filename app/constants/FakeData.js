@@ -79,4 +79,7 @@ export const FAKE_FAVORITES_LISTS = [{
   background: '../assets/images/img_favorite_cover08.png',
   title: 'Crazy',
   songCount: 1,
+}, {
+  background: 'none',
+  title: 'More'
 }];
