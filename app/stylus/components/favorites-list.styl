@@ -2,26 +2,50 @@
   @import "suitcss-utils-display";
 }
 
-$FavoritesList-bgColor = #000000;
+$FavoritesCollection-bgColor = #000000;
 
-$FavoritesList-item-borderColor = #c3006d;
+$FavoritesCollection-item-borderColor = #c3006d;
+
+.FavoritesCollection {
+  display flex
+  flex-wrap wrap
+  background-color $FavoritesCollection-bgColor
+}
+
+.FavoritesCollection-item {
+  display inline-flex
+  flex-direction column
+  justify-content center
+  align-items center
+  background-size 100%
+  background-position center
+  color #fff
+  width 150px
+  height 150px
+  margin 5px
+  box-sizing border-box
+  transition-duration 1s
+  &:hover {
+    background-size 120%
+  }
+}
+
+.FavoritesCollection-item-title {
+  font-size 1.3em
+}
+
+.FavoritesCollection-item-divider {
+  background-color alpha(#fff, 0.2)
+  width 75%
+  height 1px
+  margin-top 10px
+  margin-bottom 1px
+}
 
 .FavoritesList {
-  background-color alpha($FavoritesList-bgColor, 0.7);
 
-  &--home {
-    display flex
-    flex-wrap wrap
-  }
 }
 
 .FavoritesList-item {
   display block
-
-  &--home {
-
-    &:hover {
-      border 3px solid $FavoritesList-item-borderColor
-    }
-  }
 }
