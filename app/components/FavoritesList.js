@@ -17,17 +17,19 @@ export default class FavoritesList extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { className, songs } = this.props;
     return (
       <List className={`FavoritesList ${className}`}
             renderItem={this.renderFavoriteItem.bind(this)}
-            item={songs} />
+            items={songs} />
     );
   }
 
   renderFavoriteItem(song) {
     return (
       <div key={song.title} className="FavoritesList-item">
+        {song.artist}
       </div>
     );
   }
