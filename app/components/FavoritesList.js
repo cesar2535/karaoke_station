@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import List from './List';
+import List from './utils/List';
 
 export default class FavoritesList extends Component {
   static propTypes = {
@@ -17,7 +17,6 @@ export default class FavoritesList extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { className, songs } = this.props;
     return (
       <List className={`FavoritesList ${className}`}

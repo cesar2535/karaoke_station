@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import List from './List';
+import List from './utils/List';
 import ListNav from './ListNav';
 
 export default class SongBookList extends Component {

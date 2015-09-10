@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SongBookList from '../components/SongBookList';
 import SideBar from '../components/SideBar';
-import TabItem from '../components/TabItem';
+import SongBookTabItem from '../components/tabitems/SongBookTabItem';
 
 import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
@@ -25,7 +25,7 @@ class SongBook extends Component {
     return (
       <div className="Main-wrapper">
         <SideBar className="SideBar" />
-        <TabItem className="TabItem" />
+        <SongBookTabItem className="TabItem" />
         <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} />
       </div>
     );
