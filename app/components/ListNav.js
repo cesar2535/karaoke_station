@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class SideBar extends Component {
+export default class ListNav extends Component {
 	render() {
 		const { className } = this.props;
 		return (
-			<section className={className}>我是sidebar</section>
+			<section className={className}>我是listnav</section>
 		);
 	}
 }

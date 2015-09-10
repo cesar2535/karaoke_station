@@ -24,9 +24,9 @@ class SongBook extends Component {
     //console.log(artists)
     return (
       <div className="Main-wrapper">
-        <SideBar className="" />
-        <TabItem className="" />
-        <SongBookList className="Playlist--home" songs={songs} artists={artists} type={params.type} />
+        <SideBar className="SideBar" />
+        <TabItem className="TabItem" />
+        <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} />
       </div>
     );
   }

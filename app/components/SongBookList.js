@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import List from './List';
+import ListNav from './ListNav';
 
 export default class SongBookList extends Component {
 	render() {
@@ -8,9 +9,12 @@ export default class SongBookList extends Component {
 	    const items = type === 'language' ? songs : artists
 	    console.log(artists)
 	    return (
-	    	<List className={`Playlist ${className}`}
-	            renderItem={renderItem}
-	            items={items} />
+	    	<div>
+		    	<ListNav className={className} />
+		    	<List className={`Playlist ${className}`}
+		            renderItem={renderItem}
+		            items={items} />
+		    </div>
 	    );
   	}
 
