@@ -4,7 +4,7 @@ import SongBookList from '../components/SongBookList';
 import SideBar from '../components/SideBar';
 import TabItem from '../components/TabItem';
 
-import { FAKE_PLAYLIST, FAKE_ARTISTLIST } from '../constants/FakeData';
+import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
 class SongBook extends Component {
   static propTypes = {
@@ -21,6 +21,7 @@ class SongBook extends Component {
 
   render() {
     const { songs, artists, params } = this.props;
+    //console.log(artists)
     return (
       <div className="Main-wrapper">
         <SideBar className="" />
@@ -32,10 +33,24 @@ class SongBook extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const artists = getArtistFakeDate(ownProps.params.type);
   return {
     songs: FAKE_PLAYLIST,
-    artists: FAKE_ARTISTLIST
+    artists: artists
   };
+}
+
+function getArtistFakeDate(type) {
+  switch (type) {
+    case 'male':
+      return FAKE_MALE_ARTISTLIST;
+    case 'female':
+      return FAKE_FEMALE_ARTISTLIST;
+    case 'group':
+      return FAKE_GROUP_ARTISTLIST;
+    default:
+      return [];
+  }
 }
 
 export default connect(mapStateToProps)(SongBook);
