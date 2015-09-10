@@ -21,7 +21,6 @@ class SongBook extends Component {
 
   render() {
     const { songs, artists, params } = this.props;
-    //console.log(artists)
     return (
       <div className="Main-wrapper">
         <SideBar className="SideBar" />
