@@ -49,7 +49,7 @@ export const FAKE_PLAYLIST = [{
 
 export const FAKE_FAVORITES_LISTS = [{
   background: '../assets/images/img_favorite_cover01.png',
-  title: `Daddy's`,
+  title: 'Daddy\'s',
   songCount: 10,
 }, {
   background: '../assets/images/img_favorite_cover02.png',
@@ -83,3 +83,64 @@ export const FAKE_FAVORITES_LISTS = [{
   background: 'none',
   title: 'More'
 }];
+
+export const FAKE_MALE_ARTISTLIST = [{
+  name: '劉德華'
+}, {
+  name: '阿信'
+}, {
+  name: '伍百'
+}, {
+  name: '羅百吉'
+}, {
+  name: '王力宏'
+}, {
+  name: '林俊傑'
+}, {
+  name: '林志炫'
+}, {
+  name: '楊宗緯'
+}, {
+  name: '林宥嘉'
+}];
+
+export const FAKE_FEMALE_ARTISTLIST = [{
+  name: '梁靜茹'
+}, {
+  name: '蔡依林'
+}, {
+  name: '徐佳瑩'
+}, {
+  name: '張惠妹'
+}, {
+  name: '阿密特'
+}, {
+  name: 'A-Lin'
+}, {
+  name: '彭佳慧'
+}, {
+  name: '莫文蔚'
+}, {
+  name: '蕭亞軒'
+}];
+
+export const FAKE_GROUP_ARTISTLIST = [{
+  name: '五月天'
+}, {
+  name: '自由發揮'
+}, {
+  name: '動力火車'
+}, {
+  name: 'S.H.E.'
+}, {
+  name: 'F.I.R'
+}, {
+  name: '蘇打綠'
+}, {
+  name: '滅火器'
+}, {
+  name: '信樂團'
+}, {
+  name: '董事長樂團'
+}];
+

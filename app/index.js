@@ -23,7 +23,7 @@ React.render(
       <Router history={history}>
         <Route component={App}>
           <Route path='/' component={HomePage} />
-          <Route path='/songbook/:type/:name' component={SongBook} />
+          <Route path='/songbook/:type' component={SongBook} />
           <Route path='/songbook/language/:name' component={SongBook} />
         </Route>
       </Router>

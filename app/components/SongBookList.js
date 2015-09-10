@@ -1,16 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import List from './List';
+import ListNav from './ListNav';
 
 export default class SongBookList extends Component {
 	render() {
     	const { className, songs, artists, type } = this.props;
     	const renderItem = type === 'language' ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
 	    const items = type === 'language' ? songs : artists
-	    // console.log(renderItem, items)
+	    console.log(artists)
 	    return (
-	    	<List className={`Playlist ${className}`}
-	            renderItem={renderItem}
-	            items={items} />
+	    	<div>
+		    	<ListNav className={className} />
+		    	<List className={`Playlist ${className}`}
+		            renderItem={renderItem}
+		            items={items} />
+		    </div>
 	    );
   	}
 
@@ -29,7 +33,6 @@ export default class SongBookList extends Component {
     }
 
     renderArtistlistItem(artist) {
-    	console.log(artist);
 		const { className } = this.props;
 		let itemClass = '';
 		if (className.search('home') > -1) {

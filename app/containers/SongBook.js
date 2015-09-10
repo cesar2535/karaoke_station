@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SongBookList from '../components/SongBookList';
+import SideBar from '../components/SideBar';
+import TabItem from '../components/TabItem';
+
+import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
 class SongBook extends Component {
   static propTypes = {
@@ -17,60 +21,36 @@ class SongBook extends Component {
 
   render() {
     const { songs, artists, params } = this.props;
-    // console.log(this.props);
+    //console.log(artists)
     return (
       <div className="Main-wrapper">
-        <SongBookList className="Playlist--home" songs={songs} artists={artists} type={params.type} />
+        <SideBar className="SideBar" />
+        <TabItem className="TabItem" />
+        <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} />
       </div>
     );
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  const songs = [{
-    title: 'Gravity',
-    artist: 'Against The Current'
-  }, {
-    title: 'Roar',
-    artist: 'Katy Perry'
-  }, {
-    title: 'Paralyzed',
-    artist: 'Against The Current'
-  }, {
-    title: 'Nie vergessen',
-    artist: 'Glasperlenspiel'
-  }, {
-    title: 'Ich bin ich',
-    artist: 'Glasperlenspiel'
-  }, {
-    title: 'Make It Up',
-    artist: 'Sam Tsui'
-  }];
-
-  const artists = [{
-    name: '劉德華'
-  }, {
-    name: '阿信'
-  }, {
-    name: '伍百'
-  }, {
-    name: '羅百吉'
-  }, {
-    name: '王力宏'
-  }, {
-    name: '林俊傑'
-  }, {
-    name: '林志炫'
-  }, {
-    name: '楊宗緯'
-  }, {
-    name: '林宥嘉'
-  }];
-
+  const artists = getArtistFakeDate(ownProps.params.type);
   return {
-    songs: songs,
+    songs: FAKE_PLAYLIST,
     artists: artists
   };
+}
+
+function getArtistFakeDate(type) {
+  switch (type) {
+    case 'male':
+      return FAKE_MALE_ARTISTLIST;
+    case 'female':
+      return FAKE_FEMALE_ARTISTLIST;
+    case 'group':
+      return FAKE_GROUP_ARTISTLIST;
+    default:
+      return [];
+  }
 }
 
 export default connect(mapStateToProps)(SongBook);
