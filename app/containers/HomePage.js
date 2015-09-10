@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FAKE_PLAYLIST, FAKE_FAVORITES_LISTS } from '../constants/FakeData';
-import List from '../components/List';
+import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
 
 class HomePage extends Component {
