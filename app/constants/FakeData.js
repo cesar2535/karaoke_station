@@ -49,7 +49,7 @@ export const FAKE_PLAYLIST = [{
 
 export const FAKE_FAVORITES_LISTS = [{
   background: '../assets/images/img_favorite_cover01.png',
-  title: `Daddy's`,
+  title: 'Daddy\'s',
   songCount: 10,
 }, {
   background: '../assets/images/img_favorite_cover02.png',
@@ -82,4 +82,24 @@ export const FAKE_FAVORITES_LISTS = [{
 }, {
   background: 'none',
   title: 'More'
+}];
+
+export const FAKE_ARTISTLIST = [{
+  name: '劉德華'
+}, {
+  name: '阿信'
+}, {
+  name: '伍百'
+}, {
+  name: '羅百吉'
+}, {
+  name: '王力宏'
+}, {
+  name: '林俊傑'
+}, {
+  name: '林志炫'
+}, {
+  name: '楊宗緯'
+}, {
+  name: '林宥嘉'
 }];
