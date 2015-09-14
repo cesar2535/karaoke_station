@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import SideBar from '../components/SideBar';
 import SongBookTabItem from '../components/tabitems/SongBookTabItem';
-import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
+import ListNav from '../components/ListNav';
 
 import { FAKE_PLAYLIST } from '../constants/FakeData';
 
@@ -25,9 +25,11 @@ class PlaylistPage extends Component {
     const { playlist } = this.props;
     return (
       <div className="Main-wrapper">
-        <SideBar className="SideBar" />
-        <SongBookTabItem className="TabItem" />
-        
+      <SideBar className="SideBar" />
+      <SongBookTabItem className="TabItem" />
+      <div className="">
+      <ListNav className='ListNav' />
+      </div>
       </div>
     )
   }
