@@ -28,19 +28,49 @@ $Footer-button-color = #fff;
   padding 10px 5px
   border none
   transition-duration 0.3s
+  position relative
 
   &:hover {
     background-color alpha(#fff, 0.3)
+
+    .Footer-button-panel {
+      display block
+    }
   }
 }
 
 .Footer-button-icon {
   flex 2 0 0
+  display block
   font-size 1.25em
 }
 
 .Footer-button-text {
   flex 1 0 0
+  display block
   font-size 1em
   text-transform capitalize
+}
+
+.Footer-button-panel {
+  display none
+  background-color #000
+  font-size 1.5em
+  width 100%
+  position absolute
+  left 0
+  bottom 100%
+
+  & > * {
+    display block
+    background-color transparent
+    outline none
+    width 100%
+    border none
+    transition-duration 0.3s
+
+    &:hover {
+      background-color alpha(#fff, 15%)
+    }
+  }
 }

@@ -23,9 +23,13 @@ export default class Footer extends Component {
       <footer className="Footer">
         {this._renderPlayButton()}
         {this._renderOtherButtons()}
+        {this._renderPitch()}
+        {this._renderMicVolume()}
+        {this._renderMusicVolume()}
       </footer>
     )
   }
+
   _renderPlayButton() {
     const { playing, seeking } = this.props;
 
@@ -41,6 +45,39 @@ export default class Footer extends Component {
     }
 
     return <FooterButton icon={icon} text={text} />;
+  }
+
+  _renderPitch() {
+    return (
+      <FooterButton icon='ic_controlbar_key' text='Pitch'>
+        <div className="Footer-button-panel">
+          <div>+</div>
+          <div>-</div>
+        </div>
+      </FooterButton>
+    )
+  }
+
+  _renderMicVolume() {
+    return (
+      <FooterButton icon='ic_controlbar_micvolume' text='Mic Volume'>
+        <div className="Footer-button-panel">
+          <div>+</div>
+          <div>-</div>
+        </div>
+      </FooterButton>
+    )
+  }
+
+  _renderMusicVolume() {
+    return (
+      <FooterButton icon='ic_controlbar_musicvolume' text='Volume'>
+        <div className="Footer-button-panel">
+          <div>+</div>
+          <div>-</div>
+        </div>
+      </FooterButton>
+    )
   }
 
   _renderOtherButtons() {

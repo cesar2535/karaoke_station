@@ -13,13 +13,14 @@ class FooterButton extends Component {
   }
 
   render() {
-    const { icon, text, onClick } = this.props;
+    const { icon, text, onClick, children } = this.props;
     const btnClass = ClassNames('Footer-button-icon', 'ic', icon);
 
     return (
       <button className="Footer-button" onClick={onClick}>
         <span className={btnClass} />
         <span className="Footer-button-text">{text}</span>
+        {children}
       </button>
     );
   }

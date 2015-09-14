@@ -11,17 +11,8 @@ export const FOOTER_BUTTONS = [{
   icon: 'ic_controlbar_effect',
   text: 'Effect'
 }, {
-  icon: 'ic_controlbar_key',
-  text: 'Pitch'
-}, {
   icon: 'ic_controlbar_femaletune',
-  text: 'Mic Effect'
-}, {
-  icon: 'ic_controlbar_micvolume',
-  text: 'Mic Volume'
-}, {
-  icon: 'ic_controlbar_musicvolume',
-  text: 'Volume'
+  text: 'Mic Echo'
 }];
 
 export const FAKE_PLAYLIST = [{
