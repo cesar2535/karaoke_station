@@ -6,7 +6,7 @@ import SongBookTabItem from '../components/tabitems/SongBookTabItem';
 
 import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
-class SongBook extends Component {
+class SongBookPage extends Component {
   static propTypes = {
 
   }
@@ -52,4 +52,4 @@ function getArtistFakeDate(type) {
   }
 }
 
-export default connect(mapStateToProps)(SongBook);
+export default connect(mapStateToProps)(SongBookPage);

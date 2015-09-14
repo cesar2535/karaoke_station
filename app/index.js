@@ -9,7 +9,7 @@ import configureStore from './store/configureStore';
 
 import App from './containers/App';
 import HomePage from './containers/HomePage';
-import SongBook from './containers/SongBook';
+import SongBookPage from './containers/SongBookPage';
 import PlaylistPage from './containers/PlaylistPage';
 
 const history = new createHistory({
@@ -24,8 +24,8 @@ React.render(
       <Router history={history}>
         <Route path='/' component={App}>
           <IndexRoute component={HomePage} />
-          <Route path='/songbook/:type' component={SongBook} />
-          <Route path='/songbook/language/:name' component={SongBook} />
+          <Route path='/songbook/:type' component={SongBookPage} />
+          <Route path='/songbook/language/:name' component={SongBookPage} />
           <Route path='/playlist/queue' component={PlaylistPage} />
           <Route path='/playlist/completed' component={PlaylistPage} />
         </Route>
