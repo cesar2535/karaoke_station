@@ -6,14 +6,14 @@ import Pager from './Pager';
 export default class SongBookList extends Component {
 	render() {
     	const { className, songs, artists, type, name } = this.props;
-    	const renderItem = type === 'language' ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
-	    const items = type === 'language' ? songs : artists;
+    	const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
+	    const items = type === undefined ? songs : artists;
 	    const artistsTitle = mapTitleNameByType(type, name);
-	    const itemsLeft = type === 'language' ? [] : mapArrayToModular(items, 3, 0);
-	    const itemsMiddle = type === 'language' ? [] : mapArrayToModular(items, 3, 1);
-	    const itemsRight = type === 'language' ? [] : mapArrayToModular(items, 3, 2);
-	    const total = type === 'language' ? songs.length : artists.length;
-	    return (
+	    const itemsLeft = type === undefined ? [] : mapArrayToModular(items, 3, 0);
+	    const itemsMiddle = type === undefined ? [] : mapArrayToModular(items, 3, 1);
+	    const itemsRight = type === undefined ? [] : mapArrayToModular(items, 3, 2);
+	    const total = type === undefined ? songs.length : artists.length;
+	    return type !== undefined ? (
 	    	<div className='SongBookListView'>
 		    	<ListNav className='ListNav' />
 		    	<h1>{artistsTitle}</h1>
@@ -30,6 +30,22 @@ export default class SongBookList extends Component {
 			    </section>
 			    <Pager className='Pager' total={total} />
 		    </div>
+	    ) : (
+	    	<div className='SongBookListView'>
+		    	<ListNav className='ListNav' />
+		    	<h1>{artistsTitle}</h1>
+		    	<section className='SongBookListItem'>
+			    	<section className='SongListTitle'>
+			    		<span>歌名</span>
+			    		<span>演唱者</span>
+			    	</section>
+			    	<section className=''>
+			    		<List className={`Playlist ${className}`}
+		            		renderItem={renderItem}
+		            		items={items} />
+		        	</section>
+            	</section>
+            </div>
 	    );
   	}
 
@@ -48,6 +64,8 @@ export default class SongBookList extends Component {
     }
 
     renderArtistlistItem(artist) {
+    	console.log(this.props)
+
 		const { className } = this.props;
 		let itemClass = '';
 		if (className.search('home') > -1) {
@@ -78,7 +96,7 @@ function mapTitleNameByType(type, name) {
 			return '女歌手';
 		case 'group':
 			return '團體';
-		case 'language':
+		case undefined:
 			return mapTitleNameFromLanguage(name);
 		default:
 			return '';
