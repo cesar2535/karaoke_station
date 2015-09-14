@@ -4,7 +4,7 @@ import './stylus/styles.styl';
 import React from 'react';
 import createHistory from 'history/lib/createBrowserHistory';
 import { Provider } from 'react-redux';
-import { Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import configureStore from './store/configureStore';
 
 import App from './containers/App';
@@ -21,8 +21,8 @@ React.render(
   <Provider store={store}>
     {() =>
       <Router history={history}>
-        <Route component={App}>
-          <Route path='/' component={HomePage} />
+        <Route path='/' component={App}>
+          <IndexRoute component={HomePage} />
           <Route path='/songbook/:type' component={SongBook} />
           <Route path='/songbook/language/:name' component={SongBook} />
         </Route>
