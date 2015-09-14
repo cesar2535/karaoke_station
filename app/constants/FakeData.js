@@ -3,7 +3,7 @@ export const FOOTER_BUTTONS = [{
   text: 'Next'
 }, {
   icon: 'ic_controlbar_repeat',
-  text: 'Repeat'
+  text: 'Replay'
 }, {
   icon: 'ic_controlbar_guide',
   text: 'Guide'
