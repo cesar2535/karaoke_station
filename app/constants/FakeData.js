@@ -1,7 +1,4 @@
 export const FOOTER_BUTTONS = [{
-  icon: 'ic_controlbar_pause',
-  text: 'Pause'
-}, {
   icon: 'ic_controlbar_stop',
   text: 'Next'
 }, {
@@ -143,4 +140,3 @@ export const FAKE_GROUP_ARTISTLIST = [{
 }, {
   name: '董事長樂團'
 }];
-
