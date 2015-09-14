@@ -21,7 +21,8 @@ export default class Footer extends Component {
     const { children } = this.props;
     return (
       <footer className="Footer">
-        {this._renderPlayButton()}
+        <FooterButton icon='ic_controlbar_play' text='Play' />
+        <FooterButton icon='ic_controlbar_pause' text='Pause' />
         {this._renderOtherButtons()}
         {this._renderPitch()}
         {this._renderMicVolume()}
@@ -30,22 +31,22 @@ export default class Footer extends Component {
     )
   }
 
-  _renderPlayButton() {
-    const { playing, seeking } = this.props;
-
-    let icon, text;
-    if (seeking) {
-
-    } else if (playing) {
-      icon = 'ic_controlbar_pause';
-      text = 'Pause';
-    } else {
-      icon = 'ic_controlbar_play';
-      text = 'Play';
-    }
-
-    return <FooterButton icon={icon} text={text} />;
-  }
+  // _renderPlayButton() {
+  //   const { playing, seeking } = this.props;
+  //
+  //   let icon, text;
+  //   if (seeking) {
+  //
+  //   } else if (playing) {
+  //     icon = 'ic_controlbar_pause';
+  //     text = 'Pause';
+  //   } else {
+  //     icon = 'ic_controlbar_play';
+  //     text = 'Play';
+  //   }
+  //
+  //   return <FooterButton icon={icon} text={text} />;
+  // }
 
   _renderPitch() {
     return (
