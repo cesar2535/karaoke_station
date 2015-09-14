@@ -14,11 +14,11 @@ export default class SideBar extends Component {
 					<ic className='ic ic_menu_favoraite'></ic>
 					<p>最愛歌曲</p>
 				</section>
-				<section className='SideBarItem'>
+				<Link className='SideBarItem' to='/songbook/language' activeClassName="is-current">
 					<ic className='ic ic_menu_reguestbook'></ic>
 					<p>點歌本</p>
-				</section>
-				<Link className='SideBarItem' to='/playlist/queue'>
+				</Link>
+				<Link className='SideBarItem' to='/playlist/queue' activeClassName="is-current">
 					<ic className='ic ic_menu_requestinglist'></ic>
 					<p>點歌清單</p>
 				</Link>
