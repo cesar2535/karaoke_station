@@ -11,11 +11,22 @@
 }
 
 .SideBarItem {
+  display block
   color: rgba(255, 255, 255, 0.4);
   font-size: 1.8em;
   text-align: center;
   height: 49px
   padding: 20px;
+  transition-duration 0.3s
+
+  &:hover {
+    background alpha(#fff, 15%)
+  }
+  &.is-current {
+    background-color alpha(#fff, 30%)
+    color #fff
+  }
+
   p {
     font-size: 0.4em;
     letter-spacing 2px
@@ -23,11 +34,4 @@
     margin-top -0.1em
   }
 
-  &:hover {
-    background rgba(255, 255, 255, 0.2);
-  }
-
-  &--selected {
-    color #fff
-  }
 }
