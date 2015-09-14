@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -14,6 +15,7 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
+    new ExtractTextPlugin('[name].css'),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
@@ -28,7 +30,7 @@ module.exports = {
       include: __dirname
     }, {
       test: /\.styl$/,
-      loader: 'style!css?sourceMap!cssnext!stylus?sourceMap'
+      loader: ExtractTextPlugin.extract('style', 'css?sourceMap!cssnext!stylus?sourceMap')
     }, {
       test: /\.(png|jpg|svg|ttf|woff|eot)$/,
       loader: 'url?limit=1000000'
