@@ -26,11 +26,19 @@
 }
 
 .SongListTitle {
+    box-sizing border-box
     display flex
     span {
         flex 1
-        padding: 11px 11px 11px 38px;
         background: rgba(27, 27, 27, 0.7);
         color: #8f8f8f;
+    }
+
+    &--Left {
+      padding 11px 11px 11px 55px
+    }
+
+    &--Right {
+      padding: 11px;
     }
 }

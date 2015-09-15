@@ -39,11 +39,11 @@ export default class SongBookList extends Component {
           <h1>{artistsTitle}</h1>
           <section className='SongBookListItem'>
             <section className='SongListTitle'>
-              <span>歌名</span>
-              <span>演唱者</span>
+              <span className='SongListTitle--Left'>歌名</span>
+              <span className='SongListTitle--Right'>演唱者</span>
             </section>
             <section className=''>
-              <List className={`Playlist ${className}`}
+              <List className={`${className}`}
                     renderItem={renderItem}
                     items={items} />
               </section>
