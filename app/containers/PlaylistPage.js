@@ -25,7 +25,7 @@ class PlaylistPage extends Component {
   }
 
   render() {
-    const { playlist } = this.props;
+    const { playlist, route: { path } } = this.props;
     const playlists = [{
       title: 'Queue',
       slug: 'queue'
@@ -34,6 +34,8 @@ class PlaylistPage extends Component {
       slug: 'completed'
     }];
 
+    const paths = path.split(/\//);
+
     return (
       <section className="Main Main--playlist">
         <SideBar className="SideBar" />
@@ -41,7 +43,7 @@ class PlaylistPage extends Component {
         <SideTab className="SideTab" items={playlists} renderItem={this._renderSideTabItem.bind(this)} />
         <div className="Main-wrapper Main-wrapper--playlist">
           <ListNav className='ListNav ListNav--playlist' />
-          <h1 className="Main-wrapper-title">Playlist</h1>
+          <h1 className="Main-wrapper-title">{paths[paths.length - 1]}</h1>
           <div className="PlaylistView">
             <div className="PlaylistView-head">
               <span>Title</span>
