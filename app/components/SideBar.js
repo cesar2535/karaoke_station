@@ -18,7 +18,7 @@ export default class SideBar extends Component {
           <ic className='ic ic_menu_reguestbook'></ic>
           <p>點歌本</p>
         </Link>
-        <Link className='SideBarItem' to='/playlist/queue' activeClassName="is-current">
+        <Link className='SideBarItem' to='/playlist' activeClassName="is-current">
           <ic className='ic ic_menu_requestinglist'></ic>
           <p>點歌清單</p>
         </Link>
