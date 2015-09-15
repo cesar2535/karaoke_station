@@ -40,11 +40,12 @@ export default class SongBookList extends Component {
 			    		<span>演唱者</span>
 			    	</section>
 			    	<section className=''>
-			    		<List className={`Playlist ${className}`}
+			    		<List className={`${className}`}
 		            		renderItem={renderItem}
 		            		items={items} />
 		        	</section>
             	</section>
+            	<Pager className='Pager' total={total} />
             </div>
 	    );
   	}
@@ -56,7 +57,7 @@ export default class SongBookList extends Component {
 			// itemClass = 'Playlist-item--home';
 		}
 		return (
-			<div key={song.title} className={`Playlist-item`}>
+			<div key={song.title} className={'Playlist-item Playlist-item--songs'}>
 		    	<span className="Playlist-item-title">{song.title}</span>
 		    	<span className="Playlist-item-artist">{song.artist}</span>
 			</div>
