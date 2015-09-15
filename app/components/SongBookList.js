@@ -15,7 +15,7 @@ export default class SongBookList extends Component {
     const total = type === 'language' ? songs.length : artists.length;
     return (
       <div className='SongBookListView'>
-        <ListNav className='ListNav' />
+        <ListNav className='ListNav--songbook' />
         <h1>{artistsTitle}</h1>
         <section className='Artist'>
           <List className={`Playlist ${className}`}

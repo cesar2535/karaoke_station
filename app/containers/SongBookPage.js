@@ -22,11 +22,13 @@ class SongBookPage extends Component {
   render() {
     const { songs, artists, params } = this.props;
     return (
-      <div className="Main-wrapper">
+      <section className="Main Main--songbook">
         <SideBar className="SideBar" />
         <SongBookTabItem className="TabItem" />
-        <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} name={params.name} />
-      </div>
+        <div className="Main-wrapper Main-wrapper--songbook">
+          <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} name={params.name} />
+        </div>
+      </section>
     );
   }
 }
