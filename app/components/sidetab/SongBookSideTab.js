@@ -1,17 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class TabItem extends Component {
+export default class SideTab extends Component {
   render() {
     const { className } = this.props;
     return (
       <div className={className}>
-        <section className='TabItem-item'>
+        <section className='SideTab-item'>
           <h6>歌星點歌</h6>
           <li>男歌手</li>
           <li>女歌手</li>
           <li>團體</li>
         </section>
-        <section className='TabItem-item'>
+        <section className='SideTab-item'>
           <h6>依語言點歌</h6>
           <li>中文</li>
           <li>英文</li>
@@ -22,7 +22,7 @@ export default class TabItem extends Component {
           <li>西班牙語</li>
           <li>其他語言</li>
         </section>
-        <section className='TabItem-item'>
+        <section className='SideTab-item'>
           <h6>依種類點歌</h6>
           <li>搖滾</li>
           <li>嘻哈R&B</li>
