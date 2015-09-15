@@ -53,8 +53,9 @@ export default class SongBookList extends Component {
     }
 
     renderPlaylistItem(song, index) {
+      const { addPrepareTodos } = this.props;
       return (
-        <div key={index} className={'Playlist-item Playlist-item--songs'}>
+        <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
             <span className="Playlist-item-artist">{song.artist}</span>
         </div>
