@@ -33,6 +33,51 @@ export const FAKE_PLAYLIST = [{
 }, {
   title: 'Make It Up',
   artist: 'Sam Tsui'
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry'
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current'
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel'
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel'
+}, {
+  title: 'Make It Up',
+  artist: 'Sam Tsui'
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry'
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry'
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current'
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel'
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel'
+}, {
+  title: 'Make It Up',
+  artist: 'Sam Tsui'
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry'
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current'
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel'
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel'
 }];
 
 export const FAKE_FAVORITES_LISTS = [{
