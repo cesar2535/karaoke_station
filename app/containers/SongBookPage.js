@@ -6,7 +6,7 @@ import SongBookTabItem from '../components/tabitems/SongBookTabItem';
 
 import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
-class SongBook extends Component {
+class SongBookPage extends Component {
   static propTypes = {
 
   }
@@ -22,11 +22,13 @@ class SongBook extends Component {
   render() {
     const { songs, artists, params } = this.props;
     return (
-      <div className="Main-wrapper">
+      <section className="Main Main--songbook">
         <SideBar className="SideBar" />
         <SongBookTabItem className="TabItem" />
-        <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} name={params.name} />
-      </div>
+        <div className="Main-wrapper Main-wrapper--songbook">
+          <SongBookList className="ArtistList Playlist--home" songs={songs} artists={artists} type={params.type} name={params.name} />
+        </div>
+      </section>
     );
   }
 }
@@ -52,4 +54,4 @@ function getArtistFakeDate(type) {
   }
 }
 
-export default connect(mapStateToProps)(SongBook);
+export default connect(mapStateToProps)(SongBookPage);

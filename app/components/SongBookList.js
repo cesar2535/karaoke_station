@@ -49,43 +49,41 @@ export default class SongBookList extends Component {
 	    );
   	}
 
-  	renderPlaylistItem(song) {
-		const { className } = this.props;
-		let itemClass = '';
-		if (className.search('home') > -1) {
-			itemClass = 'Playlist-item--home';
-		}
-		return (
-			<div key={song.title} className={`Playlist-item ${itemClass}`}>
-		    	<span className="Playlist-item-title">{song.title}</span>
-		    	<span className="Playlist-item-artist">{song.artist}</span>
-			</div>
-    	);
+  renderPlaylistItem(song) {
+    const { className } = this.props;
+    let itemClass = '';
+    if (className.search('home') > -1) {
+      itemClass = 'Playlist-item--home';
     }
+    return (
+      <div key={song.title} className={`Playlist-item ${itemClass}`}>
+        <span className="Playlist-item-title">{song.title}</span>
+        <span className="Playlist-item-artist">{song.artist}</span>
+      </div>
+    );
+  }
 
-    renderArtistlistItem(artist) {
-    	console.log(this.props)
-
-		const { className } = this.props;
-		let itemClass = '';
-		if (className.search('home') > -1) {
-			itemClass = 'Playlist-item--home Playlist-item--artists';
-		}
-		return (
-			<div key={artist.name} className={`Playlist-item ${itemClass}`}>
-		    	<span className="Playlist-item-artist">{artist.name}</span>
-			</div>
-    	);
+  renderArtistlistItem(artist) {
+    const { className } = this.props;
+    let itemClass = '';
+    if (className.search('home') > -1) {
+      itemClass = 'Playlist-item--home Playlist-item--artists';
     }
+    return (
+      <div key={artist.name} className={`Playlist-item ${itemClass}`}>
+        <span className="Playlist-item-artist">{artist.name}</span>
+      </div>
+    );
+  }
 }
 
 function mapArrayToModular(array, mod, myIndex) {
-	const return_array = [];
-	let i = myIndex;
-	for ( i; i < array.length; i += mod ){
-		return_array.push(array[i]);
-	}
-	return return_array;
+  const return_array = [];
+  let i = myIndex;
+  for ( i; i < array.length; i += mod ){
+    return_array.push(array[i]);
+  }
+  return return_array;
 }
 
 function mapTitleNameByType(type, name) {
@@ -104,25 +102,24 @@ function mapTitleNameByType(type, name) {
 }
 
 function mapTitleNameFromLanguage(name) {
-	switch(name.toLowerCase()) {
-		case 'tc':
-			return '中文';
-		case 'e':
-			return '英文';
-		case 'c':
-			return '粵語';
-		case 't':
-			return '台語';
-		case 'j':
-			return '日語';
-		case 'k':
-			return '韓語';
-		case 'eo':
-			return '西班牙語';
-		case 'other':
-			return '其他語言';
-		default:
-			return '你哪位';
-	}
+  switch(name.toLowerCase()) {
+    case 'tc':
+      return '中文';
+    case 'e':
+      return '英文';
+    case 'c':
+      return '粵語';
+    case 't':
+      return '台語';
+    case 'j':
+      return '日語';
+    case 'k':
+      return '韓語';
+    case 'eo':
+      return '西班牙語';
+    case 'other':
+      return '其他語言';
+    default:
+      return '你哪位';
+  }
 }
-
