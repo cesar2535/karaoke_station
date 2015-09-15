@@ -19,8 +19,9 @@ export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
   }
 }
 
-export function addPrepareTodos() {
+export function addPrepareTodos(songid) {
   return {
-    type: PREPARE_TODO
+    type: PREPARE_TODO,
+    id: songid
   }
 }

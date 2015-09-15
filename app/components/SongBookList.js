@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react';
-import { chunk, unzip } from 'lodash';
+import React, { Component } from 'react';
+// import { chunk, unzip } from 'lodash';
 import List from './utils/List';
 import ListNav from './ListNav';
 import Pager from './Pager';
 
 export default class SongBookList extends Component {
   render() {
-      const { className, songs, artists, type, name } = this.props;
+      const { className, songs, artists, type, name, prepareSongId, addPrepareTodos } = this.props;
       const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this);
       const items = type === undefined ? songs : artists;
       const artistsTitle = mapTitleNameByType(type, name);
@@ -15,7 +15,6 @@ export default class SongBookList extends Component {
       const itemsRight = type === undefined ? [] : mapArrayToModular(items, 3, 2);
       // const [ itemsLeft, itemsMiddle, itemsRight ] = unzip(chunk(items, 3));
       const total = type === undefined ? songs.length : artists.length;
-      console.log(songs, songs.length)
       return type !== undefined ? (
         <div className='SongBookListView'>
           <ListNav className='ListNav' />
@@ -54,11 +53,6 @@ export default class SongBookList extends Component {
     }
 
     renderPlaylistItem(song, index) {
-      const { className } = this.props;
-      let itemClass = '';
-      if (className.search('home') > -1) {
-        // itemClass = 'Playlist-item--home';
-      }
       return (
         <div key={index} className={'Playlist-item Playlist-item--songs'}>
             <span className="Playlist-item-title">{song.title}</span>
@@ -82,16 +76,16 @@ export default class SongBookList extends Component {
 }
 
 function mapArrayToModular(array, mod, myIndex) {
-  const return_array = [];
+  let return_array = [];
   let i = myIndex;
-  for ( i; i < array.length; i += mod ){
+  for ( i; i < array.length; i += mod ) {
     return_array.push(array[i]);
   }
   return return_array;
 }
 
 function mapTitleNameByType(type, name) {
-  switch(type) {
+  switch (type) {
     case 'male':
       return '男歌手';
     case 'female':
@@ -106,7 +100,7 @@ function mapTitleNameByType(type, name) {
 }
 
 function mapTitleNameFromLanguage(name) {
-  switch(name.toLowerCase()) {
+  switch (name.toLowerCase()) {
     case 'tc':
       return '中文';
     case 'e':
