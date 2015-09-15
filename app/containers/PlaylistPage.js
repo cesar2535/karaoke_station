@@ -5,6 +5,7 @@ import SideBar from '../components/SideBar';
 import SongBookSideTab from '../components/sidetab/SongBookSideTab';
 import Playlist from '../components/Playlist';
 import ListNav from '../components/ListNav';
+import ListPager from '../components/ListPager';
 
 import { FAKE_PLAYLIST } from '../constants/FakeData';
 
@@ -35,8 +36,9 @@ class PlaylistPage extends Component {
               <span>Title</span>
               <span>Artist</span>
             </div>
-            <Playlist className="Playlist--playlist" songs={FAKE_PLAYLIST} />
+            <Playlist className="Playlist--playlist" songs={playlist} />
           </div>
+          <ListPager className="ListPager--playlist" total={playlist.length} />
         </div>
       </section>
     )
@@ -45,7 +47,7 @@ class PlaylistPage extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    playlist: []
+    playlist: FAKE_PLAYLIST
   }
 }
 
