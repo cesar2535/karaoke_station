@@ -6,14 +6,14 @@ import Pager from './Pager';
 export default class SongBookList extends Component {
 	render() {
     	const { className, songs, artists, type, name } = this.props;
-    	const renderItem = type === 'language' ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
-	    const items = type === 'language' ? songs : artists;
+    	const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
+	    const items = type === undefined ? songs : artists;
 	    const artistsTitle = mapTitleNameByType(type, name);
-	    const itemsLeft = type === 'language' ? [] : mapArrayToModular(items, 3, 0);
-	    const itemsMiddle = type === 'language' ? [] : mapArrayToModular(items, 3, 1);
-	    const itemsRight = type === 'language' ? [] : mapArrayToModular(items, 3, 2);
-	    const total = type === 'language' ? songs.length : artists.length;
-	    return (
+	    const itemsLeft = type === undefined ? [] : mapArrayToModular(items, 3, 0);
+	    const itemsMiddle = type === undefined ? [] : mapArrayToModular(items, 3, 1);
+	    const itemsRight = type === undefined ? [] : mapArrayToModular(items, 3, 2);
+	    const total = type === undefined ? songs.length : artists.length;
+	    return type !== undefined ? (
 	    	<div className='SongBookListView'>
 		    	<ListNav className='ListNav' />
 		    	<h1>{artistsTitle}</h1>
@@ -30,6 +30,22 @@ export default class SongBookList extends Component {
 			    </section>
 			    <Pager className='Pager' total={total} />
 		    </div>
+	    ) : (
+	    	<div className='SongBookListView'>
+		    	<ListNav className='ListNav' />
+		    	<h1>{artistsTitle}</h1>
+		    	<section className='SongBookListItem'>
+			    	<section className='SongListTitle'>
+			    		<span>歌名</span>
+			    		<span>演唱者</span>
+			    	</section>
+			    	<section className=''>
+			    		<List className={`Playlist ${className}`}
+		            		renderItem={renderItem}
+		            		items={items} />
+		        	</section>
+            	</section>
+            </div>
 	    );
   	}
 
@@ -37,37 +53,37 @@ export default class SongBookList extends Component {
 		const { className } = this.props;
 		let itemClass = '';
 		if (className.search('home') > -1) {
-			itemClass = 'Playlist-item--home';
+			// itemClass = 'Playlist-item--home';
 		}
 		return (
-			<div key={song.title} className={`Playlist-item ${itemClass}`}>
+			<div key={song.title} className={`Playlist-item`}>
 		    	<span className="Playlist-item-title">{song.title}</span>
 		    	<span className="Playlist-item-artist">{song.artist}</span>
 			</div>
     	);
     }
 
-    renderArtistlistItem(artist) {
-		const { className } = this.props;
-		let itemClass = '';
-		if (className.search('home') > -1) {
-			itemClass = 'Playlist-item--home Playlist-item--artists';
-		}
-		return (
-			<div key={artist.name} className={`Playlist-item ${itemClass}`}>
-		    	<span className="Playlist-item-artist">{artist.name}</span>
-			</div>
-    	);
+  renderArtistlistItem(artist) {
+    const { className } = this.props;
+    let itemClass = '';
+    if (className.search('home') > -1) {
+      itemClass = 'Playlist-item--home Playlist-item--artists';
     }
+    return (
+      <div key={artist.name} className={`Playlist-item ${itemClass}`}>
+        <span className="Playlist-item-artist">{artist.name}</span>
+      </div>
+    );
+  }
 }
 
 function mapArrayToModular(array, mod, myIndex) {
-	const return_array = [];
-	let i = myIndex;
-	for ( i; i < array.length; i += mod ){
-		return_array.push(array[i]);
-	}
-	return return_array;
+  const return_array = [];
+  let i = myIndex;
+  for ( i; i < array.length; i += mod ){
+    return_array.push(array[i]);
+  }
+  return return_array;
 }
 
 function mapTitleNameByType(type, name) {
@@ -78,7 +94,7 @@ function mapTitleNameByType(type, name) {
 			return '女歌手';
 		case 'group':
 			return '團體';
-		case 'language':
+		case undefined:
 			return mapTitleNameFromLanguage(name);
 		default:
 			return '';
@@ -86,25 +102,24 @@ function mapTitleNameByType(type, name) {
 }
 
 function mapTitleNameFromLanguage(name) {
-	switch(name.toLowerCase()) {
-		case 'tc':
-			return '中文';
-		case 'e':
-			return '英文';
-		case 'c':
-			return '粵語';
-		case 't':
-			return '台語';
-		case 'j':
-			return '日語';
-		case 'k':
-			return '韓語';
-		case 'eo':
-			return '西班牙語';
-		case 'other':
-			return '其他語言';
-		default:
-			return '你哪位';
-	}
+  switch(name.toLowerCase()) {
+    case 'tc':
+      return '中文';
+    case 'e':
+      return '英文';
+    case 'c':
+      return '粵語';
+    case 't':
+      return '台語';
+    case 'j':
+      return '日語';
+    case 'k':
+      return '韓語';
+    case 'eo':
+      return '西班牙語';
+    case 'other':
+      return '其他語言';
+    default:
+      return '你哪位';
+  }
 }
-

@@ -2,6 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var NODE_ENV = (process.env.NODE_ENV || 'development').toLowerCase();
+var cssLoaders = 'style!css?sourceMap!cssnext!stylus?sourceMap';
+
+if (NODE_ENV === 'production') {
+  cssLoaders = ExtractTextPlugin.extract('style', 'css?sourceMap!cssnext!stylus?sourceMap');
+}
+
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -30,7 +37,7 @@ module.exports = {
       include: __dirname
     }, {
       test: /\.styl$/,
-      loader: ExtractTextPlugin.extract('style', 'css?sourceMap!cssnext!stylus?sourceMap')
+      loader: cssLoaders
     }, {
       test: /\.(png|jpg|svg|ttf|woff|eot)$/,
       loader: 'url?limit=1000000'
