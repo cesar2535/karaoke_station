@@ -62,13 +62,6 @@ export default class SongBookList extends Component {
 			</div>
     	);
     }
-    return (
-      <div key={song.title} className={`Playlist-item ${itemClass}`}>
-        <span className="Playlist-item-title">{song.title}</span>
-        <span className="Playlist-item-artist">{song.artist}</span>
-      </div>
-    );
-  }
 
   renderArtistlistItem(artist) {
     const { className } = this.props;
