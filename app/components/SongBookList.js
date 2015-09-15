@@ -1,67 +1,70 @@
 import React, { Component, PropTypes } from 'react';
+import { chunk, unzip } from 'lodash';
 import List from './utils/List';
 import ListNav from './ListNav';
 import Pager from './Pager';
 
 export default class SongBookList extends Component {
-	render() {
-    	const { className, songs, artists, type, name } = this.props;
-    	const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this)
-	    const items = type === undefined ? songs : artists;
-	    const artistsTitle = mapTitleNameByType(type, name);
-	    const itemsLeft = type === undefined ? [] : mapArrayToModular(items, 3, 0);
-	    const itemsMiddle = type === undefined ? [] : mapArrayToModular(items, 3, 1);
-	    const itemsRight = type === undefined ? [] : mapArrayToModular(items, 3, 2);
-	    const total = type === undefined ? songs.length : artists.length;
-	    return type !== undefined ? (
-	    	<div className='SongBookListView'>
-		    	<ListNav className='ListNav' />
-		    	<h1>{artistsTitle}</h1>
-		    	<section className='Artist'>
-			    	<List className={`Playlist ${className}`}
-			            renderItem={renderItem}
-			            items={itemsLeft} />
-			        <List className={`Playlist ${className}`}
-			            renderItem={renderItem}
-			            items={itemsMiddle} />
-			        <List className={`Playlist ${className}`}
-			            renderItem={renderItem}
-			            items={itemsRight} />
-			    </section>
-			    <Pager className='Pager' total={total} />
-		    </div>
-	    ) : (
-	    	<div className='SongBookListView'>
-		    	<ListNav className='ListNav' />
-		    	<h1>{artistsTitle}</h1>
-		    	<section className='SongBookListItem'>
-			    	<section className='SongListTitle'>
-			    		<span>歌名</span>
-			    		<span>演唱者</span>
-			    	</section>
-			    	<section className=''>
-			    		<List className={`${className}`}
-		            		renderItem={renderItem}
-		            		items={items} />
-		        	</section>
-            	</section>
-            	<Pager className='Pager' total={total} />
-            </div>
-	    );
-  	}
+  render() {
+      const { className, songs, artists, type, name } = this.props;
+      const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this);
+      const items = type === undefined ? songs : artists;
+      const artistsTitle = mapTitleNameByType(type, name);
+      const itemsLeft = type === undefined ? [] : mapArrayToModular(items, 3, 0);
+      const itemsMiddle = type === undefined ? [] : mapArrayToModular(items, 3, 1);
+      const itemsRight = type === undefined ? [] : mapArrayToModular(items, 3, 2);
+      // const [ itemsLeft, itemsMiddle, itemsRight ] = unzip(chunk(items, 3));
+      const total = type === undefined ? songs.length : artists.length;
+      console.log(songs, songs.length)
+      return type !== undefined ? (
+        <div className='SongBookListView'>
+          <ListNav className='ListNav' />
+          <h1>{artistsTitle}</h1>
+          <section className='Artist'>
+            <List className={`Playlist ${className}`}
+                  renderItem={renderItem}
+                  items={itemsLeft} />
+              <List className={`Playlist ${className}`}
+                  renderItem={renderItem}
+                  items={itemsMiddle} />
+              <List className={`Playlist ${className}`}
+                  renderItem={renderItem}
+                  items={itemsRight} />
+          </section>
+          <Pager className='Pager' total={total} />
+        </div>
+      ) : (
+        <div className='SongBookListView'>
+          <ListNav className='ListNav' />
+          <h1>{artistsTitle}</h1>
+          <section className='SongBookListItem'>
+            <section className='SongListTitle'>
+              <span>歌名</span>
+              <span>演唱者</span>
+            </section>
+            <section className=''>
+              <List className={`Playlist ${className}`}
+                    renderItem={renderItem}
+                    items={items} />
+              </section>
+            </section>
+            <Pager className='Pager' total={total} />
+          </div>
+      );
+    }
 
-  	renderPlaylistItem(song) {
-		const { className } = this.props;
-		let itemClass = '';
-		if (className.search('home') > -1) {
-			// itemClass = 'Playlist-item--home';
-		}
-		return (
-			<div key={song.title} className={'Playlist-item Playlist-item--songs'}>
-		    	<span className="Playlist-item-title">{song.title}</span>
-		    	<span className="Playlist-item-artist">{song.artist}</span>
-			</div>
-    	);
+    renderPlaylistItem(song, index) {
+      const { className } = this.props;
+      let itemClass = '';
+      if (className.search('home') > -1) {
+        // itemClass = 'Playlist-item--home';
+      }
+      return (
+        <div key={index} className={'Playlist-item Playlist-item--songs'}>
+            <span className="Playlist-item-title">{song.title}</span>
+            <span className="Playlist-item-artist">{song.artist}</span>
+        </div>
+        );
     }
 
   renderArtistlistItem(artist) {
@@ -88,18 +91,18 @@ function mapArrayToModular(array, mod, myIndex) {
 }
 
 function mapTitleNameByType(type, name) {
-	switch(type) {
-		case 'male':
-			return '男歌手';
-		case 'female':
-			return '女歌手';
-		case 'group':
-			return '團體';
-		case undefined:
-			return mapTitleNameFromLanguage(name);
-		default:
-			return '';
-	}
+  switch(type) {
+    case 'male':
+      return '男歌手';
+    case 'female':
+      return '女歌手';
+    case 'group':
+      return '團體';
+    case undefined:
+      return mapTitleNameFromLanguage(name);
+    default:
+      return '';
+  }
 }
 
 function mapTitleNameFromLanguage(name) {

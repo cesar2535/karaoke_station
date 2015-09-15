@@ -11,22 +11,36 @@ $Playlist-item-bgColor = #000000;
   display block
   // background-color $Playlist-bgColor
   color $Playlist-color
-  width 300px
+
+  &--playlist {
+    width 60%
+    height 55vh
+    overflow-y scroll
+  }
 }
 
 .Playlist-item {
   background-color alpha($Playlist-item-bgColor, 0.7)
   width 100%
-  padding 5px 10px
+  padding 10px 25px
   box-sizing border-box
 
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background-color alpha($Playlist-item-bgColor, 0.4)
   }
 
   &--home {
     display flex
     justify-content space-between
+  }
+
+  &--playlist {
+    display flex
+    color #FE5FB9
+    margin-bottom 2px
+    & > * {
+      flex 1
+    }
   }
 
   &--artists {
@@ -48,4 +62,23 @@ $Playlist-item-bgColor = #000000;
 .Playlist-item-artist {
   flex 1
   padding: 11px 11px 11px 30px;
+}
+
+.PlaylistView {
+  display flex
+  flex-direction column
+  align-items center
+
+  &-head {
+    display flex
+    background-color alpha($Playlist-item-bgColor, 0.7)
+    color #fff
+    width 60%
+    padding 10px 25px
+    margin-bottom 2px
+    box-sizing border-box
+    & > * {
+      flex 1
+    }
+  }
 }
