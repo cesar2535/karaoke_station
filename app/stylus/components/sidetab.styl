@@ -34,6 +34,7 @@
 }
 
 .SideTab-listitem {
+  display block
   color #fff
   font-size 0.9em
   line-height 40px
@@ -41,6 +42,10 @@
   padding-left 20px
 
   &:hover {
-    background-color alpha(#fff, 0.2)
+    background-color alpha(#fff, 20%)
+  }
+
+  &.is-current {
+    background-color alpha(#fff, 30%)
   }
 }

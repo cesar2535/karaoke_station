@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import SideBar from '../components/SideBar';
 import SongBookSideTab from '../components/sidetab/SongBookSideTab';
@@ -26,9 +27,11 @@ class PlaylistPage extends Component {
   render() {
     const { playlist } = this.props;
     const playlists = [{
-      title: 'Queue'
+      title: 'Queue',
+      slug: 'queue'
     }, {
-      title: 'Completed'
+      title: 'Completed',
+      slug: 'completed'
     }];
 
     return (
@@ -54,9 +57,9 @@ class PlaylistPage extends Component {
 
   _renderSideTabItem(item, index) {
     return (
-      <div key={index} className="SideTab-listitem">
+      <Link key={index} className="SideTab-listitem" to={`/playlist/${item.slug}`} activeClassName="is-current">
         <span>{item.title}</span>
-      </div>
+      </Link>
     );
   }
 }
