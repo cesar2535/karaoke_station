@@ -25,12 +25,12 @@ export default class Playlist extends Component {
     );
   }
 
-  renderPlaylistItem(song) {
+  renderPlaylistItem(song, index) {
     const { className } = this.props;
     const classNamesArr = className.split(/\s/);
     const itemClass = `Playlist-item${classNamesArr[0].slice(8)}`;
     return (
-      <div key={song.title} className={`Playlist-item ${itemClass}`}>
+      <div key={index} className={`Playlist-item ${itemClass}`}>
         <span className="Playlist-item-title">{song.title}</span>
         <span className="Playlist-item-artist">{song.artist}</span>
       </div>
