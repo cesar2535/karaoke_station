@@ -53,10 +53,10 @@ export default class SongBookList extends Component {
 		const { className } = this.props;
 		let itemClass = '';
 		if (className.search('home') > -1) {
-			itemClass = 'Playlist-item--home';
+			// itemClass = 'Playlist-item--home';
 		}
 		return (
-			<div key={song.title} className={`Playlist-item ${itemClass}`}>
+			<div key={song.title} className={`Playlist-item`}>
 		    	<span className="Playlist-item-title">{song.title}</span>
 		    	<span className="Playlist-item-artist">{song.artist}</span>
 			</div>
@@ -125,4 +125,3 @@ function mapTitleNameFromLanguage(name) {
 			return '你哪位';
 	}
 }
-
