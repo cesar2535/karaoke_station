@@ -27,10 +27,8 @@ export default class Playlist extends Component {
 
   renderPlaylistItem(song) {
     const { className } = this.props;
-    let itemClass = '';
-    if (className.search('home') > -1) {
-      itemClass = 'Playlist-item--home';
-    }
+    const classNamesArr = className.split(/\s/);
+    const itemClass = `Playlist-item${classNamesArr[0].slice(8)}`;
     return (
       <div key={song.title} className={`Playlist-item ${itemClass}`}>
         <span className="Playlist-item-title">{song.title}</span>

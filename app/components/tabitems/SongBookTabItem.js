@@ -4,7 +4,7 @@ export default class TabItem extends Component {
   render() {
     const { className } = this.props;
     return (
-      <section className={className}>
+      <div className={className}>
         <section className='TabItem-item'>
           <h6>歌星點歌</h6>
           <li>男歌手</li>
@@ -30,7 +30,7 @@ export default class TabItem extends Component {
           <li>爵士</li>
         </section>
 
-      </section>
+      </div>
     );
   }
 }
