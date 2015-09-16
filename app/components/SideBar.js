@@ -14,7 +14,7 @@ export default class SideBar extends Component {
           <ic className='ic ic_menu_favoraite'></ic>
           <p>最愛歌曲</p>
         </section>
-        <Link className='SideBarItem' to='/songbook/male' activeClassName="is-current">
+        <Link className='SideBarItem' to='/songbook' activeClassName="is-current">
           <ic className='ic ic_menu_reguestbook'></ic>
           <p>點歌本</p>
         </Link>

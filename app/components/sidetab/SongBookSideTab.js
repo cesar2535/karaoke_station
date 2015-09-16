@@ -8,40 +8,40 @@ export default class SideTab extends Component {
       <div className={className}>
         <section className='SideTab-item'>
           <h6>歌星點歌</h6>
-          <Link className='SideTab-item' to='/songbook/male'>
+          <Link to='/songbook/male' activeClassName="is-current">
             <li>男歌手</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/female'>
+          <Link to='/songbook/female' activeClassName="is-current">
             <li>女歌手</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/group'>
+          <Link to='/songbook/group' activeClassName="is-current">
             <li>團體</li>
           </Link>
         </section>
         <section className='SideTab-item'>
           <h6>依語言點歌</h6>
-          <Link className='SideTab-item' to='/songbook/language/tc'>
+          <Link to='/songbook/language/tc' activeClassName="is-current">
             <li>中文</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/e'>
+          <Link to='/songbook/language/e' activeClassName="is-current">
             <li>英文</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/c'>
+          <Link to='/songbook/language/c' activeClassName="is-current">
             <li>粵語</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/t'>
+          <Link to='/songbook/language/t' activeClassName="is-current">
            <li>台語</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/j'>
+          <Link to='/songbook/language/j' activeClassName="is-current">
             <li>日語</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/k'>
+          <Link to='/songbook/language/k' activeClassName="is-current">
             <li>韓語</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/eo'>
+          <Link to='/songbook/language/eo' activeClassName="is-current">
             <li>西班牙語</li>
           </Link>
-          <Link className='SideTab-item' to='/songbook/language/other'>
+          <Link to='/songbook/language/other'>
             <li>其他語言</li>
           </Link>
         </section>
