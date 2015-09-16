@@ -5,6 +5,7 @@ import ListNav from './ListNav';
 import ListPager from './ListPager';
 
 export default class SongBookList extends Component {
+
   render() {
       const { className, songs, artists, type, name, prepareSongId, addPrepareTodos } = this.props;
       const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this);
@@ -53,11 +54,18 @@ export default class SongBookList extends Component {
     }
 
     renderPlaylistItem(song, index) {
-      const { addPrepareTodos } = this.props;
+      const { addPrepareTodos, prepareSongId } = this.props;
+      let itemClass = '';
+      if (prepareSongId === song.id) {
+        itemClass = 'Playlist-item--todopanel'
+      }
       return (
         <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
             <span className="Playlist-item-artist">{song.artist}</span>
+            <div style='display: block'>
+
+            </div>
         </div>
         );
     }
