@@ -63,9 +63,10 @@ export default class SongBookList extends Component {
         <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
             <span className="Playlist-item-artist">{song.artist}</span>
-            <div style='display: block'>
+            {/*<div style='display: block'>
 
-            </div>
+              </div>
+            */}
         </div>
         );
     }
