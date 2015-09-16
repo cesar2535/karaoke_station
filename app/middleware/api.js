@@ -5,12 +5,11 @@ import 'isomorphic-fetch';
 const API_ROOT = 'http://172.17.34.10:5603/ktvstation/v1';
 export const CALL_API = Symbol('Call API');
 
-function callApi({ endpoint, schema, method = 'GET', body }) {
-  const METHOD = method.toUpperCase();
+function callApi({ endpoint, schema, method, body }) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
   let request;
 
-  switch (METHOD) {
+  switch (method) {
     case 'GET':
       request = fetch(fullUrl)
       break;
@@ -45,12 +44,10 @@ function callApi({ endpoint, schema, method = 'GET', body }) {
       return Promise.reject(json);
     }
     const camelizedJSON = camelizeKeys(json);
-    console.log(camelizedJSON);
 
-    if (METHOD === 'GET') {
+    if (method === 'GET') {
       return Object.assign({}, normalize(camelizedJSON, schema));
     }
-
     return Object.assign({}, camelizedJSON);
   });
 }
@@ -79,7 +76,8 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, method, body } = callAPI;
+  const { schema, types, method = 'GET', body } = callAPI;
+  const METHOD = method.toUpperCase();
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -89,7 +87,7 @@ export default store => next => action => {
     throw new Error('Specify a string endpoint URL.');
   }
 
-  if (!schema) {
+  if (METHOD === 'GET' && !schema) {
     throw new Error('Specify one of the exported Schemas.');
   }
 
@@ -110,7 +108,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next( actionWith({ type: requestType }) );
 
-  return callApi({ endpoint, schema, method, body }).then(
+  return callApi({ endpoint, schema, method: METHOD, body }).then(
     response => next(actionWith({
       response,
       type: successType
