@@ -82,3 +82,61 @@ $Playlist-item-bgColor = #000000;
     }
   }
 }
+
+.PrepareTodoPanel {
+  display absolute
+  width: 500px;
+  height: 50px
+  z-index: 9994;
+  text-align: center;
+  margin: -52px 0 0 0;
+
+  p {
+    margin: 0 0 10px;
+    font-size 0.9em
+  }
+
+  a {
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+    ic {
+      font-size: 1.8em;
+      padding-top: 4px;
+    }
+
+    &.PanelHidden {
+      display none
+    }
+  }
+
+  &--btn-add {
+    background: #c3006d;
+  }
+
+  &--btn-insert {
+    background: #7b0046;
+  }
+
+  &--btn-add-faverite {
+    background: #4f0130;
+  }
+
+  &--btn-remove {
+    background: #340121;
+  }
+
+  &--btn-remove-faverite {
+    background: #340121;
+  }
+
+}
+
+.PanelHidden {
+  display none
+}
+
+
