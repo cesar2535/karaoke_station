@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import List from './utils/List';
 import ListNav from './ListNav';
 import ListPager from './ListPager';
+import PrepareTodoPanel from './PrepareTodoPanel';
 
 export default class SongBookList extends Component {
 
@@ -56,17 +57,21 @@ export default class SongBookList extends Component {
     renderPlaylistItem(song, index) {
       const { addPrepareTodos, prepareSongId } = this.props;
       let itemClass = '';
+      let preparePanelClass = '';
       if (prepareSongId === song.id) {
-        itemClass = 'Playlist-item--todopanel'
+        itemClass = 'Playlist-item--todopanel';
+      }
+      if ( song.id === 1 ) {
+        preparePanelClass = 'PrepareTodoPanel';
+      } else {
+        preparePanelClass = 'hidden PrepareTodoPanel';
       }
       return (
         <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
-            <span className="Playlist-item-artist">{song.artist}</span>
-            {/*<div style='display: block'>
-
-              </div>
-            */}
+            <span className="Playlist-item-artist">{song.artist}
+              <PrepareTodoPanel className={preparePanelClass} />
+            </span>
         </div>
         );
     }
