@@ -21,8 +21,8 @@ export default class Footer extends Component {
     const { children } = this.props;
     return (
       <footer className="Footer">
-        <FooterButton icon='ic_controlbar_play' text='Play' />
-        <FooterButton icon='ic_controlbar_pause' text='Pause' />
+        <FooterButton icon='ic_controlbar_play' text='播放' />
+        <FooterButton icon='ic_controlbar_pause' text='暫停' />
         {this._renderOtherButtons()}
         {this._renderPitch()}
         {this._renderMicVolume()}
@@ -50,7 +50,7 @@ export default class Footer extends Component {
 
   _renderPitch() {
     return (
-      <FooterButton icon='ic_controlbar_key' text='Pitch'>
+      <FooterButton icon='ic_controlbar_key' text='音調'>
         <div className="Footer-button-panel">
           <div>+</div>
           <div>-</div>
@@ -61,7 +61,7 @@ export default class Footer extends Component {
 
   _renderMicVolume() {
     return (
-      <FooterButton icon='ic_controlbar_micvolume' text='Mic Volume'>
+      <FooterButton icon='ic_controlbar_micvolume' text='麥克風音量'>
         <div className="Footer-button-panel">
           <div>+</div>
           <div>-</div>
@@ -72,7 +72,7 @@ export default class Footer extends Component {
 
   _renderMusicVolume() {
     return (
-      <FooterButton icon='ic_controlbar_musicvolume' text='Volume'>
+      <FooterButton icon='ic_controlbar_musicvolume' text='音樂音量'>
         <div className="Footer-button-panel">
           <div>+</div>
           <div>-</div>
