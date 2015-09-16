@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 export default class Header extends Component {
   constructor(props) {
@@ -9,10 +10,10 @@ export default class Header extends Component {
     return (
       <header className="Header">
         <div className="Header-left">
-          <a className="Header-logo" href="/">
+          <Link className="Header-logo" to="/">
             <b>KTV</b>
             <span>Station</span>
-          </a>
+          </Link>
         </div>
         <div className="Header-right"></div>
       </header>

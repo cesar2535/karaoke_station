@@ -12,7 +12,7 @@ import HomePage from './containers/HomePage';
 import SongBookPage from './containers/SongBookPage';
 import PlaylistPage from './containers/PlaylistPage';
 
-const history = new createHistory({
+const history = createHistory({
   // queryKey: '_key'
 });
 

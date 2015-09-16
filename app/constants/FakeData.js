@@ -1,18 +1,18 @@
 export const FOOTER_BUTTONS = [{
   icon: 'ic_controlbar_stop',
-  text: 'Next'
+  text: '切歌'
 }, {
   icon: 'ic_controlbar_repeat',
-  text: 'Replay'
+  text: '重播'
 }, {
   icon: 'ic_controlbar_guide',
-  text: 'Guide'
+  text: '導唱'
 }, {
   icon: 'ic_controlbar_effect',
-  text: 'Effect'
+  text: '音效'
 }, {
   icon: 'ic_controlbar_femaletune',
-  text: 'Mic Echo'
+  text: '回音'
 }];
 
 export const FAKE_PLAYLIST = [{
