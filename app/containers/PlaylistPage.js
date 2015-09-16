@@ -27,10 +27,10 @@ class PlaylistPage extends Component {
   render() {
     const { playlist, route: { path } } = this.props;
     const playlists = [{
-      title: 'Queue',
+      title: '待唱歌曲',
       slug: 'queue'
     }, {
-      title: 'Completed',
+      title: '已唱歌曲',
       slug: 'completed'
     }];
 
