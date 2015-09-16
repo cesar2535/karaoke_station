@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { chunk, unzip } from 'lodash';
 import List from './utils/List';
 import ListNav from './ListNav';
-import Pager from './Pager';
+import ListPager from './ListPager';
 
 export default class SongBookList extends Component {
   render() {
@@ -30,7 +30,7 @@ export default class SongBookList extends Component {
                   renderItem={renderItem}
                   items={itemsRight} />
           </section>
-          <Pager className='Pager' total={total} />
+          <ListPager className='ListPager' total={total} />
         </div>
       ) : (
         <div className='SongBookListView'>
@@ -47,7 +47,7 @@ export default class SongBookList extends Component {
                     items={items} />
               </section>
             </section>
-            <Pager className='Pager' total={total} />
+            <ListPager className='Pager' total={total} />
           </div>
       );
     }
@@ -77,9 +77,9 @@ export default class SongBookList extends Component {
 }
 
 function mapArrayToModular(array, mod, myIndex) {
-  let return_array = [];
+  const return_array = [];
   let i = myIndex;
-  for ( i; i < array.length; i += mod ) {
+  for ( i; i < array.length; i += mod ){
     return_array.push(array[i]);
   }
   return return_array;

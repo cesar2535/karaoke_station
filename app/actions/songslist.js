@@ -16,12 +16,12 @@ export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
   return (dispatch, getState) => {
 
     return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
-  }
+  };
 }
 
 export function addPrepareTodos(songid) {
   return {
     type: PREPARE_TODO,
     id: songid
-  }
+  };
 }

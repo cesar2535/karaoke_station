@@ -4,7 +4,7 @@ import './stylus/styles.styl';
 import React from 'react';
 import createHistory from 'history/lib/createBrowserHistory';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import configureStore from './store/configureStore';
 
 import App from './containers/App';
@@ -28,6 +28,7 @@ React.render(
           <Route path='/songbook/language/:name' component={SongBookPage} />
           <Route path='/playlist/queue' component={PlaylistPage} />
           <Route path='/playlist/completed' component={PlaylistPage} />
+          <Redirect from='/playlist' to='/playlist/queue' />
         </Route>
       </Router>
     }
