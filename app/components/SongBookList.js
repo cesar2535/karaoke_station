@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react';
-import { chunk, unzip } from 'lodash';
+import React, { Component } from 'react';
+// import { chunk, unzip } from 'lodash';
 import List from './utils/List';
 import ListNav from './ListNav';
 import ListPager from './ListPager';
 
 export default class SongBookList extends Component {
+
   render() {
-      const { className, songs, artists, type, name } = this.props;
+      const { className, songs, artists, type, name, prepareSongId, addPrepareTodos } = this.props;
       const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this);
       const items = type === undefined ? songs : artists;
       const artistsTitle = mapTitleNameByType(type, name);
@@ -38,31 +39,35 @@ export default class SongBookList extends Component {
           <h1>{artistsTitle}</h1>
           <section className='SongBookListItem'>
             <section className='SongListTitle'>
-              <span>歌名</span>
-              <span>演唱者</span>
+              <span className='SongListTitle--Left'>歌名</span>
+              <span className='SongListTitle--Right'>演唱者</span>
             </section>
             <section className=''>
-              <List className={`Playlist ${className}`}
+              <List className={`${className}`}
                     renderItem={renderItem}
                     items={items} />
               </section>
-              </section>
-            </div>
+            </section>
+            <ListPager className='Pager' total={total} />
+          </div>
       );
     }
 
-    renderPlaylistItem(song) {
-    const { className } = this.props;
-    let itemClass = '';
-    if (className.search('home') > -1) {
-      // itemClass = 'Playlist-item--home';
-    }
-    return (
-      <div key={song.title} className={`Playlist-item`}>
-          <span className="Playlist-item-title">{song.title}</span>
-          <span className="Playlist-item-artist">{song.artist}</span>
-      </div>
-      );
+    renderPlaylistItem(song, index) {
+      const { addPrepareTodos, prepareSongId } = this.props;
+      let itemClass = '';
+      if (prepareSongId === song.id) {
+        itemClass = 'Playlist-item--todopanel'
+      }
+      return (
+        <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
+            <span className="Playlist-item-title">{song.title}</span>
+            <span className="Playlist-item-artist">{song.artist}</span>
+            <div style='display: block'>
+
+            </div>
+        </div>
+        );
     }
 
   renderArtistlistItem(artist) {
@@ -89,7 +94,7 @@ function mapArrayToModular(array, mod, myIndex) {
 }
 
 function mapTitleNameByType(type, name) {
-  switch(type) {
+  switch (type) {
     case 'male':
       return '男歌手';
     case 'female':
@@ -104,7 +109,7 @@ function mapTitleNameByType(type, name) {
 }
 
 function mapTitleNameFromLanguage(name) {
-  switch(name.toLowerCase()) {
+  switch (name.toLowerCase()) {
     case 'tc':
       return '中文';
     case 'e':

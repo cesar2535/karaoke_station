@@ -29,6 +29,7 @@ React.render(
           <Route path='playlist/queue' component={PlaylistPage} />
           <Route path='playlist/completed' component={PlaylistPage} />
           <Redirect from='/playlist' to='/playlist/queue' />
+          <Redirect from='/songbook' to='/songbook/male' />
         </Route>
       </Router>
     }

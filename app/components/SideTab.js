@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ClassNames from 'classnames';
-
 import List from './utils/List';
 
 class SideTab extends Component {
@@ -37,7 +36,7 @@ class SideTab extends Component {
 
     if (data.items) {
       return (
-        <section className={itemClass}>
+        <section className={itemClass} to='/'>
           <h6>{data.title}</h6>
           <List className={listClass} items={data.items} renderItem={renderItem} />
         </section>

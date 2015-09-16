@@ -17,67 +17,88 @@ export const FOOTER_BUTTONS = [{
 
 export const FAKE_PLAYLIST = [{
   title: 'Gravity',
-  artist: 'Against The Current'
+  artist: 'Against The Current',
+  id: 1
 }, {
   title: 'Roar',
-  artist: 'Katy Perry'
+  artist: 'Katy Perry',
+  id: 2
 }, {
   title: 'Paralyzed',
-  artist: 'Against The Current'
+  artist: 'Against The Current',
+  id: 3
 }, {
   title: 'Nie vergessen',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 4
 }, {
   title: 'Ich bin ich',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 5
 }, {
   title: 'Make It Up',
-  artist: 'Sam Tsui'
+  artist: 'Sam Tsui',
+  id: 6
 }, {
   title: 'Roar',
-  artist: 'Katy Perry'
+  artist: 'Katy Perry',
+  id: 7
 }, {
   title: 'Paralyzed',
-  artist: 'Against The Current'
+  artist: 'Against The Current',
+  id: 8
 }, {
   title: 'Nie vergessen',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 9
 }, {
   title: 'Ich bin ich',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 10
 }, {
   title: 'Make It Up',
-  artist: 'Sam Tsui'
+  artist: 'Sam Tsui',
+  id: 11
 }, {
   title: 'Roar',
-  artist: 'Katy Perry'
+  artist: 'Katy Perry',
+  id: 12
 }, {
   title: 'Roar',
-  artist: 'Katy Perry'
+  artist: 'Katy Perry',
+  id: 13
 }, {
   title: 'Paralyzed',
-  artist: 'Against The Current'
+  artist: 'Against The Current',
+  id: 14
 }, {
   title: 'Nie vergessen',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 15
 }, {
   title: 'Ich bin ich',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 16
 }, {
   title: 'Make It Up',
-  artist: 'Sam Tsui'
+  artist: 'Sam Tsui',
+  id: 17
 }, {
   title: 'Roar',
-  artist: 'Katy Perry'
+  artist: 'Katy Perry',
+  id: 18
 }, {
   title: 'Paralyzed',
-  artist: 'Against The Current'
+  artist: 'Against The Current',
+  id: 19
 }, {
   title: 'Nie vergessen',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 20
 }, {
   title: 'Ich bin ich',
-  artist: 'Glasperlenspiel'
+  artist: 'Glasperlenspiel',
+  id: 21
 }];
 
 export const FAKE_FAVORITES_LISTS = [{
