@@ -89,11 +89,11 @@ $Playlist-item-bgColor = #000000;
   height: 50px
   z-index: 9994;
   text-align: center;
-  margin: -90px 0 0 180px;
+  margin: -52px 0 0 0;
 
   p {
-    display inline-block
     margin: 0 0 10px;
+    font-size 0.9em
   }
 
   a {
@@ -106,6 +106,10 @@ $Playlist-item-bgColor = #000000;
     ic {
       font-size: 1.8em;
       padding-top: 4px;
+    }
+
+    &.PanelHidden {
+      display none
     }
   }
 
@@ -131,7 +135,7 @@ $Playlist-item-bgColor = #000000;
 
 }
 
-.hidden {
+.PanelHidden {
   display none
 }
 

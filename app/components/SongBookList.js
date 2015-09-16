@@ -4,6 +4,7 @@ import List from './utils/List';
 import ListNav from './ListNav';
 import ListPager from './ListPager';
 import PrepareTodoPanel from './PrepareTodoPanel';
+import { ADD_BUTTOM, INSERT_BUTTOM, ADD_FAVORITE_BUTTOM } from '../constants/Config';
 
 export default class SongBookList extends Component {
 
@@ -56,21 +57,17 @@ export default class SongBookList extends Component {
 
     renderPlaylistItem(song, index) {
       const { addPrepareTodos, prepareSongId } = this.props;
-      let itemClass = '';
       let preparePanelClass = '';
-      if (prepareSongId === song.id) {
-        itemClass = 'Playlist-item--todopanel';
-      }
-      if ( song.id === 1 ) {
+      if ( song.id === prepareSongId ) {
         preparePanelClass = 'PrepareTodoPanel';
       } else {
-        preparePanelClass = 'hidden PrepareTodoPanel';
+        preparePanelClass = 'PanelHidden PrepareTodoPanel';
       }
       return (
         <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
             <span className="Playlist-item-artist">{song.artist}
-              <PrepareTodoPanel className={preparePanelClass} />
+              <PrepareTodoPanel className={preparePanelClass} addBtn={ADD_BUTTOM} insertBtn={INSERT_BUTTOM} addFavoriteBtn={ADD_FAVORITE_BUTTOM} />
             </span>
         </div>
         );
