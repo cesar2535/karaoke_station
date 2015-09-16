@@ -10,6 +10,11 @@ import ListNav from '../components/ListNav';
 import ListPager from '../components/ListPager';
 
 import { FAKE_PLAYLIST } from '../constants/FakeData';
+import loadPlaylist from '../actions/playlist';
+
+function loadData(props) {
+  props.loadPlaylist();
+}
 
 class PlaylistPage extends Component {
   static propTypes = {
@@ -22,6 +27,10 @@ class PlaylistPage extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    loadData(this.props);
   }
 
   render() {
@@ -72,4 +81,4 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(PlaylistPage);
+export default connect(mapStateToProps, { loadPlaylist })(PlaylistPage);
