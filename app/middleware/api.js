@@ -2,7 +2,7 @@ import { Schema, arrayOf, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import 'isomorphic-fetch';
 
-const API_ROOT = '';
+const API_ROOT = 'http://172.17.34.10:5603/ktvstation/v1';
 export const CALL_API = Symbol('Call API');
 
 function callApi({ endpoint, schema, method = 'GET', body }) {
@@ -44,16 +44,36 @@ function callApi({ endpoint, schema, method = 'GET', body }) {
     if (!response.ok) {
       return Promise.reject(json);
     }
-
     const camelizedJSON = camelizeKeys(json);
+    console.log(camelizedJSON);
 
-    return Object.assign({}, normalize(camelizedJSON, schema));
+    if (METHOD === 'GET') {
+      return Object.assign({}, normalize(camelizedJSON, schema));
+    }
+
+    return Object.assign({}, camelizedJSON);
   });
 }
 
+const listitemSchema = new Schema('item', {
+  idAttribute: 'id'
+});
+
+const playlistSchema = new Schema('playlist')
+
+playlistSchema.define({
+  current: arrayOf(listitemSchema),
+  finished: arrayOf(listitemSchema)
+});
+
+export const Schemas = {
+  PLAYLIST: playlistSchema,
+  ITEM: listitemSchema,
+  ITEM_ARRAY: arrayOf(listitemSchema)
+};
+
 export default store => next => action => {
   const callAPI = action[CALL_API];
-
   if (typeof callAPI === 'undefined') {
     return next(action);
   }
