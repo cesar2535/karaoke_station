@@ -23,7 +23,7 @@ class SongBookPage extends Component {
   }
 
   render() {
-    const { songs, artists, params, prepareSongId, addPrepareTodos } = this.props;
+    const { songs, artists, params, prepareSongId, addPrepareTodos, addPlay, insertPlay, addFavorite } = this.props;
     return (
       <section className="Main Main--songbook">
         <SideBar className="SideBar" />
@@ -35,7 +35,10 @@ class SongBookPage extends Component {
             type={params.type}
             name={params.name}
             prepareSongId={prepareSongId}
-            addPrepareTodos={addPrepareTodos} />
+            addPrepareTodos={addPrepareTodos}
+            addPlay={addPlay}
+            insertPlay={insertPlay}
+            addFavorite={addFavorite} />
         </div>
       </section>
     );

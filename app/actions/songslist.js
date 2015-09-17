@@ -25,7 +25,7 @@ function addToPlayList(songid, method) {
   return {
     [CALL_API]: {
       types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
-      endpoint: 'playlist',
+      endpoint: '/playlist',
       schema: '',
       method: method,
       body: { songid }
@@ -34,7 +34,7 @@ function addToPlayList(songid, method) {
 }
 
 export function addPlay(songid) {
-  return ( dispatch, getState ) => {
+  return ( dispatch ) => {
     return dispatch(addToPlayList(songid, 'POST'));
   };
 }

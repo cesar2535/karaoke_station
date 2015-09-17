@@ -5,11 +5,12 @@ import ListNav from './ListNav';
 import ListPager from './ListPager';
 import PrepareTodoPanel from './PrepareTodoPanel';
 import { ADD_BUTTOM, INSERT_BUTTOM, ADD_FAVORITE_BUTTOM } from '../constants/Config';
+import { mapArrayToModular, mapTitleNameByType, mapTitleNameFromLanguage } from '../constants/FakeData';
 
 export default class SongBookList extends Component {
 
   render() {
-      const { className, songs, artists, type, name, prepareSongId, addPrepareTodos } = this.props;
+      const { className, songs, artists, type, name } = this.props;
       const renderItem = type === undefined ? this.renderPlaylistItem.bind(this) : this.renderArtistlistItem.bind(this);
       const items = type === undefined ? songs : artists;
       const artistsTitle = mapTitleNameByType(type, name);
@@ -56,7 +57,7 @@ export default class SongBookList extends Component {
     }
 
     renderPlaylistItem(song, index) {
-      const { addPrepareTodos, prepareSongId } = this.props;
+      const { addPrepareTodos, prepareSongId, addPlay, insertPlay, addFavorite, favoriteIds } = this.props;
       let preparePanelClass = '';
       if ( song.id === prepareSongId ) {
         preparePanelClass = 'PrepareTodoPanel';
@@ -67,10 +68,18 @@ export default class SongBookList extends Component {
         <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className="Playlist-item-title">{song.title}</span>
             <span className="Playlist-item-artist">{song.artist}
-              <PrepareTodoPanel className={preparePanelClass} addBtn={ADD_BUTTOM} insertBtn={INSERT_BUTTOM} addFavoriteBtn={ADD_FAVORITE_BUTTOM} />
+              <PrepareTodoPanel className={preparePanelClass}
+              addBtn={ADD_BUTTOM}
+              insertBtn={INSERT_BUTTOM}
+              addFavoriteBtn={ADD_FAVORITE_BUTTOM}
+              addPlay={addPlay}
+              insertPlay={insertPlay}
+              addFavorite={addFavorite}
+              songId={prepareSongId}
+              favoriteIds={favoriteIds} />
             </span>
         </div>
-        );
+      );
     }
 
   renderArtistlistItem(artist) {
@@ -84,52 +93,5 @@ export default class SongBookList extends Component {
         <span className="Playlist-item-artist">{artist.name}</span>
       </div>
     );
-  }
-}
-
-function mapArrayToModular(array, mod, myIndex) {
-  const return_array = [];
-  let i = myIndex;
-  for ( i; i < array.length; i += mod ){
-    return_array.push(array[i]);
-  }
-  return return_array;
-}
-
-function mapTitleNameByType(type, name) {
-  switch (type) {
-    case 'male':
-      return '男歌手';
-    case 'female':
-      return '女歌手';
-    case 'group':
-      return '團體';
-    case undefined:
-      return mapTitleNameFromLanguage(name);
-    default:
-      return '';
-  }
-}
-
-function mapTitleNameFromLanguage(name) {
-  switch (name.toLowerCase()) {
-    case 'tc':
-      return '中文';
-    case 'e':
-      return '英文';
-    case 'c':
-      return '粵語';
-    case 't':
-      return '台語';
-    case 'j':
-      return '日語';
-    case 'k':
-      return '韓語';
-    case 'eo':
-      return '西班牙語';
-    case 'other':
-      return '其他語言';
-    default:
-      return '你哪位';
   }
 }

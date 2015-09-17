@@ -197,3 +197,51 @@ export const FAKE_GROUP_ARTISTLIST = [{
 }, {
   name: '董事長樂團'
 }];
+
+export function mapArrayToModular(array, mod, myIndex) {
+  const return_array = [];
+  let i = myIndex;
+  for ( i; i < array.length; i += mod ){
+    return_array.push(array[i]);
+  }
+  return return_array;
+}
+
+export function mapTitleNameByType(type, name) {
+  switch (type) {
+    case 'male':
+      return '男歌手';
+    case 'female':
+      return '女歌手';
+    case 'group':
+      return '團體';
+    case undefined:
+      return mapTitleNameFromLanguage(name);
+    default:
+      return '';
+  }
+}
+
+export function mapTitleNameFromLanguage(name) {
+  switch (name.toLowerCase()) {
+    case 'tc':
+      return '中文';
+    case 'e':
+      return '英文';
+    case 'c':
+      return '粵語';
+    case 't':
+      return '台語';
+    case 'j':
+      return '日語';
+    case 'k':
+      return '韓語';
+    case 'eo':
+      return '西班牙語';
+    case 'other':
+      return '其他語言';
+    default:
+      return '你哪位';
+  }
+}
+
