@@ -89,7 +89,7 @@ $Playlist-item-bgColor = #000000;
   height: 50px
   z-index: 9994;
   text-align: center;
-  margin: -52px 0 0 0;
+  margin: -52px 0 0 70px;
 
   p {
     margin: 0 0 10px;
@@ -103,6 +103,7 @@ $Playlist-item-bgColor = #000000;
     display: inline-block;
     padding: 10px;
     text-decoration: none;
+    cursor: pointer;
     ic {
       font-size: 1.8em;
       padding-top: 4px;
@@ -110,6 +111,10 @@ $Playlist-item-bgColor = #000000;
 
     &.PanelHidden {
       display none
+    }
+
+    &:hover {
+      background #434343
     }
   }
 
@@ -121,7 +126,7 @@ $Playlist-item-bgColor = #000000;
     background: #7b0046;
   }
 
-  &--btn-add-faverite {
+  &--btn-add-favorite {
     background: #4f0130;
   }
 

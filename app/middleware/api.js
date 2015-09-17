@@ -11,7 +11,7 @@ function callApi({ endpoint, schema, method, body }) {
 
   switch (method) {
     case 'GET':
-      request = fetch(fullUrl)
+      request = fetch(fullUrl);
       break;
     case 'POST':
       request = fetch(fullUrl, {
@@ -56,7 +56,7 @@ const listitemSchema = new Schema('item', {
   idAttribute: 'id'
 });
 
-const playlistSchema = new Schema('playlist')
+const playlistSchema = new Schema('playlist');
 
 playlistSchema.define({
   current: arrayOf(listitemSchema),
@@ -118,4 +118,4 @@ export default store => next => action => {
       error: error.message || `Something bad happened.`
     }))
   );
-}
+};
