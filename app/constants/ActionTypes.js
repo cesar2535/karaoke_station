@@ -14,3 +14,11 @@ export const PREPARE_TODO = 'PREPARE_TODO';
 export const ADD_PLAY = 'ADD_PLAY';
 export const INSERT_PLAY = 'INSERT_PLAY';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
+
+export const PLAY_REQUEST = 'PLAY_REQUEST';
+export const PLAY_SUCCESS = 'PLAY_SUCCESS';
+export const PLAY_FAILURE = 'PLAY_FAILURE';
+
+export const PAUSE_REQUEST = 'PAUSE_REQUEST';
+export const PAUSE_SUCCESS = 'PAUSE_SUCCESS';
+export const PAUSE_FAILURE = 'PAUSE_FAILURE';

@@ -49,7 +49,7 @@ function addToFavorite(songid, favoriteid) {
   return {
     [CALL_API]: {
       types: [ FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE ],
-      endpoint: `favorite/${favoriteid}`,
+      endpoint: `/favorite/${favoriteid}`,
       schema: '',
       method: 'PUT',
       body: { songid }

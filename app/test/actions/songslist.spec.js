@@ -24,7 +24,7 @@ describe('songslist actions', () => {
 			actions.addPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
-      endpoint: 'playlist',
+      endpoint: '/playlist',
       schema: '',
       method: 'POST',
       body: { songid: 100 }
@@ -36,7 +36,7 @@ describe('songslist actions', () => {
 			actions.insertPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
-      endpoint: 'playlist',
+      endpoint: '/playlist',
       schema: '',
       method: 'PUT',
       body: { songid: 100 }
@@ -48,7 +48,7 @@ describe('songslist actions', () => {
 			actions.addFavorite(100, 1000)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.FAVORITE_REQUEST, types.FAVORITE_SUCCESS, types.FAVORITE_FAILURE ],
-      endpoint: 'favorite/1000',
+      endpoint: '/favorite/1000',
       schema: '',
       method: 'PUT',
       body: { songid: 100 }
