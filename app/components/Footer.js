@@ -112,7 +112,7 @@ export default class Footer extends Component {
   _renderOtherButtons() {
     const buttons = FOOTER_BUTTONS;
     const { player } = this.props;
-    const onClickEventHandler = [ player.stop, player.repeat, player.guide ];
+    const onClickEventHandler = [ player.next, player.repeat, player.guide ];
     return buttons.map( (item, index) => <FooterButton key={index} icon={item.icon} text={item.text} onClick={ () => onClickEventHandler[index]() } />);
   }
 

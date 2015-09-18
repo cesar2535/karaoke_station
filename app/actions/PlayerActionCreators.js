@@ -5,11 +5,12 @@ import { TOGGLE_PLAY_PAUSE_BUTTOM,
       STOP_REQUEST, STOP_SUCCESS, STOP_FAILURE,
       REPLAY_REQUEST, REPLAY_SUCCESS, REPLAY_FAILURE,
       GUIDE_REQUEST, GUIDE_SUCCESS, GUIDE_FAILURE,
-      EDIT_MIC_ECHO_REQUEST, EDIT_MIC_ECHO_SUCCESS, EDIT_MIC_ECHO_FAILURE,
+      NEXT_REQUEST, NEXT_SUCCESS, NEXT_FAILURE
+      /* EDIT_MIC_ECHO_REQUEST, EDIT_MIC_ECHO_SUCCESS, EDIT_MIC_ECHO_FAILURE,
       EDIT_MIC_VOLUME_REQUEST, EDIT_MIC_VOLUME_SUCCESS, EDIT_MIC_VOLUME_FAILURE,
       EDIT_MUSIC_VOLUME_REQUEST, EDIT_MUSIC_VOLUME_SUCCESS, EDIT_MUSIC_VOLUME_FAILURE,
       EDIT_KEY_REQUEST, EDIT_KEY_SUCCESS, EDIT_KEY_FAILURE,
-      EDIT_EFFECT_REQUEST, EDIT_EFFECT_SUCCESS, EDIT_EFFECT_FAILURE } from '../constants/ActionTypes';
+      EDIT_EFFECT_REQUEST, EDIT_EFFECT_SUCCESS, EDIT_EFFECT_FAILURE*/ } from '../constants/ActionTypes';
 
 function actionPlay(action) {
   const endpoint = '/player/' + action;
@@ -101,6 +102,23 @@ function actionGuide() {
 export function guide() {
   return ( dispatch ) => {
     return dispatch(actionGuide());
+  };
+}
+
+function actionNext() {
+  return {
+    [CALL_API]: {
+      types: [ NEXT_REQUEST, NEXT_SUCCESS, NEXT_FAILURE ],
+      endpoint: '/player/next',
+      schema: '',
+      method: 'POST'
+    }
+  };
+}
+
+export function next() {
+  return ( dispatch ) => {
+    return dispatch(actionNext());
   };
 }
 

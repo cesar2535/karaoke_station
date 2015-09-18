@@ -1,7 +1,7 @@
 import { TOGGLE_PLAY_PAUSE_BUTTOM } from '../constants/ActionTypes';
 
 const initialState = {
-  status: 'STOP'
+  status: 'stop'
 };
 
 export default function togglePlayPauseButtom(state = initialState, action) {
