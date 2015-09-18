@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { bindActionCreators } from 'redux';
+import * as PlayerActions from '../actions/PlayerActionCreators';
 
 class App extends Component {
   constructor(props) {
@@ -9,12 +11,13 @@ class App extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, player, playState } = this.props;
+    console.log(this.props);
     return (
       <div>
         <Header />
         {children}
-        <Footer />
+        <Footer player={player} playState={playState} />
       </div>
     );
   }
@@ -22,13 +25,13 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    playState: state.player.status
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    player: bindActionCreators(PlayerActions, dispatch)
   };
 }
 

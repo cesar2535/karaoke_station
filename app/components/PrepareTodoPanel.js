@@ -10,6 +10,7 @@ export default class PrepareTodoPanel extends Component {
     const displayAddFavoriteBtn = addFavoriteBtn === Config.ADD_FAVORITE_BUTTOM ? '' : 'PanelHidden';
     const displayRemoveBtn = removeBtn === Config.REMOVE_BUTTOM ? '' : 'PanelHidden';
     const displayRemoveFavoriteBtn = removeFavoriteBtn === Config.REMOVE_FAVORITE_BUTTOM ? '' : 'PanelHidden';
+    const favoriteId = favoriteIds === undefined ? '' : favoriteIds[0];
     return (
       <div className={className}>
         <a className={ `${className}--btn-add ${displayAddBtn}`} onClick={() => addPlay(songId)}>
@@ -20,7 +21,7 @@ export default class PrepareTodoPanel extends Component {
           <ic className='ic ic_action_inserting' />
           <p>插播</p>
         </a>
-        <a className={ `${className}--btn-add-favorite ${displayAddFavoriteBtn}`} onClick={ () => addFavorite(songId, favoriteId)}>
+        <a className={ `${className}--btn-add-favorite ${displayAddFavoriteBtn}`} onClick={ () => addFavorite(songId, 100)}>
           <ic className='ic ic_action_favortie' />
           <p>加入最愛</p>
         </a>

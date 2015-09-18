@@ -10,7 +10,6 @@ const fakeStore = fakeData => ({
 });
 
 describe('songslist actions', () => {
-
   it('addPrepareTodos should create PREPARE_TODO action', () => {
     expect(actions.addPrepareTodos(100))
     .toEqual({
@@ -19,36 +18,36 @@ describe('songslist actions', () => {
     });
   });
 
-  it('addPlay should create ADD_PLAY action', () => {
+  it('addPlay should create [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ] action', () => {
     expect(
 			actions.addPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
-      endpoint: 'playlist',
+      endpoint: '/playlist',
       schema: '',
       method: 'POST',
       body: { songid: 100 }
     });
   });
 
-  it('insertPlay should create INSERT_PLAY action', () => {
+  it('insertPlay should create [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ] action', () => {
     expect(
 			actions.insertPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
-      endpoint: 'playlist',
+      endpoint: '/playlist',
       schema: '',
       method: 'PUT',
       body: { songid: 100 }
     });
   });
 
-  it('addFavorite should create ADD_FAVORITE action', () => {
+  it('addFavorite should create [ types.FAVORITE_REQUEST, types.FAVORITE_SUCCESS, types.FAVORITE_FAILURE ] action', () => {
     expect(
 			actions.addFavorite(100, 1000)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.FAVORITE_REQUEST, types.FAVORITE_SUCCESS, types.FAVORITE_FAILURE ],
-      endpoint: 'favorite/1000',
+      endpoint: '/favorite/1000',
       schema: '',
       method: 'PUT',
       body: { songid: 100 }

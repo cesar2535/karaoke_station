@@ -7,13 +7,13 @@ export const FOOTER_BUTTONS = [{
 }, {
   icon: 'ic_controlbar_guide',
   text: '導唱'
-}, {
+}/*, {
   icon: 'ic_controlbar_effect',
   text: '音效'
 }, {
   icon: 'ic_controlbar_femaletune',
   text: '回音'
-}];
+}*/];
 
 export const FAKE_PLAYLIST = [{
   title: 'Gravity',

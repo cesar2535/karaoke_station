@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ClassNames from 'classnames';
+// import ClassNames from 'classnames';
 import FooterButton from './FooterButton';
 import { FOOTER_BUTTONS } from '../constants/FakeData';
 
@@ -8,27 +8,32 @@ export default class Footer extends Component {
 
   }
 
-  static defaultProps = {
-    playing: false,
-    seeking: false
-  }
+  // static defaultProps = {
+  //   playing: false,
+  //   seeking: false
+  // }
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { children } = this.props;
+    const { playState } = this.props;
+    const playPauseClassName = playState === 'play' ? 'ic_controlbar_pause' : 'ic_controlbar_play';
+    const playPauseTextContent = playState === 'play' ? '暫停' : '播放';
+    const canToAction = playState === 'play' ? 'pause' : 'play';
     return (
       <footer className="Footer">
-        <FooterButton icon='ic_controlbar_play' text='播放' />
-        <FooterButton icon='ic_controlbar_pause' text='暫停' />
+        <FooterButton icon={playPauseClassName} text={playPauseTextContent} onClick={ () => this._toggleButtomEvent(`${canToAction}`)}/>
+
         {this._renderOtherButtons()}
+        {this._renderEffect()}
         {this._renderPitch()}
+        {this._renderMicEcho()}
         {this._renderMicVolume()}
         {this._renderMusicVolume()}
       </footer>
-    )
+    );
   }
 
   // _renderPlayButton() {
@@ -49,14 +54,15 @@ export default class Footer extends Component {
   // }
 
   _renderPitch() {
+    const { player } = this.props;
     return (
-      <FooterButton icon='ic_controlbar_key' text='音調'>
+      <FooterButton icon='ic_controlbar_key' text='音調' >
         <div className="Footer-button-panel">
           <div>+</div>
           <div>-</div>
         </div>
       </FooterButton>
-    )
+    );
   }
 
   _renderMicVolume() {
@@ -67,7 +73,7 @@ export default class Footer extends Component {
           <div>-</div>
         </div>
       </FooterButton>
-    )
+    );
   }
 
   _renderMusicVolume() {
@@ -78,11 +84,43 @@ export default class Footer extends Component {
           <div>-</div>
         </div>
       </FooterButton>
-    )
+    );
+  }
+
+  _renderEffect() {
+    return (
+      <FooterButton icon='ic_controlbar_effect' text='音效'>
+        <div className="Footer-button-panel">
+          <div>+</div>
+          <div>-</div>
+        </div>
+      </FooterButton>
+    );
+  }
+
+  _renderMicEcho() {
+    return (
+      <FooterButton icon='ic_controlbar_echo' text='麥克風效果'>
+        <div className="Footer-button-panel">
+          <div>+</div>
+          <div>-</div>
+        </div>
+      </FooterButton>
+    );
   }
 
   _renderOtherButtons() {
     const buttons = FOOTER_BUTTONS;
-    return buttons.map( (item, index) => <FooterButton key={index} icon={item.icon} text={item.text} />);
+    const { player } = this.props;
+    const onClickEventHandler = [ player.next, player.repeat, player.guide ];
+    return buttons.map( (item, index) => <FooterButton key={index} icon={item.icon} text={item.text} onClick={ () => onClickEventHandler[index]() } />);
+  }
+
+  _toggleButtomEvent(action) {
+    const { player, playState } = this.props;
+    const planstatus = ( playState === 'play' ? 'pause' : 'play' ) === 'pause' ? 'resume' : 'play';
+    player.togglePlayPauseButtom(planstatus);
+    const realAction = planstatus === 'resume' ? 'resume' : action;
+    player.play(realAction);
   }
 }
