@@ -13,7 +13,7 @@ import SongBookPage from './containers/SongBookPage';
 import PlaylistPage from './containers/PlaylistPage';
 
 const history = createHistory({
-  // queryKey: '_key'
+  queryKey: '_key'
 });
 
 const store = configureStore();
