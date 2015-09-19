@@ -10,7 +10,7 @@ import ListNav from '../components/ListNav';
 import ListPager from '../components/ListPager';
 
 import { FAKE_PLAYLIST } from '../constants/FakeData';
-import loadPlaylist from '../actions/playlist';
+import { loadPlaylist } from '../actions/playlist';
 
 function loadData(props) {
   props.loadPlaylist('current');

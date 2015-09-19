@@ -63,7 +63,7 @@ export const Schemas = {
   SONG: songSchema,
   QUEUE: arrayOf(songSchema),
   COMPLETED: arrayOf(songSchema),
-  HISTORY: arrayOF(songSchema)
+  HISTORY: arrayOf(songSchema)
 };
 
 export default store => next => action => {
