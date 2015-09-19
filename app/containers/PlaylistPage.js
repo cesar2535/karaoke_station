@@ -13,7 +13,8 @@ import { FAKE_PLAYLIST } from '../constants/FakeData';
 import loadPlaylist from '../actions/playlist';
 
 function loadData(props) {
-  props.loadPlaylist();
+  props.loadPlaylist('current');
+  props.loadPlaylist('finished');
 }
 
 class PlaylistPage extends Component {
