@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import SideBar from '../components/SideBar';
-import SongBookSideTab from '../components/sidetab/SongBookSideTab';
 import SideTab from '../components/SideTab';
 import Playlist from '../components/Playlist';
 import ListNav from '../components/ListNav';
