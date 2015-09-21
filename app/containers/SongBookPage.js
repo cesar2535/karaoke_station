@@ -29,7 +29,7 @@ class SongBookPage extends Component {
         <SideBar className="SideBar" />
         <SongBookSideTab className="SideTab" />
         <div className="Main-wrapper Main-wrapper--songbook">
-          <SongBookList className="ArtistList Playlist--home"
+          <SongBookList className="ArtistList Playlist"
             songs={songs}
             artists={artists}
             type={params.type}
