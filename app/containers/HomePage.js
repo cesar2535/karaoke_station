@@ -1,8 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { FAKE_PLAYLIST, FAKE_FAVORITES_LISTS } from '../constants/FakeData';
+import { FAKE_FAVORITES_LISTS } from '../constants/FakeData';
 import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
+
+import { loadPlaylist } from '../actions/playlist';
+
+function loadData(props) {
+  props.loadPlaylist('current');
+}
 
 class HomePage extends Component {
   static propTypes = {
@@ -15,6 +21,10 @@ class HomePage extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    loadData(this.props);
   }
 
   render() {
@@ -62,24 +72,34 @@ class HomePage extends Component {
   }
 
   _renderPlaylist() {
-    const { playlist } = this.props;
+    const { queue, songsInQueue } = this.props;
     return (
       <div className="Main-wrapper-playlist">
         <h1>
           <span className="ic ic_menu_requestinglist" />
           點歌清單
         </h1>
-        <Playlist className="Playlist--home" songs={playlist} />
+        <Playlist className="Playlist--home" songs={queue} isFetching={songsInQueue.isFetching || false} />
       </div>
     )
   }
 }
 
 function mapStateToProps(state, ownProps) {
+
+  const {
+    pagination: { playlist },
+    entities: { songs }
+  } = state;
+
+  const songsInQueue = playlist['current'] || { ids: [] };
+  const queue = songsInQueue.ids.map(id => songs[id]);
+
   return {
-    playlist: FAKE_PLAYLIST,
+    queue,
+    songsInQueue,
     favorites: FAKE_FAVORITES_LISTS
   };
 }
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, { loadPlaylist })(HomePage);
