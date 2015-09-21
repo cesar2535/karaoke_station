@@ -9,7 +9,6 @@ import Playlist from '../components/Playlist';
 import ListNav from '../components/ListNav';
 import ListPager from '../components/ListPager';
 
-import { FAKE_PLAYLIST } from '../constants/FakeData';
 import { loadPlaylist } from '../actions/playlist';
 
 function loadData(props) {
@@ -35,7 +34,7 @@ class PlaylistPage extends Component {
   }
 
   render() {
-    const { playlist, route: { path }, queue, finished } = this.props;
+    const { route: { path }, queue, finished, songsInQueue, songsInFinished } = this.props;
     const playlists = [{
       title: '待唱歌曲',
       slug: 'current',
@@ -51,15 +50,18 @@ class PlaylistPage extends Component {
 
     let viewTitle;
     let viewList = [];
+    let viewState;
 
     switch (currentPage) {
       case 'current':
         viewTitle = '待唱歌曲';
         viewList = queue;
+        viewState = songsInQueue
         break;
       case 'finished':
         viewTitle = '已唱歌曲',
         viewList = finished;
+        viewState = songsInFinished
     }
 
     return (
@@ -75,9 +77,9 @@ class PlaylistPage extends Component {
               <span>Title</span>
               <span>Artist</span>
             </div>
-            <Playlist className="Playlist--playlist" songs={viewList} />
+            <Playlist className="Playlist--playlist" songs={viewList} isFetching={viewState.isFetching} />
           </div>
-          <ListPager className="ListPager--playlist" total={playlist.length} />
+          <ListPager className="ListPager--playlist" total={viewList.length} />
         </div>
       </section>
     );
@@ -107,8 +109,7 @@ function mapStateToProps(state, ownProps) {
     songsInQueue,
     songsInFinished,
     queue,
-    finished,
-    playlist: FAKE_PLAYLIST
+    finished
   }
 }
 
