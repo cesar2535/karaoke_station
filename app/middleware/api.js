@@ -47,8 +47,6 @@ function callApi({ endpoint, schema, method, body }) {
 
     if (method === 'GET') {
       const resultJSON = Object.keys(camelizedJSON).map( key => camelizedJSON[key] );
-      console.log(resultJSON);
-
       return Object.assign({}, normalize(resultJSON[0], schema));
     }
     return Object.assign({}, camelizedJSON);
@@ -59,11 +57,14 @@ const songSchema = new Schema('songs', {
   idAttribute: 'songid'
 });
 
+const artistsSchema = new Schema('artists_list');
+
 export const Schemas = {
   SONG: songSchema,
   QUEUE: arrayOf(songSchema),
   COMPLETED: arrayOf(songSchema),
-  HISTORY: arrayOf(songSchema)
+  HISTORY: arrayOf(songSchema),
+  ARTISTS: arrayOf(artistsSchema)
 };
 
 export default store => next => action => {

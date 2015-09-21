@@ -5,6 +5,7 @@ import entities from './entities';
 import songslist from './songslist';
 import player from './player';
 import paginate from './paginate';
+import sidetab from './sidetab';
 
 const pagination = combineReducers({
   playlist: paginate({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   entities,
   player,
   pagination,
-  songslist
+  songslist,
+  sidetab
 });
 
 export default rootReducer;

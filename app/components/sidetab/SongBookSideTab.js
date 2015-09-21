@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { mapTitleNameByType } from '../../constants/FakeData';
 
 export default class SideTab extends Component {
   render() {
-    const { className } = this.props;
+    const { className, artists_list, loadsongslist } = this.props;
     return (
       <div className={className}>
         <section className='SideTab-item'>
           <h6>歌星點歌</h6>
-          <Link to='/songbook/male' activeClassName="is-current">
+          {/*<Link to='/songbook/male' activeClassName="is-current">
             <li>男歌手</li>
           </Link>
           <Link to='/songbook/female' activeClassName="is-current">
@@ -16,7 +17,17 @@ export default class SideTab extends Component {
           </Link>
           <Link to='/songbook/group' activeClassName="is-current">
             <li>團體</li>
-          </Link>
+          </Link>*/}
+            {artists_list.map( (artists, index) => {
+              const to = '/songbook/' + artists;
+              const showName = mapTitleNameByType(artists, '');
+              return (
+                <Link key={index} to={to} activeClassName="is-current">
+                  <li>{showName}</li>
+                </Link>
+              );
+            })
+          }
         </section>
         <section className='SideTab-item'>
           <h6>依語言點歌</h6>
@@ -54,6 +65,22 @@ export default class SideTab extends Component {
           <li>爵士</li>
         </section>
         */}
+      </div>
+    );
+  }
+
+  _renderArtistsList() {
+    return (
+      <div>
+      <Link to='/songbook/male' activeClassName="is-current">
+        <li>男歌手</li>
+      </Link>
+      <Link to='/songbook/female' activeClassName="is-current">
+        <li>女歌手</li>
+      </Link>
+      <Link to='/songbook/group' activeClassName="is-current">
+        <li>團體</li>
+      </Link>
       </div>
     );
   }
