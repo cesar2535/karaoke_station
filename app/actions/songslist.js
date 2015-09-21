@@ -16,7 +16,6 @@ function fetchSongsList(keyword, nsong, queryWho, artistNation) {
 
 export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
   return (dispatch, getState) => {
-
     return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
   };
 }
@@ -40,7 +39,7 @@ export function addPlay(songid) {
 }
 
 export function insertPlay(songid) {
-  return ( dispatch, getState ) => {
+  return ( dispatch ) => {
     return dispatch(addToPlayList(songid, 'PUT'));
   };
 }
@@ -58,7 +57,7 @@ function addToFavorite(songid, favoriteid) {
 }
 
 export function addFavorite(songid, favoriteid) {
-  return ( dispatch, getState ) => {
+  return ( dispatch ) => {
     return dispatch(addToFavorite(songid, favoriteid));
   };
 }

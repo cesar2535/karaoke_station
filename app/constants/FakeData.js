@@ -245,3 +245,108 @@ export function mapTitleNameFromLanguage(name) {
   }
 }
 
+export const FAKE_SONGSLIST = [{
+  title: 'Gravity',
+  artist: 'Against The Current',
+  id: 1,
+  inPlaylist: true
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry',
+  id: 2,
+  inPlaylist: true
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current',
+  id: 3,
+  inPlaylist: false
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel',
+  id: 4,
+  inPlaylist: false
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel',
+  id: 5,
+  inPlaylist: true
+}, {
+  title: 'Make It Up',
+  artist: 'Sam Tsui',
+  id: 6,
+  inPlaylist: false
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry',
+  id: 7,
+  inPlaylist: true
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current',
+  id: 8,
+  inPlaylist: true
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel',
+  id: 9,
+  inPlaylist: true
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel',
+  id: 10,
+  inPlaylist: true
+}, {
+  title: 'Make It Up',
+  artist: 'Sam Tsui',
+  id: 11,
+  inPlaylist: true
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry',
+  id: 12,
+  inPlaylist: true
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry',
+  id: 13,
+  inPlaylist: true
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current',
+  id: 14,
+  inPlaylist: true
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel',
+  id: 15,
+  inPlaylist: true
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel',
+  id: 16,
+  inPlaylist: true
+}, {
+  title: 'Make It Up',
+  artist: 'Sam Tsui',
+  id: 17,
+  inPlaylist: true
+}, {
+  title: 'Roar',
+  artist: 'Katy Perry',
+  id: 18
+}, {
+  title: 'Paralyzed',
+  artist: 'Against The Current',
+  id: 19,
+  inPlaylist: false
+}, {
+  title: 'Nie vergessen',
+  artist: 'Glasperlenspiel',
+  id: 20,
+  inPlaylist: true
+}, {
+  title: 'Ich bin ich',
+  artist: 'Glasperlenspiel',
+  id: 21,
+  inPlaylist: true
+}];

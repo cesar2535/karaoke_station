@@ -81,7 +81,7 @@ describe('PlayerActionCreators actions', () => {
 
   it('repeat should create [ types.REPLAY_REQUEST, types.REPLAY_SUCCESS, types.REPLAY_FAILURE ] action', () => {
     expect(
-    	actions.repeat()(action => action, fakeStore({}))[CALL_API]
+      actions.repeat()(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.REPLAY_REQUEST, types.REPLAY_SUCCESS, types.REPLAY_FAILURE ],
       endpoint: '/player/replay',
@@ -92,10 +92,21 @@ describe('PlayerActionCreators actions', () => {
 
   it('next should create [ types.NEXT_REQUEST, types.NEXT_SUCCESS, types.NEXT_FAILURE ] action', () => {
     expect(
-	actions.next()(action => action, fakeStore({}))[CALL_API]
+      actions.next()(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
       types: [ types.NEXT_REQUEST, types.NEXT_SUCCESS, types.NEXT_FAILURE ],
       endpoint: '/player/next',
+      schema: '',
+      method: 'POST'
+    });
+  });
+
+  it('guide should create [ types.GUIDE_REQUEST, types.GUIDE_SUCCESS, types.GUIDE_FAILURE ] action', () => {
+    expect(
+			actions.guide()(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.GUIDE_REQUEST, types.GUIDE_SUCCESS, types.GUIDE_FAILURE ],
+      endpoint: '/player/guide',
       schema: '',
       method: 'POST'
     });
