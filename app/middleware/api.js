@@ -56,7 +56,7 @@ function callApi({ endpoint, schema, method, body }) {
 }
 
 const songSchema = new Schema('songs', {
-  idAttribute: 'id'
+  idAttribute: 'songid'
 });
 
 export const Schemas = {

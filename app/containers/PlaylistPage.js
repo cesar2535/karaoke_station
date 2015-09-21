@@ -35,16 +35,32 @@ class PlaylistPage extends Component {
   }
 
   render() {
-    const { playlist, route: { path } } = this.props;
+    const { playlist, route: { path }, queue, finished } = this.props;
     const playlists = [{
       title: '待唱歌曲',
-      slug: 'queue'
+      slug: 'current',
+      count: queue.length || 0
     }, {
       title: '已唱歌曲',
-      slug: 'completed'
+      slug: 'finished',
+      count: finished.length || 0
     }];
 
     const paths = path.split(/\//);
+    const currentPage = paths[paths.length - 1];
+
+    let viewTitle;
+    let viewList = [];
+
+    switch (currentPage) {
+      case 'current':
+        viewTitle = '待唱歌曲';
+        viewList = queue;
+        break;
+      case 'finished':
+        viewTitle = '已唱歌曲',
+        viewList = finished;
+    }
 
     return (
       <section className="Main Main--playlist">
@@ -53,13 +69,13 @@ class PlaylistPage extends Component {
         <SideTab className="SideTab" items={playlists} renderItem={this._renderSideTabItem.bind(this)} />
         <div className="Main-wrapper Main-wrapper--playlist">
           <ListNav className='ListNav ListNav--playlist' />
-          <h1 className="Main-wrapper-title">{paths[paths.length - 1]}</h1>
+          <h1 className="Main-wrapper-title">{viewTitle}</h1>
           <div className="PlaylistView">
             <div className="PlaylistView-head">
               <span>Title</span>
               <span>Artist</span>
             </div>
-            <Playlist className="Playlist--playlist" songs={playlist} />
+            <Playlist className="Playlist--playlist" songs={viewList} />
           </div>
           <ListPager className="ListPager--playlist" total={playlist.length} />
         </div>
@@ -70,14 +86,28 @@ class PlaylistPage extends Component {
   _renderSideTabItem(item, index) {
     return (
       <Link key={index} className="SideTab-listitem" to={`/playlist/${item.slug}`} activeClassName="is-current">
-        <span>{item.title}</span>
+        <span>{`${item.title} (${item.count})`}</span>
       </Link>
     );
   }
 }
 
 function mapStateToProps(state, ownProps) {
+  const {
+    pagination: { playlist },
+    entities: { songs }
+  } = state;
+
+  const songsInQueue = playlist['current'] || { ids: [] };
+  const songsInFinished = playlist['finished'] || { ids: [] };
+  const queue = songsInQueue.ids.map(id => songs[id]);
+  const finished = songsInFinished.ids.map(id => songs[id]);
+
   return {
+    songsInQueue,
+    songsInFinished,
+    queue,
+    finished,
     playlist: FAKE_PLAYLIST
   }
 }
