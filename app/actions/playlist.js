@@ -1,20 +1,20 @@
 import { CALL_API, Schemas } from '../middleware/api';
 import { PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE } from '../constants/ActionTypes';
 
-function fetchPlaylist(keyword, nsong, queryWho, artistNation) {
+function fetchPlaylist(name) {
   return {
+    name,
     [CALL_API]: {
       types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
-      endpoint: '',
-      schema: '',
-      method: ''
+      endpoint: `/playlist?state=${name}`,
+      schema: Schemas.QUEUE,
+      method: 'get'
     }
-  };
+  }
 }
 
-export default function loadPlaylist(keyword, nsong, queryWho, artistNation) {
+export function loadPlaylist(name) {
   return (dispatch, getState) => {
-
-    return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
+    return dispatch(fetchPlaylist(name));
   }
 }

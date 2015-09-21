@@ -4,7 +4,8 @@ import List from './utils/List';
 export default class Playlist extends Component {
   static propTypes = {
     className: PropTypes.string,
-    songs: PropTypes.array.isRequired
+    songs: PropTypes.array.isRequired,
+    isFetching: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
@@ -17,11 +18,12 @@ export default class Playlist extends Component {
   }
 
   render() {
-    const { className, songs } = this.props;
+    const { className, songs, isFetching } = this.props;
     return (
       <List className={`Playlist ${className}`}
             renderItem={this.renderPlaylistItem.bind(this)}
-            items={songs} />
+            items={songs}
+            isFetching={isFetching} />
     );
   }
 
@@ -31,7 +33,7 @@ export default class Playlist extends Component {
     const itemClass = `Playlist-item${classNamesArr[0].slice(8)}`;
     return (
       <div key={index} className={`Playlist-item ${itemClass}`}>
-        <span className="Playlist-item-title">{song.title}</span>
+        <span className="Playlist-item-title">{song.name}</span>
         <span className="Playlist-item-artist">{song.artist}</span>
       </div>
     );

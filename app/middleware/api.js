@@ -46,27 +46,24 @@ function callApi({ endpoint, schema, method, body }) {
     const camelizedJSON = camelizeKeys(json);
 
     if (method === 'GET') {
-      return Object.assign({}, normalize(camelizedJSON, schema));
+      const resultJSON = Object.keys(camelizedJSON).map( key => camelizedJSON[key] );
+      console.log(resultJSON);
+
+      return Object.assign({}, normalize(resultJSON[0], schema));
     }
     return Object.assign({}, camelizedJSON);
   });
 }
 
-const listitemSchema = new Schema('item', {
-  idAttribute: 'id'
-});
-
-const playlistSchema = new Schema('playlist');
-
-playlistSchema.define({
-  current: arrayOf(listitemSchema),
-  finished: arrayOf(listitemSchema)
+const songSchema = new Schema('songs', {
+  idAttribute: 'songid'
 });
 
 export const Schemas = {
-  PLAYLIST: playlistSchema,
-  ITEM: listitemSchema,
-  ITEM_ARRAY: arrayOf(listitemSchema)
+  SONG: songSchema,
+  QUEUE: arrayOf(songSchema),
+  COMPLETED: arrayOf(songSchema),
+  HISTORY: arrayOf(songSchema)
 };
 
 export default store => next => action => {

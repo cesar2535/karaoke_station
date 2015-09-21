@@ -26,6 +26,10 @@ export default class List extends Component {
       return (
         <h2><i>{loadingLabel}</i></h2>
       );
+    } else if (isEmpty) {
+      return (
+        <h2><i>No Content</i></h2>
+      )
     }
 
     return (

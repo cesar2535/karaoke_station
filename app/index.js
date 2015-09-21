@@ -26,9 +26,9 @@ React.render(
           <IndexRoute component={HomePage} />
           <Route path='songbook/:type' component={SongBookPage} />
           <Route path='songbook/language/:name' component={SongBookPage} />
-          <Route path='playlist/queue' component={PlaylistPage} />
-          <Route path='playlist/completed' component={PlaylistPage} />
-          <Redirect from='/playlist' to='/playlist/queue' />
+          <Route path='playlist/current' component={PlaylistPage} />
+          <Route path='playlist/finished' component={PlaylistPage} />
+          <Redirect from='/playlist' to='/playlist/current' />
           <Redirect from='/songbook' to='/songbook/male' />
         </Route>
       </Router>
