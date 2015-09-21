@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import * as songsListActions from '../actions/songslist';
 
 
-import { FAKE_PLAYLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
+import { FAKE_SONGSLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
 
 class SongBookPage extends Component {
   static propTypes = {
@@ -48,7 +48,7 @@ class SongBookPage extends Component {
 function mapStateToProps(state, ownProps) {
   const artists = getArtistFakeDate(ownProps.params.type);
   return {
-    songs: FAKE_PLAYLIST,
+    songs: FAKE_SONGSLIST,
     artists: artists,
     prepareSongId: state.songslist.songId
   };
