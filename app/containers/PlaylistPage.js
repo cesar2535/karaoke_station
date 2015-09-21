@@ -77,7 +77,7 @@ class PlaylistPage extends Component {
               <span>Title</span>
               <span>Artist</span>
             </div>
-            <Playlist className="Playlist--playlist" songs={viewList} isFetching={viewState.isFetching} />
+            <Playlist className="Playlist--playlist" songs={viewList} isFetching={viewState.isFetching || false} />
           </div>
           <ListPager className="ListPager--playlist" total={viewList.length} />
         </div>
