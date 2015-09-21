@@ -5,6 +5,15 @@ import 'isomorphic-fetch';
 const API_ROOT = 'http://172.17.34.10:5603/ktvstation/v1';
 export const CALL_API = Symbol('Call API');
 
+const songSchema = new Schema('songs', {
+  idAttribute: 'songid'
+});
+
+export const Schemas = {
+  SONG: songSchema,
+  SONG_ARRAY: arrayOf(songSchema)
+};
+
 function callApi({ endpoint, schema, method, body }) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
   let request;
@@ -54,17 +63,6 @@ function callApi({ endpoint, schema, method, body }) {
     return Object.assign({}, camelizedJSON);
   });
 }
-
-const songSchema = new Schema('songs', {
-  idAttribute: 'songid'
-});
-
-export const Schemas = {
-  SONG: songSchema,
-  QUEUE: arrayOf(songSchema),
-  COMPLETED: arrayOf(songSchema),
-  HISTORY: arrayOf(songSchema)
-};
 
 export default store => next => action => {
   const callAPI = action[CALL_API];

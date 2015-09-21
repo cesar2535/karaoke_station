@@ -7,7 +7,7 @@ function fetchPlaylist(name) {
     [CALL_API]: {
       types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
       endpoint: `/playlist?state=${name}`,
-      schema: Schemas.QUEUE,
+      schema: Schemas.SONG_ARRAY,
       method: 'get'
     }
   }
