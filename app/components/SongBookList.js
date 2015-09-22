@@ -82,13 +82,11 @@ export default class SongBookList extends Component {
             <List className={`Playlist ${className}`}
                   renderItem={renderItem}
                   items={itemsMiddle}
-                  isFetching={isFetchingMiddle}
-                  reallyEmpty={false} />
+                  isFetching={false} />
             <List className={`Playlist ${className}`}
                   renderItem={renderItem}
                   items={itemsRight}
-                  isFetching={isFetchingRight}
-                  reallyEmpty={false} />
+                  isFetching={false} />
           </section>
           <ListPager className='ListPager' total={total} />
         </div>
