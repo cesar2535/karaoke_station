@@ -2,6 +2,20 @@
   @import "suitcss-utils-display";
 }
 
+$Main-wrapper-component {
+  width 480px
+  height 100%
+  padding 0px 20px
+
+  .ic {
+    padding-right 10px
+  }
+
+  h1 a {
+    color #fff
+  }
+}
+
 .Main {
   height 91vh
   padding-top 63px
@@ -71,20 +85,15 @@
 }
 
 .Main-wrapper-songbook {
-  width 480px
-  height 100%
-  padding 0px 20px
+  @extends $Main-wrapper-component
 }
 
 .Main-wrapper-playlist {
-  width 480px
-  height 100%
-  padding 0px 20px
+  @extends $Main-wrapper-component
 }
 
 .Main-wrapper-favorites {
-  width 480px
-  padding 0px 20px
+  @extends $Main-wrapper-component
 }
 
 .Main-wrapper-title {
