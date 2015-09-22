@@ -42,7 +42,7 @@ class HomePage extends Component {
     return (
       <section className="Main Main--home">
         <div className="Main-prev" onClick={evt => transitionSilde(page - 1 < 0 ? 0 : page - 1 )}>Prev</div>
-        <div className="Main-next" onClick={evt => transitionSilde(page + 1 > view.length ? view.length : page + 1 )}>Next</div>
+        <div className="Main-next" onClick={evt => transitionSilde(page + 1 >= view.length ? view.length - 1 : page + 1 )}>Next</div>
         {view[page]}
         <div className="Main-nav">
           {view.map((item, index) => <div style={{ backgroundColor: index === page ? '#e7007f' : 'transparent' }} onClick={evt => transitionSilde(index)}></div>)}

@@ -9,6 +9,8 @@
 
   &--home {
     position relative
+    display flex
+    flex-direction column
   }
 
   &--playlist {
@@ -41,9 +43,8 @@
   margin-top 10px
   & > div {
     display inline-block
-    width 5px
-    height 5px
-    padding 10px
+    width 10px
+    height 10px
     border 1px solid #e7007f
     border-radius 50%
     margin 0px 10px
@@ -55,6 +56,7 @@
   &--home {
     display flex
     justify-content center
+    flex 1
   }
 
   &--playlist {
@@ -64,6 +66,7 @@
 
   &--songbook {
     flex 1
+    height 100%
   }
 }
 
