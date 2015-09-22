@@ -11,6 +11,7 @@ import App from './containers/App';
 import HomePage from './containers/HomePage';
 import SongBookPage from './containers/SongBookPage';
 import PlaylistPage from './containers/PlaylistPage';
+import HistoryPage from './containers/HistoryPage';
 
 const history = createHistory({
   queryKey: '_key'
@@ -30,6 +31,7 @@ React.render(
           /* <Route path='songbook/language/:name' component={SongBookPage} /> */
           <Route path='playlist/current' component={PlaylistPage} />
           <Route path='playlist/finished' component={PlaylistPage} />
+          <Route path='history' component={HistoryPage} />
           <Redirect from='/playlist' to='/playlist/current' />
           <Redirect from='/songbook' to='/songbook/male' />
         </Route>

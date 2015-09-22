@@ -13,14 +13,6 @@ function loadData(props) {
 }
 
 class HomePage extends Component {
-  static propTypes = {
-
-  }
-
-  static defaultProps = {
-
-  }
-
   constructor(props) {
     super(props);
   }

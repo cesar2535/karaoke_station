@@ -16,14 +16,6 @@ function loadData(props) {
 }
 
 class PlaylistPage extends Component {
-  static propTypes = {
-
-  }
-
-  static defaultProps = {
-
-  }
-
   constructor(props) {
     super(props);
   }
@@ -73,8 +65,8 @@ class PlaylistPage extends Component {
           <h1 className="Main-wrapper-title">{viewTitle}</h1>
           <div className="PlaylistView">
             <div className="PlaylistView-head">
-              <span>Title</span>
-              <span>Artist</span>
+              <span>歌名</span>
+              <span>演唱者</span>
             </div>
             <Playlist className="Playlist--playlist" songs={viewList} isFetching={viewState.isFetching || false} />
           </div>
