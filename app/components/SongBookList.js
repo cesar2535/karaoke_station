@@ -97,6 +97,7 @@ export default class SongBookList extends Component {
     }
 
     renderPlaylistItem(song, index) {
+      console.log(index);
       const { addPrepareTodos, prepareSongId, addPlay, insertPlay, addFavorite, favoriteIds } = this.props;
       const inPlayListClass = song.inPlaylist === true ? 'InPlayList' : '';
       let preparePanelClass = '';
@@ -106,7 +107,7 @@ export default class SongBookList extends Component {
         preparePanelClass = 'PanelHidden PrepareTodoPanel';
       }
       return (
-        <div key={index} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
+        <div key={`${song.name}-${index}`} className={'Playlist-item Playlist-item--songs'} onClick={() => addPrepareTodos(song.id)}>
             <span className={`Playlist-item-title ${inPlayListClass}`}>{song.name}</span>
             <span className={`Playlist-item-artist ${inPlayListClass}`}>{song.artist}
               <PrepareTodoPanel className={preparePanelClass}
@@ -123,7 +124,7 @@ export default class SongBookList extends Component {
       );
     }
 
-  renderArtistlistItem(artist) {
+  renderArtistlistItem(artist, index) {
     const { className, type, loadSongsList } = this.props;
     const to = artist === undefined ? '' : '/songbook/' + type + '/' + artist.name;
     const artistName = artist === undefined ? '' : artist.name
@@ -132,7 +133,7 @@ export default class SongBookList extends Component {
       itemClass = 'Playlist-item--home Playlist-item--artists';
     }
     return (
-      <Link key={artistName} to={to} activeClassName="is-current" onClick={ () => loadSongsList('', '', type, artistName) }>
+      <Link key={`${artistName}-${index}`} to={to} activeClassName="is-current" onClick={ () => loadSongsList('', '', type, artistName) }>
         <div key={artistName} className={`Playlist-item ${itemClass}`}>
           <span className="Playlist-item-artist">{artistName}</span>
         </div>
