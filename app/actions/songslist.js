@@ -1,20 +1,28 @@
 import { CALL_API, Schemas } from '../middleware/api';
 import { PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE,
   SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE,
-  PREPARE_TODO,FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE, ADD_FAVORITE } from '../constants/ActionTypes';
+  PREPARE_TODO,
+  FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE,
+  ADD_FAVORITE,
+  ARTISTS_LIST_REQUEST, ARTISTS_LIST_SUCCESS, ARTISTS_LIST_FAILURE,
+  ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE,
+  ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE } from '../constants/ActionTypes';
 
-function fetchSongsList(keyword, nsong, queryWho, artistNation) {
+function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count) {
+  const pageArg = page !== undefined ? 'page=' + page : '';
+  const countArg = count !== undefined ? 'count=' + count : '';
   return {
+    artistNation,
     [CALL_API]: {
       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-      endpoint: '',
-      schema: '',
-      method: ''
+      endpoint: `/songlist?${pageArg}&${countArg}&artists=${artistNation}&query_who=${queryWho}`,
+      schema: Schemas.SONGINBOOK,
+      method: 'GET'
     }
   };
 }
 
-export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
+export function loadSongsList(keyword, nsong, queryWho, artistNation) {
   return (dispatch, getState) => {
     return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
   };
@@ -23,7 +31,7 @@ export default function loadSongsList(keyword, nsong, queryWho, artistNation) {
 function addToPlayList(songid, method) {
   return {
     [CALL_API]: {
-      types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
+      types: [ ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE ],
       endpoint: '/playlist',
       schema: '',
       method: method,
@@ -66,5 +74,57 @@ export function addPrepareTodos(songid) {
   return {
     type: PREPARE_TODO,
     id: songid
+  };
+}
+
+function fetchArtistsList() {
+  return {
+    [CALL_API]: {
+      types: [ ARTISTS_LIST_REQUEST, ARTISTS_LIST_SUCCESS, ARTISTS_LIST_FAILURE ],
+      endpoint: '/songlist/artists',
+      schema: Schemas.ARTISTS,
+      method: 'GET'
+    }
+  };
+}
+
+export function loadArtistsList() {
+  return ( dispatch,  getState ) => {
+    return dispatch(fetchArtistsList());
+  };
+}
+
+// function fetchSongsListByGender(gender) {
+//   return {
+//     [CALL_API]: {
+//       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
+//       endpoint: `/songlist/artists/${gender}`,
+//       schema: Schemas.SONGINBOOK,
+//       method: 'GET'
+//     }
+//   };
+// }
+
+// export function loadSongsListByGender(gender) {
+//   return (dispatch, getState) => {
+//     return dispatch(fetchSongsListByGender(gender));
+//   };
+// }
+//
+function fetchArtistsListByGender(gender) {
+  return {
+    gender,
+    [CALL_API]: {
+      types: [ ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE ],
+      endpoint: `/songlist/artists/${gender}?page=1&count=20`,
+      schema: Schemas.ARTISTSINBOOK,
+      method: 'GET'
+    }
+  };
+}
+
+export function loadArtistsListByGender(gender) {
+  return (dispatch, getState) => {
+    return dispatch(fetchArtistsListByGender(gender));
   };
 }

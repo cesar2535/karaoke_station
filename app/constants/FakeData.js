@@ -215,7 +215,7 @@ export function mapTitleNameByType(type, name) {
       return '女歌手';
     case 'group':
       return '團體';
-    case undefined:
+    case 'language':
       return mapTitleNameFromLanguage(name);
     default:
       return '';

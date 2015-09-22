@@ -9,9 +9,25 @@ const songSchema = new Schema('songs', {
   idAttribute: 'songid'
 });
 
+const songInBookSchema = new Schema('songs', {
+  idAttribute: 'id'
+});
+
+const artistsInBookSchema = new Schema('artists', {
+  idAttribute: 'name'
+});
+
+const artistsSchema = new Schema('artists_list');
+
 export const Schemas = {
   SONG: songSchema,
-  SONG_ARRAY: arrayOf(songSchema)
+  SONG_ARRAY: arrayOf(songSchema),
+  QUEUE: arrayOf(songSchema),
+  COMPLETED: arrayOf(songSchema),
+  HISTORY: arrayOf(songSchema),
+  ARTISTS: arrayOf(artistsSchema),
+  SONGINBOOK: arrayOf(songInBookSchema),
+  ARTISTSINBOOK: arrayOf(artistsInBookSchema)
 };
 
 function callApi({ endpoint, schema, method, body }) {
@@ -56,8 +72,6 @@ function callApi({ endpoint, schema, method, body }) {
 
     if (method === 'GET') {
       const resultJSON = Object.keys(camelizedJSON).map( key => camelizedJSON[key] );
-      console.log(resultJSON);
-
       return Object.assign({}, normalize(resultJSON[0], schema));
     }
     return Object.assign({}, camelizedJSON);

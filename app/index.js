@@ -24,8 +24,10 @@ React.render(
       <Router history={history}>
         <Route path='/' component={App}>
           <IndexRoute component={HomePage} />
-          <Route path='songbook/:type' component={SongBookPage} />
-          <Route path='songbook/language/:name' component={SongBookPage} />
+          <Route path='songbook/:type' component={SongBookPage}>
+            <Route path=':name' component={SongBookPage} />
+          </Route>
+          /* <Route path='songbook/language/:name' component={SongBookPage} /> */
           <Route path='playlist/current' component={PlaylistPage} />
           <Route path='playlist/finished' component={PlaylistPage} />
           <Redirect from='/playlist' to='/playlist/current' />

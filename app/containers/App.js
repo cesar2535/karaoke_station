@@ -12,7 +12,6 @@ class App extends Component {
 
   render() {
     const { children, player, playState } = this.props;
-    console.log(this.props);
     return (
       <div>
         <Header />

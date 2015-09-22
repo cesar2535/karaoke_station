@@ -6,6 +6,7 @@ import songslist from './songslist';
 import player from './player';
 import paginate from './paginate';
 import slide from './slide';
+import sidetab from './sidetab';
 
 const pagination = combineReducers({
   playlist: paginate({
@@ -15,6 +16,14 @@ const pagination = combineReducers({
   favorites: paginate({
     mapActionToKey: action => action.listName,
     types: [ ActionTypes.FAVORITES_REQUEST, ActionTypes.FAVORITES_SUCCESS, ActionTypes.FAVORITES_FAILURE ]
+  }),
+  songlist: paginate({
+    mapActionToKey: action => action.artistNation,
+    types: [ ActionTypes.SONGS_LIST_REQUEST, ActionTypes.SONGS_LIST_SUCCESS, ActionTypes.SONGS_LIST_FAILURE ]
+  }),
+  artistlist: paginate({
+    mapActionToKey: action => action.gender,
+    types: [ ActionTypes.ARTISTS_LIST_BY_GENDER_REQUEST, ActionTypes.ARTISTS_LIST_BY_GENDER_SUCCESS, ActionTypes.ARTISTS_LIST_BY_GENDER_FAILURE ]
   })
 });
 
@@ -23,7 +32,8 @@ const rootReducer = combineReducers({
   player,
   pagination,
   songslist,
-  slide
+  slide,
+  sidetab
 });
 
 export default rootReducer;
