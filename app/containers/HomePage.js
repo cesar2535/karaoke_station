@@ -5,6 +5,7 @@ import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
 
 import { loadPlaylist } from '../actions/playlist';
+import { transitionSilde } from '../actions';
 
 function loadData(props) {
   props.loadPlaylist('current');
@@ -28,11 +29,23 @@ class HomePage extends Component {
   }
 
   render() {
+    const { page = 0, transitionSilde } = this.props;
+    const view = [
+      <div className="Main-wrapper Main-wrapper--home">
+        {this._renderFavoritesCollection()}
+      </div>,
+      <div className="Main-wrapper Main-wrapper--home">
+        {this._renderPlaylist()}
+      </div>
+    ];
+
     return (
       <section className="Main Main--home">
-        <div className="Main-wrapper Main-wrapper--home">
-          {this._renderFavoritesCollection()}
-          {this._renderPlaylist()}
+        <div className="Main-prev" onClick={evt => transitionSilde(page - 1 < 0 ? 0 : page - 1 )}>Prev</div>
+        <div className="Main-next" onClick={evt => transitionSilde(page + 1 >= view.length ? view.length - 1 : page + 1 )}>Next</div>
+        {view[page]}
+        <div className="Main-nav">
+          {view.map((item, index) => <div style={{ backgroundColor: index === page ? '#e7007f' : 'transparent' }} onClick={evt => transitionSilde(index)}></div>)}
         </div>
       </section>
     );
@@ -89,7 +102,8 @@ function mapStateToProps(state, ownProps) {
 
   const {
     pagination: { playlist },
-    entities: { songs }
+    entities: { songs },
+    slide
   } = state;
 
   const songsInQueue = playlist['current'] || { ids: [] };
@@ -98,8 +112,9 @@ function mapStateToProps(state, ownProps) {
   return {
     queue,
     songsInQueue,
+    page: slide,
     favorites: FAKE_FAVORITES_LISTS
   };
 }
 
-export default connect(mapStateToProps, { loadPlaylist })(HomePage);
+export default connect(mapStateToProps, { loadPlaylist, transitionSilde })(HomePage);

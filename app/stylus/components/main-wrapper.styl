@@ -7,6 +7,12 @@
   padding-top 63px
   box-sizing border-box
 
+  &--home {
+    position relative
+    display flex
+    flex-direction column
+  }
+
   &--playlist {
     display flex
   }
@@ -16,11 +22,41 @@
   }
 }
 
+.Main-prev {
+  font-size 2em
+  font-weight bold
+  position absolute
+  left 20px
+  top 50%
+}
+
+.Main-next {
+  font-size 2em
+  font-weight bold
+  position absolute
+  right 20px
+  top 50%
+}
+
+.Main-nav {
+  text-align center
+  margin-top 10px
+  & > div {
+    display inline-block
+    width 10px
+    height 10px
+    border 1px solid #e7007f
+    border-radius 50%
+    margin 0px 10px
+  }
+}
+
 .Main-wrapper {
-  height 100%
+  // height 100%
   &--home {
     display flex
     justify-content center
+    flex 1
   }
 
   &--playlist {
@@ -30,6 +66,7 @@
 
   &--songbook {
     flex 1
+    height 100%
   }
 }
 
