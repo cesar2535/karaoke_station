@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { FAKE_FAVORITES_LISTS } from '../constants/FakeData';
 import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
@@ -91,7 +92,7 @@ class HomePage extends Component {
       <div className="Main-wrapper-playlist">
         <h1>
           <span className="ic ic_menu_requestinglist" />
-          點歌清單
+          <Link className="" to={`/playlist/current`}>點歌清單</Link>
         </h1>
         <Playlist className="Playlist--home" songs={queue} isFetching={songsInQueue.isFetching || false} />
       </div>
