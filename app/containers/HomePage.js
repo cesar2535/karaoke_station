@@ -99,12 +99,12 @@ class HomePage extends Component {
           點歌本
         </h1>
         <div className="SongbookNav">
-          <div className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover01.png)`}}>
+          <Link className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover01.png)`}} to={`/songbook/male`}>
             <span className="SongbookNav-item-title">依歌星點歌</span>
-          </div>
-          <div className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover02.png)`}}>
+          </Link>
+          <Link className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover02.png)`}} to={`/songbook/language/tc`}>
             <span className="SongbookNav-item-title">依語言點歌</span>
-          </div>
+          </Link>
         </div>
       </div>
     );
