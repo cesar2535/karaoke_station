@@ -33,6 +33,7 @@ class HomePage extends Component {
     const view = [
       <div className="Main-wrapper Main-wrapper--home">
         {this._renderFavoritesCollection()}
+        {this._renderSongbook()}
       </div>,
       <div className="Main-wrapper Main-wrapper--home">
         {this._renderPlaylist()}
@@ -41,8 +42,8 @@ class HomePage extends Component {
 
     return (
       <section className="Main Main--home">
-        <div className="Main-prev" onClick={evt => transitionSilde(page - 1 < 0 ? 0 : page - 1 )}>Prev</div>
-        <div className="Main-next" onClick={evt => transitionSilde(page + 1 >= view.length ? view.length - 1 : page + 1 )}>Next</div>
+        <div className="Main-prev ic btn_page_previous" style={{ display: page - 1 < 0 ? 'none' : 'block' }} onClick={evt => page - 1 < 0 ? 0 : transitionSilde(page - 1)}></div>
+        <div className="Main-next ic btn_page_next" style={{ display: page + 1 >= view.length ? 'none' : 'block' }} onClick={evt => page + 1 >= view.length ? view.length - 1 : transitionSilde(page + 1)}></div>
         {view[page]}
         <div className="Main-nav">
           {view.map((item, index) => <div style={{ backgroundColor: index === page ? '#e7007f' : 'transparent' }} onClick={evt => transitionSilde(index)}></div>)}
@@ -95,6 +96,25 @@ class HomePage extends Component {
         <Playlist className="Playlist--home" songs={queue} isFetching={songsInQueue.isFetching || false} />
       </div>
     )
+  }
+
+  _renderSongbook() {
+    return (
+      <div className="Main-wrapper-songbook">
+        <h1>
+          <span className="ic ic_menu_reguestbook" />
+          點歌本
+        </h1>
+        <div className="SongbookNav">
+          <div className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover01.png)`}}>
+            <span className="SongbookNav-item-title">依歌星點歌</span>
+          </div>
+          <div className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover02.png)`}}>
+            <span className="SongbookNav-item-title">依語言點歌</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
