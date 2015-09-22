@@ -14,14 +14,6 @@ function loadData(props) {
 }
 
 class FavoritesPage extends Component {
-  static propTypes = {
-
-  }
-
-  static defaultProps = {
-
-  }
-
   constructor(props) {
     super(props);
   }

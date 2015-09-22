@@ -13,14 +13,6 @@ function loadData(props) {
 }
 
 class HomePage extends Component {
-  static propTypes = {
-
-  }
-
-  static defaultProps = {
-
-  }
-
   constructor(props) {
     super(props);
   }
@@ -47,7 +39,7 @@ class HomePage extends Component {
         <div className="Main-next ic btn_page_next" style={{ display: page + 1 >= view.length ? 'none' : 'block' }} onClick={evt => page + 1 >= view.length ? view.length - 1 : transitionSilde(page + 1)}></div>
         {view[page]}
         <div className="Main-nav">
-          {view.map((item, index) => <div style={{ backgroundColor: index === page ? '#e7007f' : 'transparent' }} onClick={evt => transitionSilde(index)}></div>)}
+          {view.map((item, index) => <div key={index} style={{ backgroundColor: index === page ? '#e7007f' : 'transparent' }} onClick={evt => transitionSilde(index)}></div>)}
         </div>
       </section>
     );
