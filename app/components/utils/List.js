@@ -18,10 +18,10 @@ export default class List extends Component {
 
   render() {
     const {
-      isFetching, pageCount, items, renderItem, loadingLabel, className
+      isFetching, pageCount, items, renderItem, loadingLabel, className, reallyEmpty
     } = this.props;
 
-    const isEmpty = items.length === 0;
+    const isEmpty = items.length === 0 && reallyEmpty;
     if (isEmpty && isFetching) {
       return (
         <h2><i>{loadingLabel}</i></h2>

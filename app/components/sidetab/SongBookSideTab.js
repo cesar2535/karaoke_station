@@ -4,7 +4,7 @@ import { mapTitleNameByType } from '../../constants/FakeData';
 
 export default class SideTab extends Component {
   render() {
-    const { className, artists_list, loadsongslist } = this.props;
+    const { className, artistsList, loadsongslist } = this.props;
     return (
       <div className={className}>
         <section className='SideTab-item'>
@@ -18,11 +18,11 @@ export default class SideTab extends Component {
           <Link to='/songbook/group' activeClassName="is-current">
             <li>團體</li>
           </Link>*/}
-            {artists_list.map( (artists, index) => {
+            {artistsList.map( (artists, index) => {
               const to = '/songbook/' + artists;
               const showName = mapTitleNameByType(artists, '');
               return (
-                <Link key={index} to={to} activeClassName="is-current">
+                <Link key={index} to={to} activeClassName="is-current" onClick={ () => loadsongslist(artists) } >
                   <li>{showName}</li>
                 </Link>
               );

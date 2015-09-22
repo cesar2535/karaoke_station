@@ -57,6 +57,14 @@ const songSchema = new Schema('songs', {
   idAttribute: 'songid'
 });
 
+const songInBookSchema = new Schema('songs', {
+  idAttribute: 'id'
+});
+
+const artistsInBookSchema = new Schema('artists', {
+  idAttribute: 'name'
+});
+
 const artistsSchema = new Schema('artists_list');
 
 export const Schemas = {
@@ -64,7 +72,9 @@ export const Schemas = {
   QUEUE: arrayOf(songSchema),
   COMPLETED: arrayOf(songSchema),
   HISTORY: arrayOf(songSchema),
-  ARTISTS: arrayOf(artistsSchema)
+  ARTISTS: arrayOf(artistsSchema),
+  SONGINBOOK: arrayOf(songInBookSchema),
+  ARTISTSINBOOK: arrayOf(artistsInBookSchema)
 };
 
 export default store => next => action => {
