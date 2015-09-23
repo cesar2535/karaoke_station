@@ -102,35 +102,35 @@ export const FAKE_PLAYLIST = [{
 }];
 
 export const FAKE_FAVORITES_LISTS = [{
-  background: '../assets/images/img_favorite_cover01.png',
+  background: './assets/images/img_favorite_cover01.png',
   title: 'Daddy\'s',
   songCount: 10,
 }, {
-  background: '../assets/images/img_favorite_cover02.png',
+  background: './assets/images/img_favorite_cover02.png',
   title: 'Pop',
   songCount: 8,
 }, {
-  background: '../assets/images/img_favorite_cover03.png',
+  background: './assets/images/img_favorite_cover03.png',
   title: 'Country',
   songCount: 23,
 }, {
-  background: '../assets/images/img_favorite_cover04.png',
+  background: './assets/images/img_favorite_cover04.png',
   title: 'Birthday',
   songCount: 20,
 }, {
-  background: '../assets/images/img_favorite_cover05.png',
+  background: './assets/images/img_favorite_cover05.png',
   title: 'Party',
   songCount: 5,
 }, {
-  background: '../assets/images/img_favorite_cover06.png',
+  background: './assets/images/img_favorite_cover06.png',
   title: 'Relax',
   songCount: 14,
 }, {
-  background: '../assets/images/img_favorite_cover07.png',
+  background: './assets/images/img_favorite_cover07.png',
   title: 'Rock',
   songCount: 18,
 }, {
-  background: '../assets/images/img_favorite_cover08.png',
+  background: './assets/images/img_favorite_cover08.png',
   title: 'Crazy',
   songCount: 1,
 }, {
