@@ -35,19 +35,26 @@ export const Schemas = {
 function callApi({ endpoint, schema, method, body }) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
   let request;
-
   switch (method) {
     case 'GET':
       request = fetch(fullUrl);
       break;
     case 'POST':
+      let form;
+      if (body) {
+        form = new FormData();
+        Object.keys(body).forEach( item => {
+          form.append(item, body[item])
+        });
+        console.log(form);
+      }
       request = fetch(fullUrl, {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Content-Type': 'application/json'
+        // },
+        body: form || undefined
       });
       break;
     case 'DELETE':
