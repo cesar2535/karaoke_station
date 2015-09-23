@@ -1,30 +1,36 @@
 import { CALL_API, Schemas } from '../middleware/api';
-import { PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE,
-  SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE,
+import { SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE,
   PREPARE_TODO,
   FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE,
-  ADD_FAVORITE,
+  // ADD_FAVORITE,
   ARTISTS_LIST_REQUEST, ARTISTS_LIST_SUCCESS, ARTISTS_LIST_FAILURE,
   ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE,
-  ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE } from '../constants/ActionTypes';
+  ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE,
+  LANGUAGE_LIST_REQUEST, LANGUAGE_LIST_SUCCESS, LANGUAGE_LIST_FAILURE } from '../constants/ActionTypes';
 
-function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count) {
-  const pageArg = page !== undefined ? 'page=' + page : '';
-  const countArg = count !== undefined ? 'count=' + count : '';
+import * as APIS from '../constants/Apis.config';
+
+function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
+  const pageArg = page !== undefined ? '&page=' + page : '';
+  const countArg = count !== undefined ? '&count=' + count : '';
+  const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
+  const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
+  const languageArg = language !== undefined ? '&lang=' + language : '';
+  const actionKey = language !== undefined ? language : artistNation;
   return {
-    artistNation,
+    actionKey,
     [CALL_API]: {
       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-      endpoint: `/songlist?${pageArg}&${countArg}&artists=${artistNation}&query_who=${queryWho}`,
+      endpoint: `${APIS.SONGS}?${pageArg}${countArg}${artistArg}${queryWhoArg}${languageArg}`,
       schema: Schemas.SONGINBOOK,
       method: 'GET'
     }
   };
 }
 
-export function loadSongsList(keyword, nsong, queryWho, artistNation) {
-  return (dispatch, getState) => {
-    return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation));
+export function loadSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
+  return (dispatch) => {
+    return dispatch(fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language));
   };
 }
 
@@ -32,7 +38,7 @@ function addToPlayList(songid, method) {
   return {
     [CALL_API]: {
       types: [ ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE ],
-      endpoint: '/playlist',
+      endpoint: `${APIS.PLAYS}`,
       schema: '',
       method: method,
       body: { songid }
@@ -56,7 +62,7 @@ function addToFavorite(songid, favoriteid) {
   return {
     [CALL_API]: {
       types: [ FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE ],
-      endpoint: `/favorite/${favoriteid}`,
+      endpoint: `${APIS.FAVORITES}/${favoriteid}`,
       schema: '',
       method: 'PUT',
       body: { songid }
@@ -81,7 +87,7 @@ function fetchArtistsList() {
   return {
     [CALL_API]: {
       types: [ ARTISTS_LIST_REQUEST, ARTISTS_LIST_SUCCESS, ARTISTS_LIST_FAILURE ],
-      endpoint: '/songlist/artists',
+      endpoint: `${APIS.ARTISTS_CATEGORY}`,
       schema: Schemas.ARTISTS,
       method: 'GET'
     }
@@ -89,8 +95,25 @@ function fetchArtistsList() {
 }
 
 export function loadArtistsList() {
-  return ( dispatch,  getState ) => {
+  return ( dispatch ) => {
     return dispatch(fetchArtistsList());
+  };
+}
+
+function fetchLanguageList() {
+  return {
+    [CALL_API]: {
+      types: [ LANGUAGE_LIST_REQUEST, LANGUAGE_LIST_SUCCESS, LANGUAGE_LIST_FAILURE ],
+      endpoint: `${APIS.LANGUAGES}`,
+      schema: Schemas.ARTISTS,
+      method: 'GET'
+    }
+  };
+}
+
+export function loadLanguageList() {
+  return ( dispatch ) => {
+    return dispatch(fetchLanguageList());
   };
 }
 
@@ -116,7 +139,7 @@ function fetchArtistsListByGender(gender) {
     gender,
     [CALL_API]: {
       types: [ ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE ],
-      endpoint: `/songlist/artists/${gender}?page=1&count=20`,
+      endpoint: `${APIS.ARTISTS_CATEGORY}/${gender}?page=1&count=80`,
       schema: Schemas.ARTISTSINBOOK,
       method: 'GET'
     }
@@ -124,7 +147,7 @@ function fetchArtistsListByGender(gender) {
 }
 
 export function loadArtistsListByGender(gender) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(fetchArtistsListByGender(gender));
   };
 }

@@ -224,21 +224,21 @@ export function mapTitleNameByType(type, name) {
 
 export function mapTitleNameFromLanguage(name) {
   switch (name.toLowerCase()) {
-    case 'tc':
+    case 'mandarin':
       return '中文';
-    case 'e':
+    case 'english':
       return '英文';
-    case 'c':
+    case 'cantonese':
       return '粵語';
-    case 't':
+    case 'taiwanese':
       return '台語';
-    case 'j':
+    case 'japanese':
       return '日語';
-    case 'k':
+    case 'korean':
       return '韓語';
-    case 'eo':
+    case 'spain':
       return '西班牙語';
-    case 'other':
+    case 'others':
       return '其他語言';
     default:
       return '你哪位';

@@ -1,17 +1,21 @@
-import { ARTISTS_LIST_SUCCESS } from '../constants/ActionTypes';
+import { ARTISTS_LIST_SUCCESS, LANGUAGE_LIST_SUCCESS } from '../constants/ActionTypes';
 
-const initialState = {
-  artists_list: []
-};
-
-export default function updateArtistsToEntities(state = initialState, action) {
+export default function updateSidetabToEntities(state = {
+  artists_list: [],
+  languages: []
+}, action) {
   switch (action.type) {
     case ARTISTS_LIST_SUCCESS:
       return {
-        artists_list: action.response.result
+        artists_list: action.response.result,
+        languages: state.languages
+      };
+    case LANGUAGE_LIST_SUCCESS:
+      return {
+				artists_list: state.artists_list,
+        languages: action.response.result
       };
     default:
       return state;
   }
 }
-

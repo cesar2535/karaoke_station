@@ -18,7 +18,7 @@ const pagination = combineReducers({
     types: [ ActionTypes.FAVORITES_REQUEST, ActionTypes.FAVORITES_SUCCESS, ActionTypes.FAVORITES_FAILURE ]
   }),
   songlist: paginate({
-    mapActionToKey: action => action.artistNation,
+    mapActionToKey: action => action.actionKey,
     types: [ ActionTypes.SONGS_LIST_REQUEST, ActionTypes.SONGS_LIST_SUCCESS, ActionTypes.SONGS_LIST_FAILURE ]
   }),
   artistlist: paginate({
