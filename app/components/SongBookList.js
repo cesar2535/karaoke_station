@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 // import { chunk, unzip } from 'lodash';
 import List from './utils/List';
@@ -9,15 +9,18 @@ import { ADD_BUTTOM, INSERT_BUTTOM, ADD_FAVORITE_BUTTOM } from '../constants/Con
 import { mapArrayToModular, mapTitleNameByType, mapTitleNameFromLanguage } from '../constants/FakeData';
 
 export default class SongBookList extends Component {
+  static propTypes = {
+    className: PropTypes.string
+  }
 
   render() {
-      const { className, songs, artists, type, name } = this.props;
+      const { className, songs, artists, type, name, songsIds, artistsIds } = this.props;
       const total = type === 'language' ? songs.length : artists.length;
       if ( type !== 'language' && name !== undefined ) {
         const renderItem = this.renderPlaylistItem.bind(this);
         const items = songs;
-        const isFetching = songs.length !== 0;
         const artistsTitle = name;
+        const isFetching = songsIds.isFetching;
         return (
         <div className='SongBookListView'>
           <ListNav className='ListNav' />
@@ -41,7 +44,7 @@ export default class SongBookList extends Component {
         const artistsTitle = mapTitleNameByType(type, name);
         const renderItem = this.renderPlaylistItem.bind(this);
         const items = songs;
-        const isFetching = songs.length !== 0;
+        const isFetching = songsIds.isFetching;
         return (
         <div className='SongBookListView'>
           <ListNav className='ListNav' />
@@ -68,36 +71,34 @@ export default class SongBookList extends Component {
         const itemsLeft = mapArrayToModular(items, 3, 0);
         const itemsMiddle = mapArrayToModular(items, 3, 1);
         const itemsRight = mapArrayToModular(items, 3, 2);
-        const isFetchingLeft = itemsLeft.length !== 0;
-        const isFetchingMiddle = itemsMiddle.length !== 0;
-        const isFetchingRight = itemsRight.length !== 0;
-        return <div className='SongBookListView'>
-          <ListNav className='ListNav' />
-          <h1>{artistsTitle}</h1>
-          <section className='Artist'>
-            <List className={`Playlist ${className}`}
-                  renderItem={renderItem}
-                  items={itemsLeft}
-                  isFetching={isFetchingLeft} />
-            <List className={`Playlist ${className}`}
-                  renderItem={renderItem}
-                  items={itemsMiddle}
-                  isFetching={isFetchingMiddle}
-                  noTip={true} />
-            <List className={`Playlist ${className}`}
-                  renderItem={renderItem}
-                  items={itemsRight}
-                  isFetching={isFetchingRight}
-                  noTip={true} />
-          </section>
-          <ListPager className='ListPager' total={total} />
-        </div>
+        const isFetching = artistsIds.isFetching;
+        return (
+          <div className='SongBookListView'>
+            <ListNav className='ListNav' />
+            <h1>{artistsTitle}</h1>
+            <section className='Artist'>
+              <List className={`Playlist ${className}`}
+                    renderItem={renderItem}
+                    items={itemsLeft}
+                    isFetching={isFetching} />
+              <List className={`Playlist ${className}`}
+                    renderItem={renderItem}
+                    items={itemsMiddle}
+                    isFetching={isFetching}
+                    noTip={true} />
+              <List className={`Playlist ${className}`}
+                    renderItem={renderItem}
+                    items={itemsRight}
+                    isFetching={isFetching}
+                    noTip={true} />
+            </section>
+            <ListPager className='ListPager' total={total} />
+          </div>
+        );
       }
-
     }
 
     renderPlaylistItem(song, index) {
-      console.log(index);
       const { addPrepareTodos, prepareSongId, addPlay, insertPlay, addFavorite, favoriteIds } = this.props;
       const inPlayListClass = song.inPlaylist === true ? 'InPlayList' : '';
       let preparePanelClass = '';

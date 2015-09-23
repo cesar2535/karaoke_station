@@ -6,18 +6,21 @@ import SongBookSideTab from '../components/sidetab/SongBookSideTab';
 import { bindActionCreators } from 'redux';
 import * as songsListActions from '../actions/songslist';
 
-import { FAKE_SONGSLIST, FAKE_MALE_ARTISTLIST, FAKE_FEMALE_ARTISTLIST, FAKE_GROUP_ARTISTLIST } from '../constants/FakeData';
-
 function loadData(props) {
   props.loadArtistsList();
+  props.loadLanguageList();
 }
 
-function loadSongsData(props) {
-  props.loadSongsList('', '', props.params.type, props.params.name);
+function loadSongsDataByArtists(props) {
+  props.loadSongsList(undefined, undefined, props.params.type, props.params.name);
 }
 
 function loadArtistByGender(props) {
   props.loadArtistsListByGender(props.params.type);
+}
+
+function loadSongsDataByLanguage(props) {
+  props.loadSongsList(undefined, undefined, undefined, undefined, 1, 80, props.params.name);
 }
 
 class SongBookPage extends Component {
@@ -36,26 +39,21 @@ class SongBookPage extends Component {
   componentWillMount() {
     const { params } = this.props;
     if ( params.type !== 'language' && params.name !== undefined ) {
-      loadSongsData(this.props);
+      loadSongsDataByArtists(this.props);
     } else if ( params.type !== 'language' ) {
       loadArtistByGender(this.props);
+    } else {
+      loadSongsDataByLanguage(this.props);
     }
     loadData(this.props);
   }
 
-  // componentDidMount() {
-  //   console.log("componentDidMount");
-  //   console.log(this.props);
-  //   loadArtistByGender(this.props);
-  // }
-
   render() {
-    const { songs, artists, params, prepareSongId, addPrepareTodos, addPlay, insertPlay, addFavorite, artists_list, loadArtistsListByGender, loadSongsList } = this.props;
-    //console.log(this.props);
+    const { songs, songsIds, artists, artistsIds, params, prepareSongId, addPrepareTodos, addPlay, insertPlay, addFavorite, artistsList, loadArtistsListByGender, loadSongsList, languages } = this.props;
     return (
       <section className="Main Main--songbook">
         <SideBar className="SideBar" />
-        <SongBookSideTab className="SideTab" artistsList={artists_list} loadsongslist={loadArtistsListByGender} />
+        <SongBookSideTab className="SideTab" artistsList={artistsList} languages={languages} loadArtistsListByGender={loadArtistsListByGender} loadSongsList={loadSongsList} />
         <div className="Main-wrapper Main-wrapper--songbook">
           <SongBookList className="ArtistList Playlist"
             songs={songs}
@@ -67,7 +65,9 @@ class SongBookPage extends Component {
             addPlay={addPlay}
             insertPlay={insertPlay}
             addFavorite={addFavorite}
-            loadSongsList={loadSongsList} />
+            loadSongsList={loadSongsList}
+            songsIds={songsIds}
+            artistsIds={artistsIds} />
         </div>
       </section>
     );
@@ -75,7 +75,6 @@ class SongBookPage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  // const artists = getArtistFakeDate(ownProps.params.type);
   const {
     pagination: { songlist, artistlist },
     entities: { songs, artists }
@@ -84,12 +83,14 @@ function mapStateToProps(state, ownProps) {
   const songsData = songsIds.ids.map(id => songs[id]);
   const artistsIds = artistlist[ownProps.params.type] || { ids: [] };
   const artistsData = artistsIds.ids.map(id => artists[id]);
-
   return {
+    songsIds,
+    artistsIds,
     songs: songsData,
     artists: artistsData,
     prepareSongId: state.songslist.songId,
-    artists_list: state.sidetab.artists_list
+    artistsList: state.sidetab.artists_list,
+    languages: state.sidetab.languages
   };
 }
 
@@ -97,19 +98,6 @@ function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(songsListActions, dispatch)
   };
-}
-
-function getArtistFakeDate(type) {
-  switch (type) {
-    case 'male':
-      return FAKE_MALE_ARTISTLIST;
-    case 'female':
-      return FAKE_FEMALE_ARTISTLIST;
-    case 'group':
-      return FAKE_GROUP_ARTISTLIST;
-    default:
-      return [];
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongBookPage);

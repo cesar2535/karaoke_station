@@ -1,28 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { mapTitleNameByType } from '../../constants/FakeData';
+import { mapTitleNameByType, mapTitleNameFromLanguage } from '../../constants/FakeData';
 
 export default class SideTab extends Component {
   render() {
-    const { className, artistsList, loadsongslist } = this.props;
+    const { className, artistsList, loadArtistsListByGender, languages, loadSongsList } = this.props;
     return (
       <div className={className}>
         <section className='SideTab-item'>
           <h6>歌星點歌</h6>
-          {/*<Link to='/songbook/male' activeClassName="is-current">
-            <li>男歌手</li>
-          </Link>
-          <Link to='/songbook/female' activeClassName="is-current">
-            <li>女歌手</li>
-          </Link>
-          <Link to='/songbook/group' activeClassName="is-current">
-            <li>團體</li>
-          </Link>*/}
             {artistsList.map( (artists, index) => {
               const to = '/songbook/' + artists;
               const showName = mapTitleNameByType(artists, '');
               return (
-                <Link key={index} to={to} activeClassName="is-current" onClick={ () => loadsongslist(artists) } >
+                <Link key={index} to={to} activeClassName="is-current" onClick={ () => loadArtistsListByGender(artists) } >
                   <li>{showName}</li>
                 </Link>
               );
@@ -31,7 +22,17 @@ export default class SideTab extends Component {
         </section>
         <section className='SideTab-item'>
           <h6>依語言點歌</h6>
-          <Link to='/songbook/language/tc' activeClassName="is-current">
+            {languages.map( (language, index) => {
+              const to = '/songbook/language/' + language;
+              const showName = mapTitleNameFromLanguage(language);
+              return (
+                <Link key={index} to={to} activeClassName="is-current" onClick={ () => loadSongsList(undefined, undefined, undefined, undefined, 1, 80, language) } >
+                  <li>{showName}</li>
+                </Link>
+              );
+            })
+          }
+          {/*<Link to='/songbook/language/tc' activeClassName="is-current">
             <li>中文</li>
           </Link>
           <Link to='/songbook/language/e' activeClassName="is-current">
@@ -54,7 +55,7 @@ export default class SideTab extends Component {
           </Link>
           <Link to='/songbook/language/other'>
             <li>其他語言</li>
-          </Link>
+          </Link>*/}
         </section>
         {/*
         <section className='SideTab-item'>
