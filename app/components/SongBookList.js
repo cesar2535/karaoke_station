@@ -5,7 +5,7 @@ import List from './utils/List';
 import ListNav from './ListNav';
 import ListPager from './ListPager';
 import PrepareTodoPanel from './PrepareTodoPanel';
-import { ADD_BUTTOM, INSERT_BUTTOM, ADD_FAVORITE_BUTTOM } from '../constants/Config';
+import { ADD_BUTTOM, INSERT_BUTTOM, ADD_FAVORITE_BUTTOM, QTS_ROOT } from '../constants/Config';
 import { mapArrayToModular, mapTitleNameByType, mapTitleNameFromLanguage } from '../constants/FakeData';
 
 export default class SongBookList extends Component {
@@ -127,7 +127,7 @@ export default class SongBookList extends Component {
 
   renderArtistlistItem(artist, index) {
     const { className, type, loadSongsList } = this.props;
-    const to = artist === undefined ? '' : '/songbook/' + type + '/' + artist.name;
+    const to = artist === undefined ? '' : QTS_ROOT + 'songbook/' + type + '/' + artist.name;
     const artistName = artist === undefined ? '' : artist.name
     let itemClass = '';
     if (className.search('home') > -1) {
