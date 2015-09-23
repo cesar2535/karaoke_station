@@ -18,10 +18,15 @@ export default class List extends Component {
 
   render() {
     const {
-      isFetching, pageCount, items, renderItem, loadingLabel, className
+      isFetching, pageCount, items, renderItem, loadingLabel, className, noTip
     } = this.props;
 
     const isEmpty = items.length === 0;
+
+    if (isEmpty && noTip) {
+      return <span />;
+    }
+    
     if (isEmpty && isFetching) {
       return (
         <h2><i>{loadingLabel}</i></h2>
