@@ -4,7 +4,7 @@
   "description": "Karaoke Station with QTS",
   "main": "entry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config=./webpack.config.js --progress",
     "start": "node server.js",
     "test": "cd ./app/ && mocha --recursive --compilers js:babel/register",
     "test:cov": "cd ./app/ && babel-node ../node_modules/.bin/isparta cover --report text --report html ../node_modules/.bin/_mocha -- --recursive --compilers js:babel/register"
