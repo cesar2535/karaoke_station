@@ -18,11 +18,11 @@ describe('songslist actions', () => {
     });
   });
 
-  it('addPlay should create [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ] action', () => {
+  it('addPlay should create [ ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE ] action', () => {
     expect(
 			actions.addPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
-      types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
+      types: [ types.ADD_PLAY_LIST_REQUEST, types.ADD_PLAY_LIST_SUCCESS, types.ADD_PLAY_LIST_FAILURE ],
       endpoint: '/playlist',
       schema: '',
       method: 'POST',
@@ -30,11 +30,11 @@ describe('songslist actions', () => {
     });
   });
 
-  it('insertPlay should create [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ] action', () => {
+  it('insertPlay should create [ ADD_PLAY_LIST_REQUEST, ADD_PLAY_LIST_SUCCESS, ADD_PLAY_LIST_FAILURE ] action', () => {
     expect(
 			actions.insertPlay(100)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
-      types: [ types.PLAYLIST_REQUEST, types.PLAYLIST_SUCCESS, types.PLAYLIST_FAILURE ],
+      types: [ types.ADD_PLAY_LIST_REQUEST, types.ADD_PLAY_LIST_SUCCESS, types.ADD_PLAY_LIST_FAILURE ],
       endpoint: '/playlist',
       schema: '',
       method: 'PUT',
@@ -42,7 +42,7 @@ describe('songslist actions', () => {
     });
   });
 
-  it('addFavorite should create [ types.FAVORITE_REQUEST, types.FAVORITE_SUCCESS, types.FAVORITE_FAILURE ] action', () => {
+  it('addFavorite should create [ FAVORITE_REQUEST, FAVORITE_SUCCESS, FAVORITE_FAILURE ] action', () => {
     expect(
 			actions.addFavorite(100, 1000)(action => action, fakeStore({}))[CALL_API]
     ).toEqual({
