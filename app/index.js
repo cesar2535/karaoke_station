@@ -23,7 +23,7 @@ React.render(
   <Provider store={store}>
     {() =>
       <Router history={history}>
-        <Route path='/' component={App}>
+        <Route path='/apps/KTVStation' component={App}>
           <IndexRoute component={HomePage} />
           <Route path='songbook/:type' component={SongBookPage}>
             <Route path=':name' component={SongBookPage} />
