@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { QTS_ROOT } from '../constants/Config';
 
 export default class Header extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class Header extends Component {
     return (
       <header className="Header">
         <div className="Header-left">
-          <Link className="Header-logo" to="/">
+          <Link className="Header-logo" to={QTS_ROOT}>
             <b>KTV</b>
             <span>Station</span>
           </Link>
