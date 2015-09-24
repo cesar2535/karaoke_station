@@ -13,9 +13,8 @@ import HomePage from './containers/HomePage';
 import SongBookPage from './containers/SongBookPage';
 import PlaylistPage from './containers/PlaylistPage';
 import HistoryPage from './containers/HistoryPage';
+import FavoritesPage from './containers/FavoritesPage';
 
-
-console.log(QTS_ROOT);
 const history = createHistory({
   queryKey: '_key'
 });
@@ -31,7 +30,9 @@ React.render(
           <Route path='songbook/:type' component={SongBookPage}>
             <Route path=':name' component={SongBookPage} />
           </Route>
-          /* <Route path='songbook/language/:name' component={SongBookPage} /> */
+          <Route path='favorite' component={FavoritesPage}>
+            <Route path=':name' component={FavoritesPage} />
+          </Route>
           <Route path='playlist/current' component={PlaylistPage} />
           <Route path='playlist/finished' component={PlaylistPage} />
           <Route path='history' component={HistoryPage} />

@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cc22e07e518ebb103d8f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "49337e7bfb2d818f35d8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -591,7 +591,7 @@
 
 	var _containersHomePage2 = _interopRequireDefault(_containersHomePage);
 
-	var _containersSongBookPage = __webpack_require__(518);
+	var _containersSongBookPage = __webpack_require__(519);
 
 	var _containersSongBookPage2 = _interopRequireDefault(_containersSongBookPage);
 
@@ -603,7 +603,10 @@
 
 	var _containersHistoryPage2 = _interopRequireDefault(_containersHistoryPage);
 
-	console.log(_constantsConfig.QTS_ROOT);
+	var _containersFavoritesPage = __webpack_require__(618);
+
+	var _containersFavoritesPage2 = _interopRequireDefault(_containersFavoritesPage);
+
 	var history = _historyLibCreateBrowserHistory2['default']({
 	  queryKey: '_key'
 	});
@@ -626,9 +629,11 @@
 	          { path: 'songbook/:type', component: _containersSongBookPage2['default'] },
 	          _react2['default'].createElement(_reactRouter.Route, { path: ':name', component: _containersSongBookPage2['default'] })
 	        ),
-	        '/* ',
-	        _react2['default'].createElement(_reactRouter.Route, { path: 'songbook/language/:name', component: _containersSongBookPage2['default'] }),
-	        ' */',
+	        _react2['default'].createElement(
+	          _reactRouter.Route,
+	          { path: 'favorite', component: _containersFavoritesPage2['default'] },
+	          _react2['default'].createElement(_reactRouter.Route, { path: ':name', component: _containersFavoritesPage2['default'] })
+	        ),
 	        _react2['default'].createElement(_reactRouter.Route, { path: 'playlist/current', component: _containersPlaylistPage2['default'] }),
 	        _react2['default'].createElement(_reactRouter.Route, { path: 'playlist/finished', component: _containersPlaylistPage2['default'] }),
 	        _react2['default'].createElement(_reactRouter.Route, { path: 'history', component: _containersHistoryPage2['default'] }),
@@ -32600,6 +32605,10 @@
 	  idAttribute: 'name'
 	});
 
+	var favoritesListSchema = new _normalizr.Schema('favorites', {
+	  idAttribute: 'id'
+	});
+
 	var artistsSchema = new _normalizr.Schema('artists_list');
 
 	var languagesSchema = new _normalizr.Schema('languages');
@@ -32612,7 +32621,8 @@
 	  ARTISTS: _normalizr.arrayOf(artistsSchema),
 	  SONGINBOOK: _normalizr.arrayOf(songSchemaS),
 	  ARTISTSINBOOK: _normalizr.arrayOf(artistsInBookSchema),
-	  LANGUAGES: _normalizr.arrayOf(languagesSchema)
+	  LANGUAGES: _normalizr.arrayOf(languagesSchema),
+	  FAVORITES: _normalizr.arrayOf(favoritesListSchema)
 	};
 
 	exports.Schemas = Schemas;
@@ -34618,11 +34628,17 @@
 	    },
 	    types: [ActionTypes.PLAYLIST_REQUEST, ActionTypes.PLAYLIST_SUCCESS, ActionTypes.PLAYLIST_FAILURE]
 	  }),
-	  favorites: _paginate2['default']({
+	  favoritesongs: _paginate2['default']({
 	    mapActionToKey: function mapActionToKey(action) {
 	      return action.listName;
 	    },
 	    types: [ActionTypes.FAVORITES_REQUEST, ActionTypes.FAVORITES_SUCCESS, ActionTypes.FAVORITES_FAILURE]
+	  }),
+	  favoritelist: _paginate2['default']({
+	    mapActionToKey: function mapActionToKey() {
+	      return 'favoritelist';
+	    },
+	    types: [ActionTypes.FAVORITES_LIST_REQUEST, ActionTypes.FAVORITES_LIST_SUCCESS, ActionTypes.FAVORITES_LIST_FAILURE]
 	  }),
 	  songlist: _paginate2['default']({
 	    mapActionToKey: function mapActionToKey(action) {
@@ -34817,7 +34833,14 @@
 	var LANGUAGE_LIST_SUCCESS = 'LANGUAGE_LIST_SUCCESS';
 	exports.LANGUAGE_LIST_SUCCESS = LANGUAGE_LIST_SUCCESS;
 	var LANGUAGE_LIST_FAILURE = 'LANGUAGE_LIST_FAILURE';
+
 	exports.LANGUAGE_LIST_FAILURE = LANGUAGE_LIST_FAILURE;
+	var FAVORITES_LIST_REQUEST = 'FAVORITES_LIST_REQUEST';
+	exports.FAVORITES_LIST_REQUEST = FAVORITES_LIST_REQUEST;
+	var FAVORITES_LIST_SUCCESS = 'FAVORITES_LIST_SUCCESS';
+	exports.FAVORITES_LIST_SUCCESS = FAVORITES_LIST_SUCCESS;
+	var FAVORITES_LIST_FAILURE = 'FAVORITES_LIST_FAILURE';
+	exports.FAVORITES_LIST_FAILURE = FAVORITES_LIST_FAILURE;
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "ActionTypes.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
@@ -37220,9 +37243,9 @@
 
 	var _componentsPlaylist2 = _interopRequireDefault(_componentsPlaylist);
 
-	var _actionsPlaylist = __webpack_require__(516);
+	var _actionsPlaylist = __webpack_require__(517);
 
-	var _actions = __webpack_require__(517);
+	var _actions = __webpack_require__(518);
 
 	var _constantsConfig = __webpack_require__(361);
 
@@ -37546,6 +37569,10 @@
 
 	var _utilsList2 = _interopRequireDefault(_utilsList);
 
+	var _PrepareTodoPanel = __webpack_require__(516);
+
+	var _PrepareTodoPanel2 = _interopRequireDefault(_PrepareTodoPanel);
+
 	var Playlist = (function (_Component) {
 	  _inherits(Playlist, _Component);
 
@@ -37585,22 +37612,55 @@
 	  };
 
 	  Playlist.prototype.renderPlaylistItem = function renderPlaylistItem(song, index) {
-	    var className = this.props.className;
+	    var _props2 = this.props;
+	    var className = _props2.className;
+	    var ADD_BUTTOM = _props2.ADD_BUTTOM;
+	    var INSERT_BUTTOM = _props2.INSERT_BUTTOM;
+	    var ADD_FAVORITE_BUTTOM = _props2.ADD_FAVORITE_BUTTOM;
+	    var REMOVE_BUTTOM = _props2.REMOVE_BUTTOM;
+	    var REMOVE_FAVORITE_BUTTOM = _props2.REMOVE_FAVORITE_BUTTOM;
+	    var addPlay = _props2.addPlay;
+	    var insertPlay = _props2.insertPlay;
+	    var addFavorite = _props2.addFavorite;
+	    var favoriteIds = _props2.favoriteIds;
+	    var prepareSongId = _props2.prepareSongId;
+	    var addPrepareTodos = _props2.addPrepareTodos;
 
 	    var classNamesArr = className.split(/\s/);
 	    var itemClass = 'Playlist-item' + classNamesArr[0].slice(8);
+	    var inPlayListClass = song.inPlaylist === true ? 'InPlayList' : '';
+	    var preparePanelClass = '';
+	    console.log(prepareSongId);
+	    if (song.id === prepareSongId) {
+	      preparePanelClass = 'PrepareTodoPanel';
+	    } else {
+	      preparePanelClass = 'PanelHidden PrepareTodoPanel';
+	    }
 	    return _react2['default'].createElement(
 	      'div',
-	      { key: index, className: 'Playlist-item ' + itemClass },
+	      { key: index, className: 'Playlist-item ' + itemClass + ' Playlist-item--songs', onClick: function () {
+	          return addPrepareTodos(song.id);
+	        } },
 	      _react2['default'].createElement(
 	        'span',
-	        { className: 'Playlist-item-title' },
+	        { className: 'Playlist-item-title ' + inPlayListClass },
 	        song.name
 	      ),
 	      _react2['default'].createElement(
 	        'span',
-	        { className: 'Playlist-item-artist' },
-	        song.artist
+	        { className: 'Playlist-item-artists ' + inPlayListClass },
+	        song.artist,
+	        _react2['default'].createElement(_PrepareTodoPanel2['default'], { className: preparePanelClass,
+	          addBtn: ADD_BUTTOM,
+	          insertBtn: INSERT_BUTTOM,
+	          addFavoriteBtn: ADD_FAVORITE_BUTTOM,
+	          addPlay: addPlay,
+	          insertPlay: insertPlay,
+	          addFavorite: addFavorite,
+	          songId: prepareSongId,
+	          favoriteIds: favoriteIds,
+	          removeBtn: REMOVE_BUTTOM,
+	          removeFavoriteBtn: REMOVE_FAVORITE_BUTTOM })
 	      )
 	    );
 	  };
@@ -37616,6 +37676,146 @@
 
 /***/ },
 /* 516 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(67);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(510);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _constantsConfig = __webpack_require__(361);
+
+	var Config = _interopRequireWildcard(_constantsConfig);
+
+	var PrepareTodoPanel = (function (_Component) {
+	  _inherits(PrepareTodoPanel, _Component);
+
+	  function PrepareTodoPanel() {
+	    _classCallCheck(this, PrepareTodoPanel);
+
+	    _Component.apply(this, arguments);
+	  }
+
+	  PrepareTodoPanel.prototype.render = function render() {
+	    var _this = this;
+
+	    var _props = this.props;
+	    var className = _props.className;
+	    var addBtn = _props.addBtn;
+	    var insertBtn = _props.insertBtn;
+	    var addFavoriteBtn = _props.addFavoriteBtn;
+	    var removeBtn = _props.removeBtn;
+	    var removeFavoriteBtn = _props.removeFavoriteBtn;
+	    var favoriteIds = _props.favoriteIds;
+	    var songId = _props.songId;
+	    var addPlay = _props.addPlay;
+	    var insertPlay = _props.insertPlay;
+	    var addFavorite = _props.addFavorite;
+
+	    var displayAddBtn = addBtn === Config.ADD_BUTTOM ? '' : 'PanelHidden';
+	    var displayInsertBtn = insertBtn === Config.INSERT_BUTTOM ? '' : 'PanelHidden';
+	    var displayAddFavoriteBtn = addFavoriteBtn === Config.ADD_FAVORITE_BUTTOM ? '' : 'PanelHidden';
+	    var displayRemoveBtn = removeBtn === Config.REMOVE_BUTTOM ? '' : 'PanelHidden';
+	    var displayRemoveFavoriteBtn = removeFavoriteBtn === Config.REMOVE_FAVORITE_BUTTOM ? '' : 'PanelHidden';
+	    var favoriteId = favoriteIds === undefined ? '' : favoriteIds[0];
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: className },
+	      _react2['default'].createElement(
+	        'a',
+	        { className: className + '--btn-add ' + displayAddBtn, onClick: function () {
+	            return addPlay(songId);
+	          } },
+	        _react2['default'].createElement('ic', { className: 'ic ic_action_requesting' }),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          '點播'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'a',
+	        { className: className + '--btn-insert ' + displayInsertBtn, onClick: function () {
+	            return insertPlay(songId);
+	          } },
+	        _react2['default'].createElement('ic', { className: 'ic ic_action_inserting' }),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          '插播'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'a',
+	        { className: className + '--btn-add-favorite ' + displayAddFavoriteBtn, onClick: function () {
+	            return addFavorite(songId, 100);
+	          } },
+	        _react2['default'].createElement('ic', { className: 'ic ic_action_favortie' }),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          '加入最愛'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'a',
+	        { className: className + '--btn-remove ' + displayRemoveBtn, onClick: function () {
+	            return _this.unComplete();
+	          } },
+	        _react2['default'].createElement('ic', { className: 'ic ic_action_remove' }),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          '刪歌'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'a',
+	        { className: className + '--btn-remove-faverite ' + displayRemoveFavoriteBtn, onClick: function () {
+	            return _this.unComplete();
+	          } },
+	        _react2['default'].createElement('ic', { className: 'ic ic_action_remove' }),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          '移除最愛'
+	        )
+	      )
+	    );
+	  };
+
+	  PrepareTodoPanel.prototype.unComplete = function unComplete() {
+	    console.log('還沒做唷');
+	  };
+
+	  return PrepareTodoPanel;
+	})(_react.Component);
+
+	exports['default'] = PrepareTodoPanel;
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "PrepareTodoPanel.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -37652,7 +37852,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 517 */
+/* 518 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -37675,7 +37875,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 518 */
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -37702,7 +37902,7 @@
 
 	var _reactRedux = __webpack_require__(379);
 
-	var _componentsSongBookList = __webpack_require__(519);
+	var _componentsSongBookList = __webpack_require__(520);
 
 	var _componentsSongBookList2 = _interopRequireDefault(_componentsSongBookList);
 
@@ -37852,7 +38052,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 519 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -37881,15 +38081,15 @@
 
 	var _utilsList2 = _interopRequireDefault(_utilsList);
 
-	var _ListNav = __webpack_require__(520);
+	var _ListNav = __webpack_require__(521);
 
 	var _ListNav2 = _interopRequireDefault(_ListNav);
 
-	var _ListPager = __webpack_require__(521);
+	var _ListPager = __webpack_require__(522);
 
 	var _ListPager2 = _interopRequireDefault(_ListPager);
 
-	var _PrepareTodoPanel = __webpack_require__(522);
+	var _PrepareTodoPanel = __webpack_require__(516);
 
 	var _PrepareTodoPanel2 = _interopRequireDefault(_PrepareTodoPanel);
 
@@ -38131,7 +38331,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 520 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -38190,7 +38390,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 521 */
+/* 522 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -38246,146 +38446,6 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ },
-/* 522 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(67);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(510);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _constantsConfig = __webpack_require__(361);
-
-	var Config = _interopRequireWildcard(_constantsConfig);
-
-	var PrepareTodoPanel = (function (_Component) {
-	  _inherits(PrepareTodoPanel, _Component);
-
-	  function PrepareTodoPanel() {
-	    _classCallCheck(this, PrepareTodoPanel);
-
-	    _Component.apply(this, arguments);
-	  }
-
-	  PrepareTodoPanel.prototype.render = function render() {
-	    var _this = this;
-
-	    var _props = this.props;
-	    var className = _props.className;
-	    var addBtn = _props.addBtn;
-	    var insertBtn = _props.insertBtn;
-	    var addFavoriteBtn = _props.addFavoriteBtn;
-	    var removeBtn = _props.removeBtn;
-	    var removeFavoriteBtn = _props.removeFavoriteBtn;
-	    var favoriteIds = _props.favoriteIds;
-	    var songId = _props.songId;
-	    var addPlay = _props.addPlay;
-	    var insertPlay = _props.insertPlay;
-	    var addFavorite = _props.addFavorite;
-
-	    var displayAddBtn = addBtn === Config.ADD_BUTTOM ? '' : 'PanelHidden';
-	    var displayInsertBtn = insertBtn === Config.INSERT_BUTTOM ? '' : 'PanelHidden';
-	    var displayAddFavoriteBtn = addFavoriteBtn === Config.ADD_FAVORITE_BUTTOM ? '' : 'PanelHidden';
-	    var displayRemoveBtn = removeBtn === Config.REMOVE_BUTTOM ? '' : 'PanelHidden';
-	    var displayRemoveFavoriteBtn = removeFavoriteBtn === Config.REMOVE_FAVORITE_BUTTOM ? '' : 'PanelHidden';
-	    var favoriteId = favoriteIds === undefined ? '' : favoriteIds[0];
-	    return _react2['default'].createElement(
-	      'div',
-	      { className: className },
-	      _react2['default'].createElement(
-	        'a',
-	        { className: className + '--btn-add ' + displayAddBtn, onClick: function () {
-	            return addPlay(songId);
-	          } },
-	        _react2['default'].createElement('ic', { className: 'ic ic_action_requesting' }),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          '點播'
-	        )
-	      ),
-	      _react2['default'].createElement(
-	        'a',
-	        { className: className + '--btn-insert ' + displayInsertBtn, onClick: function () {
-	            return insertPlay(songId);
-	          } },
-	        _react2['default'].createElement('ic', { className: 'ic ic_action_inserting' }),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          '插播'
-	        )
-	      ),
-	      _react2['default'].createElement(
-	        'a',
-	        { className: className + '--btn-add-favorite ' + displayAddFavoriteBtn, onClick: function () {
-	            return addFavorite(songId, 100);
-	          } },
-	        _react2['default'].createElement('ic', { className: 'ic ic_action_favortie' }),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          '加入最愛'
-	        )
-	      ),
-	      _react2['default'].createElement(
-	        'a',
-	        { className: className + '--btn-remove ' + displayRemoveBtn, onClick: function () {
-	            return _this.unComplete();
-	          } },
-	        _react2['default'].createElement('ic', { className: 'ic ic_action_remove' }),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          '刪歌'
-	        )
-	      ),
-	      _react2['default'].createElement(
-	        'a',
-	        { className: className + '--btn-remove-favorite ' + displayRemoveFavoriteBtn, onClick: function () {
-	            return _this.unComplete();
-	          } },
-	        _react2['default'].createElement('ic', { className: 'ic ic_action_remove' }),
-	        _react2['default'].createElement(
-	          'p',
-	          null,
-	          '移除最愛'
-	        )
-	      )
-	    );
-	  };
-
-	  PrepareTodoPanel.prototype.unComplete = function unComplete() {
-	    console.log('還沒做唷');
-	  };
-
-	  return PrepareTodoPanel;
-	})(_react.Component);
-
-	exports['default'] = PrepareTodoPanel;
-	module.exports = exports['default'];
-
-	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "PrepareTodoPanel.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
-
-/***/ },
 /* 523 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38435,8 +38495,8 @@
 	        )
 	      ),
 	      _react2['default'].createElement(
-	        'section',
-	        { className: 'SideBarItem' },
+	        _reactRouter.Link,
+	        { className: 'SideBarItem', to: _constantsConfig.QTS_ROOT + 'favorite', activeClassName: 'is-current' },
 	        _react2['default'].createElement('span', { className: 'ic ic_menu_favoraite' }),
 	        _react2['default'].createElement(
 	          'p',
@@ -38830,15 +38890,15 @@
 
 	var _componentsPlaylist2 = _interopRequireDefault(_componentsPlaylist);
 
-	var _componentsListNav = __webpack_require__(520);
+	var _componentsListNav = __webpack_require__(521);
 
 	var _componentsListNav2 = _interopRequireDefault(_componentsListNav);
 
-	var _componentsListPager = __webpack_require__(521);
+	var _componentsListPager = __webpack_require__(522);
 
 	var _componentsListPager2 = _interopRequireDefault(_componentsListPager);
 
-	var _actionsPlaylist = __webpack_require__(516);
+	var _actionsPlaylist = __webpack_require__(517);
 
 	var _constantsConfig = __webpack_require__(361);
 
@@ -39112,11 +39172,11 @@
 
 	var _componentsSideBar2 = _interopRequireDefault(_componentsSideBar);
 
-	var _componentsListNav = __webpack_require__(520);
+	var _componentsListNav = __webpack_require__(521);
 
 	var _componentsListNav2 = _interopRequireDefault(_componentsListNav);
 
-	var _componentsListPager = __webpack_require__(521);
+	var _componentsListPager = __webpack_require__(522);
 
 	var _componentsListPager2 = _interopRequireDefault(_componentsListPager);
 
@@ -50714,6 +50774,240 @@
 	}
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "history.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 618 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(67);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(379);
+
+	var _reactRouter = __webpack_require__(396);
+
+	var _constantsConfig = __webpack_require__(361);
+
+	var _componentsSideBar = __webpack_require__(523);
+
+	var _componentsSideBar2 = _interopRequireDefault(_componentsSideBar);
+
+	var _componentsSideTab = __webpack_require__(528);
+
+	var _componentsSideTab2 = _interopRequireDefault(_componentsSideTab);
+
+	var _componentsListNav = __webpack_require__(521);
+
+	var _componentsListNav2 = _interopRequireDefault(_componentsListNav);
+
+	var _componentsListPager = __webpack_require__(522);
+
+	var _componentsListPager2 = _interopRequireDefault(_componentsListPager);
+
+	var _componentsPlaylist = __webpack_require__(515);
+
+	var _componentsPlaylist2 = _interopRequireDefault(_componentsPlaylist);
+
+	var _actionsFavorites = __webpack_require__(619);
+
+	var actions = _interopRequireWildcard(_actionsFavorites);
+
+	var _actionsSongslist = __webpack_require__(525);
+
+	function loadData(props) {
+	  props.loadFavoriteLists();
+	}
+
+	var FavoritesPage = (function (_Component) {
+	  _inherits(FavoritesPage, _Component);
+
+	  function FavoritesPage(props) {
+	    _classCallCheck(this, FavoritesPage);
+
+	    _Component.call(this, props);
+	  }
+
+	  FavoritesPage.prototype.componentWillMount = function componentWillMount() {
+	    loadData(this.props);
+	  };
+
+	  FavoritesPage.prototype.render = function render() {
+	    var _props = this.props;
+	    var favoriteslist = _props.favoriteslist;
+	    var songs = _props.songs;
+	    var params = _props.params;
+	    var viewState = _props.viewState;
+	    var addPrepareTodos = _props.addPrepareTodos;
+	    var prepareSongId = _props.prepareSongId;
+
+	    var viewTitle = params.name;
+	    var viewList = songs;
+	    return _react2['default'].createElement(
+	      'section',
+	      { className: 'Main Main--playlist' },
+	      _react2['default'].createElement(_componentsSideBar2['default'], { className: 'SideBar' }),
+	      _react2['default'].createElement(_componentsSideTab2['default'], { className: 'SideTab', items: favoriteslist, renderItem: this._renderSideTabItem.bind(this) }),
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'Main-wrapper Main-wrapper--playlist' },
+	        _react2['default'].createElement(_componentsListNav2['default'], { className: 'ListNav ListNav--playlist' }),
+	        _react2['default'].createElement(
+	          'h1',
+	          { className: 'Main-wrapper-title' },
+	          viewTitle
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'PlaylistView' },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'PlaylistView-head' },
+	            _react2['default'].createElement(
+	              'span',
+	              null,
+	              '歌名'
+	            ),
+	            _react2['default'].createElement(
+	              'span',
+	              null,
+	              '演唱者'
+	            )
+	          ),
+	          _react2['default'].createElement(_componentsPlaylist2['default'], { className: 'Playlist--playlist',
+	            songs: viewList,
+	            isFetching: viewState || false,
+	            addPrepareTodos: addPrepareTodos,
+	            prepareSongId: prepareSongId,
+	            ADD_BUTTOM: _constantsConfig.ADD_BUTTOM,
+	            INSERT_BUTTOM: _constantsConfig.INSERT_BUTTOM,
+	            REMOVE_FAVORITE_BUTTOM: _constantsConfig.REMOVE_FAVORITE_BUTTOM })
+	        ),
+	        _react2['default'].createElement(_componentsListPager2['default'], { className: 'ListPager--playlist', total: viewList.length })
+	      )
+	    );
+	  };
+
+	  FavoritesPage.prototype._renderSideTabItem = function _renderSideTabItem(item, index) {
+	    var loadFavorites = this.props.loadFavorites;
+
+	    return _react2['default'].createElement(
+	      _reactRouter.Link,
+	      { key: index, className: 'SideTab-listitem', to: _constantsConfig.QTS_ROOT + 'favorite/' + item.name, activeClassName: 'is-current', onClick: function () {
+	          return loadFavorites(item.name, item.id);
+	        } },
+	      _react2['default'].createElement(
+	        'span',
+	        null,
+	        item.name + ' (' + item.nSongs + ')'
+	      )
+	    );
+	  };
+
+	  return FavoritesPage;
+	})(_react.Component);
+
+	function mapStateToProps(state, ownProps) {
+	  var _state$pagination = state.pagination;
+	  var favoritelist = _state$pagination.favoritelist;
+	  var favoritesongs = _state$pagination.favoritesongs;
+	  var _state$entities = state.entities;
+	  var favorites = _state$entities.favorites;
+	  var songs = _state$entities.songs;
+
+	  var favoritelistIds = favoritelist['favoritelist'] || { ids: [] };
+	  var favoritelistDatas = favoritelistIds.ids.map(function (id) {
+	    return favorites[id];
+	  });
+	  var favoritesongIds = favoritesongs[ownProps.params.name] || { ids: [] };
+	  var favoritesongDatas = favoritesongIds.ids.map(function (id) {
+	    return songs[id];
+	  });
+	  return {
+	    favoriteslist: favoritelistDatas,
+	    prepareSongId: state.songslist.songId,
+	    songs: favoritesongDatas,
+	    viewState: favoritesongIds.isFetching
+
+	  };
+	}
+
+	exports['default'] = _reactRedux.connect(mapStateToProps, _extends({}, actions, { addPrepareTodos: _actionsSongslist.addPrepareTodos }))(FavoritesPage);
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "FavoritesPage.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+
+/***/ },
+/* 619 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(3), RootInstanceProvider = __webpack_require__(11), ReactMount = __webpack_require__(13), React = __webpack_require__(67); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports.loadFavorites = loadFavorites;
+	exports.loadFavoriteLists = loadFavoriteLists;
+
+	var _middlewareApi = __webpack_require__(441);
+
+	var _constantsActionTypes = __webpack_require__(474);
+
+	function fetchFavorites(listName, id) {
+	  var _ref;
+
+	  return (_ref = {
+	    listName: listName
+	  }, _ref[_middlewareApi.CALL_API] = {
+	    types: [_constantsActionTypes.FAVORITES_REQUEST, _constantsActionTypes.FAVORITES_SUCCESS, _constantsActionTypes.FAVORITES_FAILURE],
+	    endpoint: '/favorite/' + id,
+	    schema: _middlewareApi.Schemas.SONG_S_ARRAY,
+	    method: 'get'
+	  }, _ref);
+	}
+
+	function loadFavorites(name, id) {
+	  return function (dispatch) {
+	    return dispatch(fetchFavorites(name, id));
+	  };
+	}
+
+	function fetchFavoriteLists() {
+	  var _ref2;
+
+	  return (_ref2 = {}, _ref2[_middlewareApi.CALL_API] = {
+	    types: [_constantsActionTypes.FAVORITES_LIST_REQUEST, _constantsActionTypes.FAVORITES_LIST_SUCCESS, _constantsActionTypes.FAVORITES_LIST_FAILURE],
+	    endpoint: '/favorite',
+	    schema: _middlewareApi.Schemas.FAVORITES,
+	    method: 'get'
+	  }, _ref2);
+	}
+
+	function loadFavoriteLists() {
+	  return function (dispatch) {
+	    return dispatch(fetchFavoriteLists());
+	  };
+	}
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(362); if (makeExportsHot(module, __webpack_require__(67))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "favorites.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }
