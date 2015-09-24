@@ -4,8 +4,16 @@
   "description": "Karaoke Station with QTS",
   "main": "entry.js",
   "scripts": {
-    "build": "webpack --config=./webpack.config.js --progress",
+    "clean": "/bin/bash scripts/clean.sh",
+    "deploy:dev": "/bin/bash scripts/deploy-dev.sh",
+    "deploy:pro": "/bin/bash scripts/deploy-pro.sh",
+    "swith:dev": "/bin/bash scripts/build-dev.sh",
+    "swith:pro": "/bin/bash scripts/pre-commit.sh",
+    "build:dev": "webpack --config=./webpack.config.js --progress",
+    "build:pro": "NODE_ENV=production webpack --config=./webpack.config.js --progress",
     "start": "node server.js",
+    "start:dev": "npm run swith:dev && npm start",
+    "start:pro": "npm run swith:pro && npm run build:pro && npm start",
     "test": "cd ./app/ && mocha --recursive --compilers js:babel/register",
     "test:cov": "cd ./app/ && babel-node ../node_modules/.bin/isparta cover --report text --report html ../node_modules/.bin/_mocha -- --recursive --compilers js:babel/register"
   },
