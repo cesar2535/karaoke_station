@@ -1,5 +1,6 @@
 import { CALL_API, Schemas } from '../middleware/api';
-import { FAVORITES_REQUEST, FAVORITES_SUCCESS, FAVORITES_FAILURE } from '../constants/ActionTypes';
+import { FAVORITES_REQUEST, FAVORITES_SUCCESS, FAVORITES_FAILURE,
+        FAVORITES_LIST_REQUEST, FAVORITES_LIST_SUCCESS, FAVORITES_LIST_FAILURE } from '../constants/ActionTypes';
 
 function fetchFavorites(listName, id) {
   return {
@@ -7,31 +8,31 @@ function fetchFavorites(listName, id) {
     [CALL_API]: {
       types: [ FAVORITES_REQUEST, FAVORITES_SUCCESS, FAVORITES_FAILURE ],
       endpoint: `/favorite/${id}`,
-      schema: Schemas.SONG_ARRAY,
+      schema: Schemas.SONG_S_ARRAY,
       method: 'get'
     }
-  }
+  };
 }
 
-export function loadFavorites(name) {
-  return (dispatch, getState) => {
-    return dispatch(fetchFavorites(name));
-  }
+export function loadFavorites(name, id) {
+  return (dispatch) => {
+    return dispatch(fetchFavorites(name, id));
+  };
 }
 
 function fetchFavoriteLists() {
   return {
     [CALL_API]: {
-      types: [],
+      types: [ FAVORITES_LIST_REQUEST, FAVORITES_LIST_SUCCESS, FAVORITES_LIST_FAILURE ],
       endpoint: `/favorite`,
-      schema: '',
+      schema: Schemas.FAVORITES,
       method: 'get'
     }
-  }
+  };
 }
 
 export function loadFavoriteLists() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(fetchFavoriteLists());
-  }
+  };
 }

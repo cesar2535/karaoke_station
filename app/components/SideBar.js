@@ -11,10 +11,10 @@ export default class SideBar extends Component {
           <span className='ic ic_menu_home'></span>
           <p>首頁</p>
         </Link>
-        <section className='SideBarItem'>
+        <Link className='SideBarItem' to={`${QTS_ROOT}favorite`} activeClassName="is-current">
           <span className='ic ic_menu_favoraite'></span>
           <p>最愛歌曲</p>
-        </section>
+        </Link>
         <Link className='SideBarItem' to={`${QTS_ROOT}songbook`} activeClassName="is-current">
           <span className='ic ic_menu_reguestbook'></span>
           <p>點歌本</p>
