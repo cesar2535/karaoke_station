@@ -8,3 +8,27 @@ Karaoke station w/ QTS
 - React-router
 
 [HackPad](https://hackpad.com/Karaoke-Station-Web-Client-2k0DVADwvmc)
+
+### Development
+
+```
+npm run start:dev
+```
+
+### Production
+
+```
+npm run start:pro
+```
+
+### Deploy Development
+
+```
+npm run deploy:dev
+```
+
+### Deploy Production
+
+```
+npm run deploy:pro
+```

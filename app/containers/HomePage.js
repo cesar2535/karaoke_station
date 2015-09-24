@@ -7,6 +7,7 @@ import Playlist from '../components/Playlist';
 
 import { loadPlaylist } from '../actions/playlist';
 import { transitionSilde } from '../actions';
+import { QTS_ROOT } from '../constants/Config';
 
 function loadData(props) {
   props.loadPlaylist('current');
@@ -84,7 +85,7 @@ class HomePage extends Component {
       <div className="Main-wrapper-playlist">
         <h1>
           <span className="ic ic_menu_requestinglist" />
-          <Link className="" to={`/playlist/current`}>點歌清單</Link>
+          <Link className="" to={`${QTS_ROOT}playlist/current`}>點歌清單</Link>
         </h1>
         <Playlist className="Playlist--home" songs={queue} isFetching={songsInQueue.isFetching || false} />
       </div>
@@ -99,10 +100,10 @@ class HomePage extends Component {
           點歌本
         </h1>
         <div className="SongbookNav">
-          <Link className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover01.png)`}} to={`/songbook/male`}>
+          <Link className="SongbookNav-item" style={{ backgroundImage: `url(./assets/images/img_songbook_cover01.png)`}} to={`${QTS_ROOT}songbook/male`}>
             <span className="SongbookNav-item-title">依歌星點歌</span>
           </Link>
-          <Link className="SongbookNav-item" style={{ backgroundImage: `url(../assets/images/img_songbook_cover02.png)`}} to={`/songbook/language/Mandarin`}>
+          <Link className="SongbookNav-item" style={{ backgroundImage: `url(./assets/images/img_songbook_cover02.png)`}} to={`${QTS_ROOT}songbook/language/Mandarin`}>
             <span className="SongbookNav-item-title">依語言點歌</span>
           </Link>
         </div>

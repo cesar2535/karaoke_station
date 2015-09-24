@@ -103,5 +103,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# build
-static
+# build-pro
+assets
+index.html

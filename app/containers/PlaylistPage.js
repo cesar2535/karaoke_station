@@ -9,6 +9,7 @@ import ListNav from '../components/ListNav';
 import ListPager from '../components/ListPager';
 
 import { loadPlaylist } from '../actions/playlist';
+import { QTS_ROOT } from '../constants/Config';
 
 function loadData(props) {
   props.loadPlaylist('current');
@@ -78,7 +79,7 @@ class PlaylistPage extends Component {
 
   _renderSideTabItem(item, index) {
     return (
-      <Link key={index} className="SideTab-listitem" to={`/playlist/${item.slug}`} activeClassName="is-current">
+      <Link key={index} className="SideTab-listitem" to={`${QTS_ROOT}playlist/${item.slug}`} activeClassName="is-current">
         <span>{`${item.title} (${item.count})`}</span>
       </Link>
     );

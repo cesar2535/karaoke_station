@@ -1,8 +1,8 @@
 import { Schema, arrayOf, normalize } from 'normalizr';
 import { camelizeKeys } from 'humps';
 import 'isomorphic-fetch';
-import { API_ROOT } from '../constants/Config';
 
+const API_ROOT = 'http://' + location.host.split(':')[0] + ':5603/ktvstation/v1';
 export const CALL_API = Symbol('Call API');
 
 const songSchema = new Schema('songs', {
