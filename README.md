@@ -9,7 +9,7 @@ Karaoke station w/ QTS
 
 [HackPad](https://hackpad.com/Karaoke-Station-Web-Client-2k0DVADwvmc)
 
-### Develop
+### Development
 
 ```
 npm run start:dev
@@ -21,9 +21,14 @@ npm run start:dev
 npm run start:pro
 ```
 
-### Deploy
+### Deploy Development
 
 ```
-npm run deploy
+npm run deploy:dev
 ```
 
+### Deploy Production
+
+```
+npm run deploy:pro
+```
