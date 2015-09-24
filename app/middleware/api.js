@@ -17,6 +17,10 @@ const artistsInBookSchema = new Schema('artists', {
   idAttribute: 'name'
 });
 
+const favoritesListSchema = new Schema('favorites', {
+  idAttribute: 'id'
+});
+
 const artistsSchema = new Schema('artists_list');
 
 const languagesSchema = new Schema('languages');
@@ -29,7 +33,8 @@ export const Schemas = {
   ARTISTS: arrayOf(artistsSchema),
   SONGINBOOK: arrayOf(songSchemaS),
   ARTISTSINBOOK: arrayOf(artistsInBookSchema),
-  LANGUAGES: arrayOf(languagesSchema)
+  LANGUAGES: arrayOf(languagesSchema),
+  FAVORITES: arrayOf(favoritesListSchema)
 };
 
 function callApi({ endpoint, schema, method, body }) {
