@@ -1,5 +1,5 @@
-export const API_ROOT = 'http://172.17.34.10:5603/ktvstation/v1';
-export const QTS_ROOT = '/';
+export const API_ROOT = 'http://' + location.host.split(':')[0] + ':5603/ktvstation/v1';
+export const QTS_ROOT = '/apps/KTVStation/';
 export const ADD_BUTTOM = 'ADD_BUTTOM';
 export const INSERT_BUTTOM = 'INSERT_BUTTOM';
 export const ADD_FAVORITE_BUTTOM = 'ADD_FAVORITE_BUTTOM';
