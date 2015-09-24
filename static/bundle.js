@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4a94d157a8f0b85a2913"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cc22e07e518ebb103d8f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -26362,9 +26362,9 @@
 	'use strict';
 
 	exports.__esModule = true;
-	var API_ROOT = 'http://172.17.34.10:5603/ktvstation/v1';
+	var API_ROOT = 'http://' + location.host.split(':')[0] + ':5603/ktvstation/v1';
 	exports.API_ROOT = API_ROOT;
-	var QTS_ROOT = '/';
+	var QTS_ROOT = '/apps/KTVStation/';
 	exports.QTS_ROOT = QTS_ROOT;
 	var ADD_BUTTOM = 'ADD_BUTTOM';
 	exports.ADD_BUTTOM = ADD_BUTTOM;
