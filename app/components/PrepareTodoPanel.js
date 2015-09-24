@@ -29,7 +29,7 @@ export default class PrepareTodoPanel extends Component {
           <ic className='ic ic_action_remove' />
           <p>刪歌</p>
         </a>
-        <a className={ `${className}--btn-remove-favorite ${displayRemoveFavoriteBtn}`} onClick={ () => this.unComplete() }>
+        <a className={ `${className}--btn-remove-faverite ${displayRemoveFavoriteBtn}`} onClick={ () => this.unComplete() }>
           <ic className='ic ic_action_remove' />
           <p>移除最愛</p>
         </a>
