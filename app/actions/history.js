@@ -8,13 +8,13 @@ function fetchHistory(page = 0, count = 20, order = 'asc') {
       types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
       endpoint: `/playlist/history?page=${page}&count=${count}&order=${order}`,
       schema: Schemas.SONG_S_ARRAY,
-      method: 'get'
+      method: 'GET'
     }
-  }
+  };
 }
 
 export function loadHistory(page, count, order) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(fetchHistory(page, count, order));
-  }
+  };
 }
