@@ -8,13 +8,13 @@ function fetchPlaylist(name) {
       types: [ PLAYLIST_REQUEST, PLAYLIST_SUCCESS, PLAYLIST_FAILURE ],
       endpoint: `/playlist?state=${name}`,
       schema: Schemas.SONG_ARRAY,
-      method: 'get'
+      method: 'GET'
     }
-  }
+  };
 }
 
 export function loadPlaylist(name) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(fetchPlaylist(name));
-  }
+  };
 }

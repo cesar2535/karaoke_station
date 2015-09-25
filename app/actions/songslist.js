@@ -10,18 +10,35 @@ import { SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE,
 
 import * as APIS from '../constants/Apis.config';
 
-function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
-  const pageArg = page !== undefined ? '&page=' + page : '';
-  const countArg = count !== undefined ? '&count=' + count : '';
+/* Issue For APIs Server when use language search can't use arg "page", "count"
+function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 0, count = 20, language) {
   const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
   const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-  const languageArg = language !== undefined ? '&lang=' + language : '';
+  const languageArg = language !== undefined ? '$lang=' + language : '';
   const actionKey = language !== undefined ? language : artistNation;
   return {
     actionKey,
     [CALL_API]: {
       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-      endpoint: `${APIS.SONGS}?${pageArg}${countArg}${artistArg}${queryWhoArg}${languageArg}`,
+      endpoint: `${APIS.SONGS}?page=${page}&count=${count}${languageArg}${artistArg}${queryWhoArg}`,
+      schema: Schemas.SONGINBOOK,
+      method: 'GET'
+    }
+  };
+}
+*/
+function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
+  const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
+  const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
+  const pageArg = page !== undefined ? '&page=' + page : '';
+  const countArg = count !== undefined ? '&count=' + count : '';
+  const languageArg = language !== undefined ? '$lang=' + language : '';
+  const actionKey = language !== undefined ? language : artistNation;
+  return {
+    actionKey,
+    [CALL_API]: {
+      types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
+      endpoint: `${APIS.SONGS}?${pageArg}${countArg}${languageArg}${artistArg}${queryWhoArg}`,
       schema: Schemas.SONGINBOOK,
       method: 'GET'
     }
@@ -117,37 +134,20 @@ export function loadLanguageList() {
   };
 }
 
-// function fetchSongsListByGender(gender) {
-//   return {
-//     [CALL_API]: {
-//       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-//       endpoint: `/songlist/artists/${gender}`,
-//       schema: Schemas.SONGINBOOK,
-//       method: 'GET'
-//     }
-//   };
-// }
-
-// export function loadSongsListByGender(gender) {
-//   return (dispatch, getState) => {
-//     return dispatch(fetchSongsListByGender(gender));
-//   };
-// }
-//
-function fetchArtistsListByGender(gender) {
+function fetchArtistsListByGender(gender, page = 0, count = 20) {
   return {
     gender,
     [CALL_API]: {
       types: [ ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE ],
-      endpoint: `${APIS.ARTISTS_CATEGORY}/${gender}?page=1&count=80`,
+      endpoint: `${APIS.ARTISTS_CATEGORY}/${gender}?page=${page}&count=${count}`,
       schema: Schemas.ARTISTSINBOOK,
       method: 'GET'
     }
   };
 }
 
-export function loadArtistsListByGender(gender) {
+export function loadArtistsListByGender(gender, page, count) {
   return (dispatch) => {
-    return dispatch(fetchArtistsListByGender(gender));
+    return dispatch(fetchArtistsListByGender(gender, page, count));
   };
 }
