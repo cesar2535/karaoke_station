@@ -9,7 +9,7 @@ function fetchFavorites(listName, id) {
       types: [ FAVORITES_REQUEST, FAVORITES_SUCCESS, FAVORITES_FAILURE ],
       endpoint: `/favorite/${id}`,
       schema: Schemas.SONG_S_ARRAY,
-      method: 'get'
+      method: 'GET'
     }
   };
 }
@@ -26,7 +26,7 @@ function fetchFavoriteLists() {
       types: [ FAVORITES_LIST_REQUEST, FAVORITES_LIST_SUCCESS, FAVORITES_LIST_FAILURE ],
       endpoint: `/favorite`,
       schema: Schemas.FAVORITES,
-      method: 'get'
+      method: 'GET'
     }
   };
 }

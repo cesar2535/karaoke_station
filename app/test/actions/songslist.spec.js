@@ -53,5 +53,71 @@ describe('songslist actions', () => {
       body: { songid: 100 }
     });
   });
+
+  it('loadArtistsListByGender(\'male\') should create [ ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE ] action', () => {
+    expect(
+      actions.loadArtistsListByGender('male')(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.ARTISTS_LIST_BY_GENDER_REQUEST, types.ARTISTS_LIST_BY_GENDER_SUCCESS, types.ARTISTS_LIST_BY_GENDER_FAILURE ],
+      endpoint: '/songlist/artists/male?page=0&count=20',
+      schema: Schemas.ARTISTSINBOOK,
+      method: 'GET'
+    });
+  });
+
+  it('loadArtistsListByGender(\'male\', 1, 30) should create [ ARTISTS_LIST_BY_GENDER_REQUEST, ARTISTS_LIST_BY_GENDER_SUCCESS, ARTISTS_LIST_BY_GENDER_FAILURE ] action', () => {
+    expect(
+      actions.loadArtistsListByGender('male', 1, 30)(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.ARTISTS_LIST_BY_GENDER_REQUEST, types.ARTISTS_LIST_BY_GENDER_SUCCESS, types.ARTISTS_LIST_BY_GENDER_FAILURE ],
+      endpoint: '/songlist/artists/male?page=1&count=30',
+      schema: Schemas.ARTISTSINBOOK,
+      method: 'GET'
+    });
+  });
+
+  it('loadLanguageList() should create [ LANGUAGE_LIST_REQUEST, LANGUAGE_LIST_SUCCESS, LANGUAGE_LIST_FAILURE ] action', () => {
+    expect(
+      actions.loadLanguageList()(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.LANGUAGE_LIST_REQUEST, types.LANGUAGE_LIST_SUCCESS, types.LANGUAGE_LIST_FAILURE ],
+      endpoint: '/songlist/languages',
+      schema: Schemas.ARTISTS,
+      method: 'GET'
+    });
+  });
+
+  it('loadArtistsList() should create [ ARTISTS_LIST_REQUEST, ARTISTS_LIST_SUCCESS, ARTISTS_LIST_FAILURE ] action', () => {
+    expect(
+      actions.loadArtistsList()(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.ARTISTS_LIST_REQUEST, types.ARTISTS_LIST_SUCCESS, types.ARTISTS_LIST_FAILURE ],
+      endpoint: '/songlist/artists',
+      schema: Schemas.ARTISTS,
+      method: 'GET'
+    });
+  });
+
+  it('loadSongsList() should create [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ] action', () => {
+    expect(
+      actions.loadSongsList()(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.SONGS_LIST_REQUEST, types.SONGS_LIST_SUCCESS, types.SONGS_LIST_FAILURE ],
+      endpoint: '/songlist?',
+      schema: Schemas.SONGINBOOK,
+      method: 'GET'
+    });
+  });
+
+  it('loadSongsList(undefined, undefined, \'songs\', \'蔡依林\', 1, 80, \'Mandarin\') should create [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ] action', () => {
+    expect(
+      actions.loadSongsList(undefined, undefined, 'songs', '蔡依林', 1, 80, 'Mandarin')(action => action, fakeStore({}))[CALL_API]
+    ).toEqual({
+      types: [ types.SONGS_LIST_REQUEST, types.SONGS_LIST_SUCCESS, types.SONGS_LIST_FAILURE ],
+      endpoint: '/songlist?&page=1&count=80$lang=Mandarin&artists=蔡依林&query_who=songs',
+      schema: Schemas.SONGINBOOK,
+      method: 'GET'
+    });
+  });
 });
 

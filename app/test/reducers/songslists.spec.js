@@ -3,7 +3,6 @@ import addPrepareTodos from '../../reducers/songslist';
 import * as types from '../../constants/ActionTypes';
 
 describe('addPrepareTodos reducer', () => {
-
   it('should handle initial state', () => {
     expect(
       addPrepareTodos(undefined, {})
