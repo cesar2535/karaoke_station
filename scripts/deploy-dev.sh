@@ -1,4 +1,4 @@
 #!/bin/bash
 
-npm run swith:dev
+npm run switch:dev
 npm run build:dev

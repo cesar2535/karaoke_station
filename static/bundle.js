@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "49337e7bfb2d818f35d8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1d22715185927b4d2c7b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -37838,12 +37838,12 @@
 	    types: [_constantsActionTypes.PLAYLIST_REQUEST, _constantsActionTypes.PLAYLIST_SUCCESS, _constantsActionTypes.PLAYLIST_FAILURE],
 	    endpoint: '/playlist?state=' + name,
 	    schema: _middlewareApi.Schemas.SONG_ARRAY,
-	    method: 'get'
+	    method: 'GET'
 	  }, _ref);
 	}
 
 	function loadPlaylist(name) {
-	  return function (dispatch, getState) {
+	  return function (dispatch) {
 	    return dispatch(fetchPlaylist(name));
 	  };
 	}
@@ -38680,20 +38680,37 @@
 
 	var APIS = _interopRequireWildcard(_constantsApisConfig);
 
+	/* Issue For APIs Server when use language search can't use arg "page", "count"
+	function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 0, count = 20, language) {
+	  const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
+	  const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
+	  const languageArg = language !== undefined ? '$lang=' + language : '';
+	  const actionKey = language !== undefined ? language : artistNation;
+	  return {
+	    actionKey,
+	    [CALL_API]: {
+	      types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
+	      endpoint: `${APIS.SONGS}?page=${page}&count=${count}${languageArg}${artistArg}${queryWhoArg}`,
+	      schema: Schemas.SONGINBOOK,
+	      method: 'GET'
+	    }
+	  };
+	}
+	*/
 	function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
 	  var _ref;
 
-	  var pageArg = page !== undefined ? '&page=' + page : '';
-	  var countArg = count !== undefined ? '&count=' + count : '';
 	  var artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
 	  var queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-	  var languageArg = language !== undefined ? '&lang=' + language : '';
+	  var pageArg = page !== undefined ? '&page=' + page : '';
+	  var countArg = count !== undefined ? '&count=' + count : '';
+	  var languageArg = language !== undefined ? '$lang=' + language : '';
 	  var actionKey = language !== undefined ? language : artistNation;
 	  return (_ref = {
 	    actionKey: actionKey
 	  }, _ref[_middlewareApi.CALL_API] = {
 	    types: [_constantsActionTypes.SONGS_LIST_REQUEST, _constantsActionTypes.SONGS_LIST_SUCCESS, _constantsActionTypes.SONGS_LIST_FAILURE],
-	    endpoint: APIS.SONGS + '?' + pageArg + countArg + artistArg + queryWhoArg + languageArg,
+	    endpoint: APIS.SONGS + '?' + pageArg + countArg + languageArg + artistArg + queryWhoArg,
 	    schema: _middlewareApi.Schemas.SONGINBOOK,
 	    method: 'GET'
 	  }, _ref);
@@ -38788,39 +38805,26 @@
 	  };
 	}
 
-	// function fetchSongsListByGender(gender) {
-	//   return {
-	//     [CALL_API]: {
-	//       types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-	//       endpoint: `/songlist/artists/${gender}`,
-	//       schema: Schemas.SONGINBOOK,
-	//       method: 'GET'
-	//     }
-	//   };
-	// }
-
-	// export function loadSongsListByGender(gender) {
-	//   return (dispatch, getState) => {
-	//     return dispatch(fetchSongsListByGender(gender));
-	//   };
-	// }
-	//
 	function fetchArtistsListByGender(gender) {
+	  var page = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+
 	  var _ref6;
+
+	  var count = arguments.length <= 2 || arguments[2] === undefined ? 20 : arguments[2];
 
 	  return (_ref6 = {
 	    gender: gender
 	  }, _ref6[_middlewareApi.CALL_API] = {
 	    types: [_constantsActionTypes.ARTISTS_LIST_BY_GENDER_REQUEST, _constantsActionTypes.ARTISTS_LIST_BY_GENDER_SUCCESS, _constantsActionTypes.ARTISTS_LIST_BY_GENDER_FAILURE],
-	    endpoint: APIS.ARTISTS_CATEGORY + '/' + gender + '?page=1&count=80',
+	    endpoint: APIS.ARTISTS_CATEGORY + '/' + gender + '?page=' + page + '&count=' + count,
 	    schema: _middlewareApi.Schemas.ARTISTSINBOOK,
 	    method: 'GET'
 	  }, _ref6);
 	}
 
-	function loadArtistsListByGender(gender) {
+	function loadArtistsListByGender(gender, page, count) {
 	  return function (dispatch) {
-	    return dispatch(fetchArtistsListByGender(gender));
+	    return dispatch(fetchArtistsListByGender(gender, page, count));
 	  };
 	}
 
@@ -50763,12 +50767,12 @@
 	    types: [_constantsActionTypes.PLAYLIST_REQUEST, _constantsActionTypes.PLAYLIST_SUCCESS, _constantsActionTypes.PLAYLIST_FAILURE],
 	    endpoint: '/playlist/history?page=' + page + '&count=' + count + '&order=' + order,
 	    schema: _middlewareApi.Schemas.SONG_S_ARRAY,
-	    method: 'get'
+	    method: 'GET'
 	  }, _ref);
 	}
 
 	function loadHistory(page, count, order) {
-	  return function (dispatch, getState) {
+	  return function (dispatch) {
 	    return dispatch(fetchHistory(page, count, order));
 	  };
 	}
@@ -50980,7 +50984,7 @@
 	    types: [_constantsActionTypes.FAVORITES_REQUEST, _constantsActionTypes.FAVORITES_SUCCESS, _constantsActionTypes.FAVORITES_FAILURE],
 	    endpoint: '/favorite/' + id,
 	    schema: _middlewareApi.Schemas.SONG_S_ARRAY,
-	    method: 'get'
+	    method: 'GET'
 	  }, _ref);
 	}
 
@@ -50997,7 +51001,7 @@
 	    types: [_constantsActionTypes.FAVORITES_LIST_REQUEST, _constantsActionTypes.FAVORITES_LIST_SUCCESS, _constantsActionTypes.FAVORITES_LIST_FAILURE],
 	    endpoint: '/favorite',
 	    schema: _middlewareApi.Schemas.FAVORITES,
-	    method: 'get'
+	    method: 'GET'
 	  }, _ref2);
 	}
 
