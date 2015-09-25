@@ -9,6 +9,13 @@ Karaoke station w/ QTS
 
 [HackPad](https://hackpad.com/Karaoke-Station-Web-Client-2k0DVADwvmc)
 
+### NAS上的部署
+
+- 將sourcecode.tar.gz解壓縮至 /share/CACHEDEV1_DATA/.qpkg/KTVStation/web/ 底下
+- 執行 deploy-production.sh 後
+- 刪除 app/, script/ 目錄及其內容, 刪除 README.md, package.json, server.js, webpack.config.js以及 deploy-production.sh
+- 再執行打包 qpkg 後續
+
 ### Development
 
 ```
