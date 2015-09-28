@@ -1,4 +1,4 @@
-export const API_ROOT = 'http://' + location.host.split(':')[0] + ':5603/ktvstation/v1';
+export const API_ROOT = 'http://' + location.hostname + ':5603/ktvstation/v1';
 export const QTS_ROOT = '/apps/KTVStation/';
 export const ADD_BUTTOM = 'ADD_BUTTOM';
 export const INSERT_BUTTOM = 'INSERT_BUTTOM';
