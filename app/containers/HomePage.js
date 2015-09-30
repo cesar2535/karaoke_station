@@ -6,11 +6,13 @@ import List from '../components/utils/List';
 import Playlist from '../components/Playlist';
 
 import { loadPlaylist } from '../actions/playlist';
+import { loadFavoriteLists } from '../actions/favorites';
 import { transitionSilde } from '../actions';
 import { QTS_ROOT } from '../constants/Config';
 
 function loadData(props) {
   props.loadPlaylist('current');
+  props.loadFavoriteLists();
 }
 
 class HomePage extends Component {
@@ -47,7 +49,9 @@ class HomePage extends Component {
   }
 
   _renderFavoritesCollection() {
-    const { favorites } = this.props;
+    const { favoriteLists, favoriteListState } = this.props;
+    let favoriteListsAtHome = favoriteLists.slice(0, 8);
+    favoriteListsAtHome.push({ name: 'More'});
     return (
       <div className="Main-wrapper-favorites">
         <h1>
@@ -56,7 +60,8 @@ class HomePage extends Component {
         </h1>
         <List className={`FavoritesCollection`}
               renderItem={this._renderFavoritesList.bind(this)}
-              items={favorites} />
+              items={favoriteListsAtHome}
+              isFetching={favoriteListState.isFetching} />
       </div>
     );
   }
@@ -64,18 +69,19 @@ class HomePage extends Component {
   _renderFavoritesList(list, index, array) {
     if (index === array.length - 1) {
       return (
-        <div key={list.title} className="FavoritesCollection-item" style={{ backgroundColor: "rgba(0,0,0,0.2)"}}>
-          <span className="FavoritesCollection-item-title">{list.title}</span>
-        </div>
+        <Link key={index} className="FavoritesCollection-item" style={{ backgroundColor: "rgba(0,0,0,0.2)"}} to={`${QTS_ROOT}favorite`}>
+          <span className="FavoritesCollection-item-title">{list.name}</span>
+        </Link>
       );
     }
 
+    const className = `FavoriteCover-0${index % 8 + 1}`;
     return (
-      <div key={list.title} className="FavoritesCollection-item" style={{ backgroundImage: `url(${list.background})`}}>
-        <span className="FavoritesCollection-item-title">{list.title}</span>
+      <Link key={index} className={`FavoritesCollection-item ${className}`} to={`${QTS_ROOT}favorite/${list.name}`}>
+        <span className="FavoritesCollection-item-title">{list.name}</span>
         <div className="FavoritesCollection-item-divider" />
-        <span className="FavoritesCollection-item-count">{`${list.songCount} songs`}</span>
-      </div>
+        <span className="FavoritesCollection-item-count">{`${list.nSongs} songs`}</span>
+      </Link>
     );
   }
 
@@ -115,20 +121,23 @@ class HomePage extends Component {
 function mapStateToProps(state, ownProps) {
 
   const {
-    pagination: { playlist },
-    entities: { songs },
+    pagination: { playlist, favoritelist },
+    entities: { songs, favorites },
     slide
   } = state;
 
   const songsInQueue = playlist['current'] || { ids: [] };
   const queue = songsInQueue.ids.map(id => songs[id]);
+  const favoriteListState = favoritelist['favoritelist'] || { ids: [] };
+  const favoriteLists = favoriteListState.ids.map(id => favorites[id]);
 
   return {
     queue,
     songsInQueue,
+    favoriteLists,
+    favoriteListState,
     page: slide,
-    favorites: FAKE_FAVORITES_LISTS
   };
 }
 
-export default connect(mapStateToProps, { loadPlaylist, transitionSilde })(HomePage);
+export default connect(mapStateToProps, { loadPlaylist, loadFavoriteLists, transitionSilde })(HomePage);
