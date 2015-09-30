@@ -43,7 +43,7 @@ export default class Playlist extends Component {
     return (
       <div key={index} className={`Playlist-item ${itemClass} Playlist-item--songs`} onClick={() => addPrepareTodos(song.id)} >
         <span className={`Playlist-item-title ${inPlayListClass}`}>{song.name}</span>
-        <span className={`Playlist-item-artists ${inPlayListClass}`}>{song.artist}
+        <span className={`Playlist-item-artist ${inPlayListClass}`}>{song.artist}
           <PrepareTodoPanel className={preparePanelClass}
               addBtn={ADD_BUTTOM}
               insertBtn={INSERT_BUTTOM}
