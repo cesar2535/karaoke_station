@@ -3,7 +3,8 @@ import './stylus/styles.styl';
 
 import React from 'react';
 import { QTS_ROOT } from './constants/Config';
-import createHistory from 'history/lib/createBrowserHistory';
+// import createHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createHashHistory';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import configureStore from './store/configureStore';

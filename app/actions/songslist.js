@@ -32,7 +32,7 @@ function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, lan
   const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
   const pageArg = page !== undefined ? '&page=' + page : '';
   const countArg = count !== undefined ? '&count=' + count : '';
-  const languageArg = language !== undefined ? '$lang=' + language : '';
+  const languageArg = language !== undefined ? '&lang=' + language : '';
   const actionKey = language !== undefined ? language : artistNation;
   return {
     actionKey,
