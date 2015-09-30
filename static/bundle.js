@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d22715185927b4d2c7b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c5bfc26a84a8e7901fa7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -571,9 +571,11 @@
 
 	var _constantsConfig = __webpack_require__(361);
 
-	var _historyLibCreateBrowserHistory = __webpack_require__(365);
+	// import createHistory from 'history/lib/createBrowserHistory';
 
-	var _historyLibCreateBrowserHistory2 = _interopRequireDefault(_historyLibCreateBrowserHistory);
+	var _historyLibCreateHashHistory = __webpack_require__(365);
+
+	var _historyLibCreateHashHistory2 = _interopRequireDefault(_historyLibCreateHashHistory);
 
 	var _reactRedux = __webpack_require__(379);
 
@@ -607,7 +609,7 @@
 
 	var _containersFavoritesPage2 = _interopRequireDefault(_containersFavoritesPage);
 
-	var history = _historyLibCreateBrowserHistory2['default']({
+	var history = _historyLibCreateHashHistory2['default']({
 	  queryKey: '_key'
 	});
 
@@ -26367,7 +26369,7 @@
 	'use strict';
 
 	exports.__esModule = true;
-	var API_ROOT = 'http://' + location.host.split(':')[0] + ':5603/ktvstation/v1';
+	var API_ROOT = 'http://' + location.hostname + ':5603/ktvstation/v1';
 	exports.API_ROOT = API_ROOT;
 	var QTS_ROOT = '/apps/KTVStation/';
 	exports.QTS_ROOT = QTS_ROOT;
@@ -26524,19 +26526,23 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(366);
+	var _warning = __webpack_require__(366);
+
+	var _warning2 = _interopRequireDefault(_warning);
+
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _Actions = __webpack_require__(367);
+	var _Actions = __webpack_require__(368);
 
-	var _ExecutionEnvironment = __webpack_require__(368);
+	var _ExecutionEnvironment = __webpack_require__(369);
 
-	var _DOMUtils = __webpack_require__(369);
+	var _DOMUtils = __webpack_require__(370);
 
-	var _DOMStateStorage = __webpack_require__(370);
+	var _DOMStateStorage = __webpack_require__(371);
 
-	var _createDOMHistory = __webpack_require__(371);
+	var _createDOMHistory = __webpack_require__(372);
 
 	var _createDOMHistory2 = _interopRequireDefault(_createDOMHistory);
 
@@ -26544,52 +26550,79 @@
 
 	var _createLocation2 = _interopRequireDefault(_createLocation);
 
-	/**
-	 * Creates and returns a history object that uses HTML5's history API
-	 * (pushState, replaceState, and the popstate event) to manage history.
-	 * This is the recommended method of managing history in browsers because
-	 * it provides the cleanest URLs.
-	 *
-	 * Note: In browsers that do not support the HTML5 history API full
-	 * page reloads will be used to preserve URLs.
-	 */
-	function createBrowserHistory(options) {
-	  _invariant2['default'](_ExecutionEnvironment.canUseDOM, 'Browser history needs a DOM');
+	function isAbsolutePath(path) {
+	  return typeof path === 'string' && path.charAt(0) === '/';
+	}
 
-	  var isSupported = _DOMUtils.supportsHistory();
+	function ensureSlash() {
+	  var path = _DOMUtils.getHashPath();
 
-	  function getCurrentLocation(historyState) {
-	    historyState = historyState || window.history.state || {};
+	  if (isAbsolutePath(path)) return true;
 
-	    var path = _DOMUtils.getWindowPath();
-	    var _historyState = historyState;
-	    var key = _historyState.key;
+	  _DOMUtils.replaceHashPath('/' + path);
 
-	    var state = undefined;
-	    if (key) {
-	      state = _DOMStateStorage.readState(key);
-	    } else {
-	      state = null;
-	      key = history.createKey();
-	      window.history.replaceState(_extends({}, historyState, { key: key }), null, path);
+	  return false;
+	}
+
+	function addQueryStringValueToPath(path, key, value) {
+	  return path + (path.indexOf('?') === -1 ? '?' : '&') + (key + '=' + value);
+	}
+
+	function stripQueryStringValueFromPath(path, key) {
+	  return path.replace(new RegExp('[?&]?' + key + '=[a-zA-Z0-9]+'), '');
+	}
+
+	function getQueryStringValueFromPath(path, key) {
+	  var match = path.match(new RegExp('\\?.*?\\b' + key + '=(.+?)\\b'));
+	  return match && match[1];
+	}
+
+	var DefaultQueryKey = '_k';
+
+	function createHashHistory() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  _invariant2['default'](_ExecutionEnvironment.canUseDOM, 'Hash history needs a DOM');
+
+	  var queryKey = options.queryKey;
+
+	  if (queryKey === undefined || !!queryKey) queryKey = typeof queryKey === 'string' ? queryKey : DefaultQueryKey;
+
+	  function getCurrentLocation() {
+	    var path = _DOMUtils.getHashPath();
+
+	    var key = undefined,
+	        state = undefined;
+	    if (queryKey) {
+	      key = getQueryStringValueFromPath(path, queryKey);
+	      path = stripQueryStringValueFromPath(path, queryKey);
+
+	      if (key) {
+	        state = _DOMStateStorage.readState(key);
+	      } else {
+	        state = null;
+	        key = history.createKey();
+	        _DOMUtils.replaceHashPath(addQueryStringValueToPath(path, queryKey, key));
+	      }
 	    }
 
 	    return _createLocation2['default'](path, state, undefined, key);
 	  }
 
-	  function startPopStateListener(_ref) {
+	  function startHashChangeListener(_ref) {
 	    var transitionTo = _ref.transitionTo;
 
-	    function popStateListener(event) {
-	      if (event.state === undefined) return; // Ignore extraneous popstate events in WebKit.
+	    function hashChangeListener() {
+	      if (!ensureSlash()) return; // Always make sure hashes are preceeded with a /.
 
-	      transitionTo(getCurrentLocation(event.state));
+	      transitionTo(getCurrentLocation());
 	    }
 
-	    _DOMUtils.addEventListener(window, 'popstate', popStateListener);
+	    ensureSlash();
+	    _DOMUtils.addEventListener(window, 'hashchange', hashChangeListener);
 
 	    return function () {
-	      _DOMUtils.removeEventListener(window, 'popstate', popStateListener);
+	      _DOMUtils.removeEventListener(window, 'hashchange', hashChangeListener);
 	    };
 	  }
 
@@ -26602,27 +26635,27 @@
 
 	    if (action === _Actions.POP) return; // Nothing to do.
 
-	    _DOMStateStorage.saveState(key, state);
-
 	    var path = pathname + search;
-	    var historyState = {
-	      key: key
-	    };
 
-	    if (action === _Actions.PUSH) {
-	      if (isSupported) {
-	        window.history.pushState(historyState, null, path);
-	      } else {
-	        window.location.href = path; // Use page reload to preserve the URL.
-	      }
+	    if (queryKey) path = addQueryStringValueToPath(path, queryKey, key);
+
+	    if (path === _DOMUtils.getHashPath()) {
+	      _warning2['default'](false, 'You cannot %s the same path using hash history', action);
 	    } else {
-	        // REPLACE
-	        if (isSupported) {
-	          window.history.replaceState(historyState, null, path);
-	        } else {
-	          window.location.replace(path); // Use page reload to preserve the URL.
-	        }
+	      if (queryKey) {
+	        _DOMStateStorage.saveState(key, state);
+	      } else {
+	        // Drop key and state.
+	        location.key = location.state = null;
 	      }
+
+	      if (action === _Actions.PUSH) {
+	        window.location.hash = path;
+	      } else {
+	        // REPLACE
+	        _DOMUtils.replaceHashPath(path);
+	      }
+	    }
 	  }
 
 	  var history = _createDOMHistory2['default'](_extends({}, options, {
@@ -26632,30 +26665,125 @@
 	  }));
 
 	  var listenerCount = 0,
-	      stopPopStateListener = undefined;
+	      stopHashChangeListener = undefined;
 
 	  function listen(listener) {
-	    if (++listenerCount === 1) stopPopStateListener = startPopStateListener(history);
+	    if (++listenerCount === 1) stopHashChangeListener = startHashChangeListener(history);
 
 	    var unlisten = history.listen(listener);
 
 	    return function () {
 	      unlisten();
 
-	      if (--listenerCount === 0) stopPopStateListener();
+	      if (--listenerCount === 0) stopHashChangeListener();
 	    };
 	  }
 
+	  function pushState(state, path) {
+	    _warning2['default'](queryKey || state == null, 'You cannot use state without a queryKey it will be dropped');
+
+	    history.pushState(state, path);
+	  }
+
+	  function replaceState(state, path) {
+	    _warning2['default'](queryKey || state == null, 'You cannot use state without a queryKey it will be dropped');
+
+	    history.replaceState(state, path);
+	  }
+
+	  var goIsSupportedWithoutReload = _DOMUtils.supportsGoWithoutReloadUsingHash();
+
+	  function go(n) {
+	    _warning2['default'](goIsSupportedWithoutReload, 'Hash history go(n) causes a full page reload in this browser');
+
+	    history.go(n);
+	  }
+
+	  function createHref(path) {
+	    return '#' + history.createHref(path);
+	  }
+
 	  return _extends({}, history, {
-	    listen: listen
+	    listen: listen,
+	    pushState: pushState,
+	    replaceState: replaceState,
+	    go: go,
+	    createHref: createHref
 	  });
 	}
 
-	exports['default'] = createBrowserHistory;
+	exports['default'] = createHashHistory;
 	module.exports = exports['default'];
 
 /***/ },
 /* 366 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	'use strict';
+
+	/**
+	 * Similar to invariant but only logs a warning if the condition is not met.
+	 * This can be used to log issues in development environments in critical
+	 * paths. Removing the logging code for production environments will keep the
+	 * same logic and follow the same code paths.
+	 */
+
+	var warning = function() {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  warning = function(condition, format, args) {
+	    var len = arguments.length;
+	    args = new Array(len > 2 ? len - 2 : 0);
+	    for (var key = 2; key < len; key++) {
+	      args[key - 2] = arguments[key];
+	    }
+	    if (format === undefined) {
+	      throw new Error(
+	        '`warning(condition, format, ...args)` requires a warning ' +
+	        'message argument'
+	      );
+	    }
+
+	    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
+	      throw new Error(
+	        'The warning format should be able to uniquely identify this ' +
+	        'warning. Please, use a more descriptive format than: ' + format
+	      );
+	    }
+
+	    if (!condition) {
+	      var argIndex = 0;
+	      var message = 'Warning: ' +
+	        format.replace(/%s/g, function() {
+	          return args[argIndex++];
+	        });
+	      if (typeof console !== 'undefined') {
+	        console.error(message);
+	      }
+	      try {
+	        // This error was thrown as a convenience so that you can use this stack
+	        // to find the callsite that caused this warning to fire.
+	        throw new Error(message);
+	      } catch(x) {}
+	    }
+	  };
+	}
+
+	module.exports = warning;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+
+/***/ },
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26715,7 +26843,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
-/* 367 */
+/* 368 */
 /***/ function(module, exports) {
 
 	/**
@@ -26751,7 +26879,7 @@
 	};
 
 /***/ },
-/* 368 */
+/* 369 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26761,7 +26889,7 @@
 	exports.canUseDOM = canUseDOM;
 
 /***/ },
-/* 369 */
+/* 370 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26841,7 +26969,7 @@
 	}
 
 /***/ },
-/* 370 */
+/* 371 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26874,7 +27002,7 @@
 	}
 
 /***/ },
-/* 371 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26885,15 +27013,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _ExecutionEnvironment = __webpack_require__(368);
+	var _ExecutionEnvironment = __webpack_require__(369);
 
-	var _DOMUtils = __webpack_require__(369);
+	var _DOMUtils = __webpack_require__(370);
 
-	var _createHistory = __webpack_require__(372);
+	var _createHistory = __webpack_require__(373);
 
 	var _createHistory2 = _interopRequireDefault(_createHistory);
 
@@ -26919,7 +27047,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 372 */
+/* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26930,11 +27058,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -26944,7 +27072,7 @@
 
 	var _AsyncUtils = __webpack_require__(377);
 
-	var _Actions = __webpack_require__(367);
+	var _Actions = __webpack_require__(368);
 
 	var _createLocation = __webpack_require__(378);
 
@@ -27160,73 +27288,6 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-
-	'use strict';
-
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-
-	var warning = function() {};
-
-	if (process.env.NODE_ENV !== 'production') {
-	  warning = function(condition, format, args) {
-	    var len = arguments.length;
-	    args = new Array(len > 2 ? len - 2 : 0);
-	    for (var key = 2; key < len; key++) {
-	      args[key - 2] = arguments[key];
-	    }
-	    if (format === undefined) {
-	      throw new Error(
-	        '`warning(condition, format, ...args)` requires a warning ' +
-	        'message argument'
-	      );
-	    }
-
-	    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
-	      throw new Error(
-	        'The warning format should be able to uniquely identify this ' +
-	        'warning. Please, use a more descriptive format than: ' + format
-	      );
-	    }
-
-	    if (!condition) {
-	      var argIndex = 0;
-	      var message = 'Warning: ' +
-	        format.replace(/%s/g, function() {
-	          return args[argIndex++];
-	        });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch(x) {}
-	    }
-	  };
-	}
-
-	module.exports = warning;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
-
-/***/ },
 /* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27408,11 +27469,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _Actions = __webpack_require__(367);
+	var _Actions = __webpack_require__(368);
 
 	function extractPath(string) {
 	  var match = string.match(/https?:\/\/[^\/]*/);
@@ -27703,7 +27764,7 @@
 
 	var _utilsWrapActionCreators2 = _interopRequireDefault(_utilsWrapActionCreators);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -28702,7 +28763,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -28837,11 +28898,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -29197,7 +29258,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -29242,11 +29303,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -29653,7 +29714,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -29729,7 +29790,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -29840,7 +29901,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -29986,7 +30047,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -30184,7 +30245,7 @@
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -31597,7 +31658,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -31734,11 +31795,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
@@ -31800,7 +31861,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -31881,11 +31942,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _warning = __webpack_require__(373);
+	var _warning = __webpack_require__(366);
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -31983,7 +32044,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -32146,7 +32207,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(366);
+	var _invariant = __webpack_require__(367);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -38704,7 +38765,7 @@
 	  var queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
 	  var pageArg = page !== undefined ? '&page=' + page : '';
 	  var countArg = count !== undefined ? '&count=' + count : '';
-	  var languageArg = language !== undefined ? '$lang=' + language : '';
+	  var languageArg = language !== undefined ? '&lang=' + language : '';
 	  var actionKey = language !== undefined ? language : artistNation;
 	  return (_ref = {
 	    actionKey: actionKey
