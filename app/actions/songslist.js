@@ -10,8 +10,7 @@ import { SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE,
 
 import * as APIS from '../constants/Apis.config';
 
-/* Issue For APIs Server when use language search can't use arg "page", "count"
-function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 0, count = 20, language) {
+function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 1, count = 20, language) {
   const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
   const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
   const languageArg = language !== undefined ? '$lang=' + language : '';
@@ -26,7 +25,8 @@ function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 0, count 
     }
   };
 }
-*/
+
+/*
 function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
   const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
   const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
@@ -44,6 +44,7 @@ function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, lan
     }
   };
 }
+*/
 
 export function loadSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
   return (dispatch) => {
