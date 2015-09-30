@@ -13,7 +13,7 @@ import * as APIS from '../constants/Apis.config';
 function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 1, count = 20, language) {
   const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
   const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-  const languageArg = language !== undefined ? '$lang=' + language : '';
+  const languageArg = language !== undefined ? '&lang=' + language : '';
   const actionKey = language !== undefined ? language : artistNation;
   return {
     actionKey,

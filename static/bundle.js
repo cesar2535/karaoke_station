@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b4d7144b3f6a0475d0ef"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "62125c98136fbd0f73f5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -38749,7 +38749,7 @@
 
 	  var artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
 	  var queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-	  var languageArg = language !== undefined ? '$lang=' + language : '';
+	  var languageArg = language !== undefined ? '&lang=' + language : '';
 	  var actionKey = language !== undefined ? language : artistNation;
 	  return (_ref = {
 	    actionKey: actionKey
