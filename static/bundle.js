@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5bfc26a84a8e7901fa7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b4d7144b3f6a0475d0ef"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -38741,41 +38741,45 @@
 
 	var APIS = _interopRequireWildcard(_constantsApisConfig);
 
-	/* Issue For APIs Server when use language search can't use arg "page", "count"
-	function fetchSongsList(keyword, nsong, queryWho, artistNation, page = 0, count = 20, language) {
+	function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
+	  if (page === undefined) page = 1;
+	  if (count === undefined) count = 20;
+
+	  var _ref;
+
+	  var artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
+	  var queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
+	  var languageArg = language !== undefined ? '$lang=' + language : '';
+	  var actionKey = language !== undefined ? language : artistNation;
+	  return (_ref = {
+	    actionKey: actionKey
+	  }, _ref[_middlewareApi.CALL_API] = {
+	    types: [_constantsActionTypes.SONGS_LIST_REQUEST, _constantsActionTypes.SONGS_LIST_SUCCESS, _constantsActionTypes.SONGS_LIST_FAILURE],
+	    endpoint: APIS.SONGS + '?page=' + page + '&count=' + count + languageArg + artistArg + queryWhoArg,
+	    schema: _middlewareApi.Schemas.SONGINBOOK,
+	    method: 'GET'
+	  }, _ref);
+	}
+
+	/*
+	function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
 	  const artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
 	  const queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-	  const languageArg = language !== undefined ? '$lang=' + language : '';
+	  const pageArg = page !== undefined ? '&page=' + page : '';
+	  const countArg = count !== undefined ? '&count=' + count : '';
+	  const languageArg = language !== undefined ? '&lang=' + language : '';
 	  const actionKey = language !== undefined ? language : artistNation;
 	  return {
 	    actionKey,
 	    [CALL_API]: {
 	      types: [ SONGS_LIST_REQUEST, SONGS_LIST_SUCCESS, SONGS_LIST_FAILURE ],
-	      endpoint: `${APIS.SONGS}?page=${page}&count=${count}${languageArg}${artistArg}${queryWhoArg}`,
+	      endpoint: `${APIS.SONGS}?${pageArg}${countArg}${languageArg}${artistArg}${queryWhoArg}`,
 	      schema: Schemas.SONGINBOOK,
 	      method: 'GET'
 	    }
 	  };
 	}
 	*/
-	function fetchSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
-	  var _ref;
-
-	  var artistArg = artistNation !== undefined ? '&artists=' + artistNation : '';
-	  var queryWhoArg = queryWho !== undefined ? '&query_who=' + queryWho : '';
-	  var pageArg = page !== undefined ? '&page=' + page : '';
-	  var countArg = count !== undefined ? '&count=' + count : '';
-	  var languageArg = language !== undefined ? '&lang=' + language : '';
-	  var actionKey = language !== undefined ? language : artistNation;
-	  return (_ref = {
-	    actionKey: actionKey
-	  }, _ref[_middlewareApi.CALL_API] = {
-	    types: [_constantsActionTypes.SONGS_LIST_REQUEST, _constantsActionTypes.SONGS_LIST_SUCCESS, _constantsActionTypes.SONGS_LIST_FAILURE],
-	    endpoint: APIS.SONGS + '?' + pageArg + countArg + languageArg + artistArg + queryWhoArg,
-	    schema: _middlewareApi.Schemas.SONGINBOOK,
-	    method: 'GET'
-	  }, _ref);
-	}
 
 	function loadSongsList(keyword, nsong, queryWho, artistNation, page, count, language) {
 	  return function (dispatch) {
