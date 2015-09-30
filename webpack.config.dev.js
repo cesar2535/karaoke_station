@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var poststylus = require('poststylus');
 
 module.exports = {
   devtool: 'eval',
@@ -23,9 +24,12 @@ module.exports = {
       exclude: /node_modules/,
       include: path.join(__dirname, 'src')
     }, {
-      test: /\.css$/,
-      loaders: ['style', 'css', 'postcss'],
+      test: /\.styl$/,
+      loaders: ['style', 'css', 'stylus'],
       exclude: /node_modules/
     }]
+  },
+  stylus: {
+    use: [ poststylus(['postcss-import']) ]
   }
 };
