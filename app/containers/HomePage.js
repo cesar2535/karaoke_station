@@ -5,6 +5,9 @@ class HomePage extends Component {
   render() {
     return (
       <div className={`Page Page--home`}>
+        <div className={`Slide`}>
+          
+        </div>
       </div>
     )
   }
