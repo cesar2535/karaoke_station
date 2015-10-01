@@ -28,11 +28,11 @@ module.exports = {
       include: path.join(__dirname, 'app')
     }, {
       test: /\.styl$/,
-      loaders: ['style', 'css', 'stylus'],
+      loaders: ['style', 'css?sourceMap', 'stylus?sourceMap'],
       exclude: /node_modules/
     }, {
       test: /\.(png|jpg|svg|ttf|woff|eot)$/,
-      loaders: ['file', 'url?limit=1000000'],
+      loaders: ['url?limit=1000000'],
       exclude: /node_modules/
     }]
   },
