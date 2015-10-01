@@ -17,15 +17,22 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  resolve: {
+    extensions: ['', '.js']
+  },
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
       exclude: /node_modules/,
-      include: path.join(__dirname, 'src')
+      include: path.join(__dirname, 'app')
     }, {
       test: /\.styl$/,
       loaders: ['style', 'css', 'stylus'],
+      exclude: /node_modules/
+    }, {
+      test: /\.(png|jpg|svg|ttf|woff|eot)$/,
+      loaders: ['file', 'url?limit=1000000'],
       exclude: /node_modules/
     }]
   },

@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var poststylus = require('poststylus');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -33,7 +34,11 @@ module.exports = {
       include: path.join(__dirname, 'src')
     }, {
       test: /\.styl$/,
-      loaders: ['style', 'css', 'stylus'],
+      loaders: ExtractTextPlugin.extract('style', 'css!stylus'),
+      exclude: /node_modules/
+    }, {
+      test: /\.(png|jpg|svg|ttf|woff|eot)$/,
+      loaders: ['file', 'url?limit=1000000'],
       exclude: /node_modules/
     }]
   },
