@@ -6,8 +6,19 @@ import { API_ROOT } from '../constants/Config';
 
 export const CALL_API = Symbol('Call API');
 
-export const Schemas = {
+const songSchema = new Schema('songs', {
+  idAttribute: 'id'
+});
 
+const songSchemaS = new Schema('songs', {
+  idAttribute: 'songid'
+});
+
+export const Schemas = {
+  SONG: songSchema,
+  SONG_ARRAY: arrayOf(songSchema),
+  SONG_S: songSchemaS,
+  SONG_ARRAY_S: arrayOf(songSchemaS)
 };
 
 function callApi({ endpoint, schema, method, body, normalizable }) {
