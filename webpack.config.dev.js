@@ -37,6 +37,6 @@ module.exports = {
     }]
   },
   stylus: {
-    use: [ poststylus(['postcss-import', 'rucksack-css']) ]
+    use: [ poststylus(['postcss-import', 'rucksack-css', 'autoprefixer']) ]
   }
 };
