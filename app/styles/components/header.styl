@@ -1,0 +1,35 @@
+@css {
+  @import 'suitcss-utils-display';
+}
+
+$Logo-color = #e7007f
+
+.Header {
+  display flex
+  justify-content space-between
+  align-items center
+  background-color $color
+  width 100%
+  height 60px
+  padding 0px 20px
+  border-top 8px solid $Logo-color
+  position fixed
+  top 0
+  left 0
+  box-sizing border-box
+}
+
+.Header-left {
+
+}
+
+.Header-right {
+
+}
+
+.Header-logo {
+  display block
+  &:before {
+    content url("../assets/images/ic_topbar_logo.png")
+  }
+}
