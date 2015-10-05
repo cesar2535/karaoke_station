@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
 import * as ActionTypes from '../constants/ActionTypes';
-import pagination from '../pagination';
+import pagination from './pagination';
 
 function entities(state = {}, action) {
   if (action.response && action.response.entities) {
@@ -25,7 +25,7 @@ function errorMessage(state = null, action) {
 const rootReducer = combineReducers({
   entities,
   errorMessage,
-  paginations
+  pagination
 });
 
 export default rootReducer;
