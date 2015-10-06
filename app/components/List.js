@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, findDOMNode } from 'react';
 import ClassNames from 'classnames';
+import debounce from 'lodash/function/debounce';
+import throttle from 'lodash/function/throttle';
 import spinnerImg from '../assets/images/spinner.svg';
 
 class List extends Component {
@@ -7,7 +9,7 @@ class List extends Component {
     items: PropTypes.array.isRequired,
     renderItem: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    onLoadMoreClick: PropTypes.func.isRequired,
+    onLoadMore: PropTypes.func.isRequired,
     pageCount: PropTypes.number
   }
 
@@ -17,6 +19,10 @@ class List extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
@@ -43,7 +49,7 @@ class List extends Component {
     }
 
     return (
-      <div className={classes}>
+      <div ref="list" className={classes} onScroll={debounce(this.handleScroll.bind(this), 1000)}>
         {this.renderSpinner(isFetching)}
         {items.map(renderItem)}
       </div>
@@ -56,9 +62,17 @@ class List extends Component {
     );
   }
 
-  renderLoadMore() {
-    const { isFetching, onLoadMoreClick } = this.props;
+  handleScroll(evt) {
+    const list = findDOMNode(this.refs.list);
+    console.log(list.scrollTop, list.scrollHeight, list.clientHeight, list.scrollTop > list.scrollHeight - list.clientHeight - 2);
+    if (list.scrollTop > list.scrollHeight - list.clientHeight - 100) {
+      this.props.onLoadMore(evt);
+    }
   }
+
+  // renderLoadMore() {
+  //   const { isFetching, onLoadMore } = this.props;
+  // }
 }
 
 export default List;
