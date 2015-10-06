@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import ClassNames from 'classnames';
+import spinnerImg from '../assets/images/spinner.svg';
 
 class List extends Component {
   static propTypes = {
@@ -10,8 +12,7 @@ class List extends Component {
   }
 
   static defaultProps = {
-    isFetching: true,
-    loadingLabel: `Loading...`
+    isFetching: true
   }
 
   constructor(props) {
@@ -19,20 +20,39 @@ class List extends Component {
   }
 
   render() {
-    const { 
+    const {
       items, renderItem, loadingLabel,
-      isFetching, pageCount 
+      isFetching, pageCount, className
     } = this.props;
 
+    const classes = ClassNames(`List`, className);
     const isEmpty = items.length === 0;
+
     if (isEmpty && isFetching) {
-      return <h2><i>{loadingLabel}</i></h2>
+      return (
+        <div className={classes}>
+          {this.renderSpinner(isFetching)}
+        </div>
+      );
+    } else if (isEmpty) {
+      return (
+        <div className={classes}>
+          <h2><i>No Content</i></h2>
+        </div>
+      );
     }
 
     return (
-      <div>
+      <div className={classes}>
+        {this.renderSpinner(isFetching)}
         {items.map(renderItem)}
       </div>
+    );
+  }
+
+  renderSpinner(isFetching) {
+    return (
+      <img className={`Spinner`} src={spinnerImg} alt='Loading' />
     );
   }
 
