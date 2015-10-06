@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import { HOST } from '../constants/Config';
+import { ROOT } from '../constants/Config';
 
 class SideNav extends Component {
   constructor(props) {
@@ -11,25 +11,25 @@ class SideNav extends Component {
   render() {
     return (
       <aside className={`SideNav`}>
-        <Link className={`SideNav-link`} to={`${HOST}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/`}>
           <span className={`ic ic_menu_home`} />
-          <span>首頁</span>
+          <p>首頁</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${HOST}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/`}>
           <span className={`ic ic_menu_favorite`} />
-          <span>最愛歌曲</span>
+          <p>最愛歌曲</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${HOST}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/`}>
           <span className={`ic ic_menu_requestbook`} />
-          <span>點歌本</span>
+          <p>點歌本</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${HOST}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/playlist`} activeClassName={`is-current`}>
           <span className={`ic ic_menu_requestinglist`} />
-          <span>點歌清單</span>
+          <p>點歌清單</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${HOST}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/`}>
           <span className={`ic ic_menu_history`} />
-          <span>歷史紀錄</span>
+          <p>歷史紀錄</p>
         </Link>
       </aside>
     );

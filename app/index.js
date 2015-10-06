@@ -7,8 +7,11 @@ import createHistory from 'history/lib/createHashHistory';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 
+import { ROOT } from './constants/Config';
+
 import App from './containers/App';
 import HomePage from './containers/HomePage';
+import PlaylistPage from './containers/PlaylistPage';
 
 // Hash History query key
 const history = createHistory({
@@ -21,8 +24,9 @@ React.render(
   <Provider store={store}>
     {() =>
       <Router history={history}>
-        <Route path='/' component={App}>
+        <Route path={`${ROOT}/`} component={App}>
           <IndexRoute component={HomePage}></IndexRoute>
+          <Route path={`playlist`} component={PlaylistPage} />
         </Route>
       </Router>
     }
