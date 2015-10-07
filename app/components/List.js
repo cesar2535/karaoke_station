@@ -9,7 +9,7 @@ class List extends Component {
     items: PropTypes.array.isRequired,
     renderItem: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    onLoadMore: PropTypes.func.isRequired,
+    onLoadMore: PropTypes.func,
     pageCount: PropTypes.number
   }
 
@@ -63,16 +63,17 @@ class List extends Component {
   }
 
   handleScroll(evt) {
+    const { onLoadMore } = this.props
     const list = findDOMNode(this.refs.list);
-    console.log(list.scrollTop, list.scrollHeight, list.clientHeight, list.scrollTop > list.scrollHeight - list.clientHeight - 2);
+
+    if (typeof onLoadMore !== 'function') {
+      return;
+    }
+
     if (list.scrollTop > list.scrollHeight - list.clientHeight - 100) {
-      this.props.onLoadMore(evt);
+      onLoadMore(evt);
     }
   }
-
-  // renderLoadMore() {
-  //   const { isFetching, onLoadMore } = this.props;
-  // }
 }
 
 export default List;
