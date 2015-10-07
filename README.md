@@ -9,9 +9,9 @@ Karaoke Station with QTS in REFACTORING
 - poststylus
 
 ### Configuration
-#### React-Router
-- **history**: use the `Hash History (Routing)`
-```js
-import createHistory from 'history/lib/createHashHistory';
-const history = createHistory({ queryKey: '_key' });
-```
+- `webpack.config.dev.js` for development
+- `webpack.config.prod.js` for production
+
+#### Development
+
+#### Production
