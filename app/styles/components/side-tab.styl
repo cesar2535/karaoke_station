@@ -1,0 +1,21 @@
+@css {
+  @import 'suitcss-utils-display';
+}
+
+$SideTab-bgImg = linear-gradient(to top, rgba(255, 0, 0, 0), #370228);
+
+.SideTab {
+  background-image $SideTab-bgImg
+  width 169px
+  overflow-x hidden
+  overflow-y auto
+}
+
+.SideTab-link {
+  display block
+  font-size 0.9em
+  padding 10px 0 10px 20px
+  &.is-current {
+    background-color alpha(#fff, 30%)
+  }
+}
