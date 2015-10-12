@@ -21,7 +21,7 @@ const pagination = combineReducers({
   }),
   songsFromPlaylist: paginate({
     mapActionToKey: action => action.name,
-    types: []
+    types: [ActionTypes.LOAD_PLAYLIST_REQUEST, ActionTypes.LOAD_PLAYLIST_SUCCESS, ActionTypes.LOAD_PLAYLIST_FAILURE]
   }),
   songsList: paginate({
     mapActionToKey: action => action.name,

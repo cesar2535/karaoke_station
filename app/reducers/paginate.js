@@ -26,8 +26,8 @@ export default function paginate({ types, mapActionToKey }) {
       case successType:
         return merge({}, state, {
           isFetching: false,
-          ids: action.response.result,
-          page: action.response.page
+          ids: union(state.ids, action.response.result),
+          page: action.page
         });
       case failureType:
         return merge({}, state, { isFetching: false });

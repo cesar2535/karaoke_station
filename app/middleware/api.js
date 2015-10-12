@@ -10,19 +10,64 @@ const songSchema = new Schema('songs', {
   idAttribute: 'id'
 });
 
+const songInPlaylistSchema = new Schema('songsInPlaylist', {
+  idAttribute: 'date'
+});
+
 const songSchemaS = new Schema('songs', {
   idAttribute: 'songid'
+});
+
+const artistSchema = new Schema('artists', {
+  idAttribute: 'id'
 });
 
 export const Schemas = {
   SONG: songSchema,
   SONG_ARRAY: arrayOf(songSchema),
   SONG_S: songSchemaS,
-  SONG_ARRAY_S: arrayOf(songSchemaS)
+  SONG_ARRAY_S: arrayOf(songSchemaS),
+  SONG_IN_PLAYLIST: songInPlaylistSchema,
+  PLAYLIST: arrayOf(songInPlaylistSchema),
+  ARTIST: artistSchema,
+  ARTIST_ARRAY: arrayOf(artistSchema)
 };
 
-function callApi({ endpoint, schema, method, body, normalizable }) {
+function getPageInfo(json) {
+  const info = Object.keys(json).reduce((result, item, index, array) => {
+    if (typeof json[item] === 'number') {
+      result['total'] = json[item];
+    }
+    return result;
+  }, {});
+  return info;
+}
 
+function callApi({ endpoint, schema, method, body }) {
+  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
+
+  switch (method) {
+    case 'GET':
+      return fetch(fullUrl).then(
+        response => response.json().then( json => ({ json, response }))
+      ).then( ({ json, response }) => {
+        if (!response.ok) {
+          return Promise.reject(json);
+        }
+
+        const camelizedJSON = camelizeKeys(json);
+        const dataIndex = Object.keys(camelizedJSON).find((item) => Array.isArray(camelizedJSON[item]));
+        const normalizableData = camelizedJSON[dataIndex];
+        const pageInfo = getPageInfo(camelizedJSON, dataIndex) || undefined;
+
+        return Object.assign({}, normalize(normalizableData, schema), pageInfo);
+      });
+    case 'POST':
+    case 'PUT':
+    case 'DELETE':
+    default:
+      throw new Error('Unrecognized request method. Please make a correct one.');
+  }
 }
 
 export default store => next => action => {
@@ -31,8 +76,9 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint } = callAPI;
-  const { schema, types, method, body, normalizable } = callAPI;
+  let { endpoint, method } = callAPI;
+  const { schema, types, body } = callAPI;
+  method = method.toUpperCase();
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getStata());
@@ -42,7 +88,7 @@ export default store => next => action => {
     throw new Error('Specify a string endpoint URL.');
   }
 
-  if (!schema) {
+  if (method === 'GET' && !schema) {
     throw new Error('Specify one of the exported Schemas.');
   }
 
@@ -63,7 +109,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next( actionWith({ type: requestType }) );
 
-  return callApi({ endpoint, schema, method, body, normalizable }).then(
+  return callApi({ endpoint, schema, method, body }).then(
     response => next(actionWith({
       response,
       type: successType
