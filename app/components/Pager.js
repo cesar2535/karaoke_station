@@ -3,7 +3,7 @@ import ClassNames from 'classnames';
 
 class Pager extends Component {
   constructor(props) {
-
+    super(props);
   }
 
   render() {
