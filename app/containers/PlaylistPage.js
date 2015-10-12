@@ -52,7 +52,7 @@ class PlaylistPage extends Component {
   }
 
   renderContent(query, props) {
-    const { queue, finished, songsByQueue, songsByFinished } = props;
+    const { queue, finished, songsByQueue, songsByFinished, history } = props;
 
     switch (query.list) {
       case 'current':
@@ -96,6 +96,7 @@ class PlaylistPage extends Component {
           </div>
         );
       default:
+        history.replaceState({}, `/playlist?list=current`);
         throw new Error('Location query is incorrect.');
     }
   }
