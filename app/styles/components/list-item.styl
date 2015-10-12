@@ -3,9 +3,21 @@
 }
 
 .Song {
+  display flex
+  background-color alpha(#000, 0.7)
   padding 10px 30px
+  margin 2px 0
+
+  &:nth-child(odd) {
+    background-color alpha(#0a0000, 40%)
+  }
+
   &--queue {
 
+  }
+
+  & > * {
+    flex 1
   }
 }
 
