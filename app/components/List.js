@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, findDOMNode } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import ClassNames from 'classnames';
 import debounce from 'lodash/function/debounce';
 import throttle from 'lodash/function/throttle';
@@ -57,15 +58,17 @@ class List extends Component {
   }
 
   renderSpinner(isFetching) {
-    return (
-      <img className={`Spinner`} src={spinnerImg} alt='Loading' />
-    );
+    if (isFetching) {
+      return (
+        <img className={`Spinner`} src={spinnerImg} alt='Loading' />
+      );
+    }
+    return null;
   }
 
   handleScroll(evt) {
     const { onLoadMore } = this.props
     const list = findDOMNode(this.refs.list);
-
     if (typeof onLoadMore !== 'function') {
       return;
     }
