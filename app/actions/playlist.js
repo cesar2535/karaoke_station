@@ -34,11 +34,11 @@ function fetchHistory(page = 1, count = 20, order= 'asc') {
       schema: Schemas.SONG_ARRAY_BY_DATE,
       method: 'GET'
     }
-  }
+  };
 }
 
 export function loadHistory(page, count, order) {
   return dispatch => {
     return dispatch(fetchHistory(page, count, order));
-  }
-}
+  };
+};

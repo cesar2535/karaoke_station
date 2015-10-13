@@ -6,6 +6,10 @@ import { API_ROOT } from '../constants/Config';
 
 export const CALL_API = Symbol('Call API');
 
+const listSchema = new Schema('lists', {
+  idAttribute: 'id'
+});
+
 const songSchema = new Schema('songs', {
   idAttribute: 'id'
 });
@@ -27,6 +31,8 @@ const artistSchema = new Schema('artists', {
 });
 
 export const Schemas = {
+  LIST: listSchema,
+  LIST_ARRAY: arrayOf(listSchema),
   SONG: songSchema,
   SONG_ARRAY: arrayOf(songSchema),
   SONG_S: songSchemaS,

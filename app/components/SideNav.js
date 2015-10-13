@@ -15,7 +15,7 @@ class SideNav extends Component {
           <span className={`ic ic_menu_home`} />
           <p>首頁</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${ROOT}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/favorite`} activeClassName={`is-current`}>
           <span className={`ic ic_menu_favorite`} />
           <p>最愛歌曲</p>
         </Link>

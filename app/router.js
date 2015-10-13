@@ -7,6 +7,7 @@ import { ROOT } from './constants/Config';
 import App from './containers/App';
 import HomePage from './containers/HomePage';
 import SongbookPage from './containers/SongbookPage';
+import FavoritePage from './containers/FavoritePage';
 import PlaylistPage from './containers/PlaylistPage';
 import HistoryPage from './containers/HistoryPage';
 
@@ -21,6 +22,7 @@ export default (
       <IndexRoute component={HomePage}></IndexRoute>
       <Route path={`songbook/artists`} component={SongbookPage} />
       <Route path={`songbook/songs`} component={SongbookPage} />
+      <Route path={`favorite`} component={FavoritePage} />
       <Route path={`playlist`} component={PlaylistPage} />
       <Route path={`history`} component={HistoryPage} />
     </Route>

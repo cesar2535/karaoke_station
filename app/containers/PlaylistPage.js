@@ -22,7 +22,6 @@ class PlaylistPage extends Component {
   }
 
   componentWillMount() {
-    history.replaceState({}, `/playlist?list=current`);
     loadData(this.props);
   }
 
@@ -101,7 +100,7 @@ class PlaylistPage extends Component {
       default:
         return (
           <div className={`Page-content`}>
-            <h2>Select a label</h2>
+            <h2>{`\u21D0 Select a label`}</h2>
           </div>
         );
     }

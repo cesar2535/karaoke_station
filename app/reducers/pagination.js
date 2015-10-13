@@ -15,7 +15,7 @@ const pagination = combineReducers({
     mapActionToKey: action => action.lang,
     types: [ActionTypes.SONGS_BY_LANG_REQUEST, ActionTypes.SONGS_BY_LANG_SUCCESS, ActionTypes.SONGS_BY_LANG_FAILURE]
   }),
-  songsFromFavorites: paginate({
+  songsFromFavorite: paginate({
     mapActionToKey: action => action.favorId,
     types: [ActionTypes.SONGS_FROM_FAVORITE_REQUEST, ActionTypes.SONGS_FROM_FAVORITE_SUCCESS, ActionTypes.SONGS_FROM_FAVORITE_FAILURE]
   }),
@@ -23,9 +23,9 @@ const pagination = combineReducers({
     mapActionToKey: action => action.name,
     types: [ActionTypes.LOAD_PLAYLIST_REQUEST, ActionTypes.LOAD_PLAYLIST_SUCCESS, ActionTypes.LOAD_PLAYLIST_FAILURE]
   }),
-  songsList: paginate({
-    mapActionToKey: action => action.name,
-    types: []
+  listsFromFavorite: paginate({
+    mapActionToKey: action => 'list',
+    types: [ActionTypes.LISTS_FROM_FAVORITE_REQUEST, ActionTypes.LISTS_FROM_FAVORITE_SUCCESS, ActionTypes.LISTS_FROM_FAVORITE_FAILURE]
   })
 });
 
