@@ -12,14 +12,24 @@
 
 .Queue, .Favorites, .History, .Songbook {
   position relative
-}
 
-.Queue--playlist {
-  width 620px
-  margin auto
+  &--w620 {
+    width 620px
+    margin auto
+  }
 }
 
 .Queue-head {
+  display flex
+  background-color alpha(#000, 0.7)
+  padding 10px 30px
+
+  & > * {
+    flex 1
+  }
+}
+
+.History-head {
   display flex
   background-color alpha(#000, 0.7)
   padding 10px 30px

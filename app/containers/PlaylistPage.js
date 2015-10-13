@@ -22,6 +22,7 @@ class PlaylistPage extends Component {
   }
 
   componentWillMount() {
+    history.replaceState({}, `/playlist?list=current`);
     loadData(this.props);
   }
 
@@ -61,7 +62,7 @@ class PlaylistPage extends Component {
             <Filter />
             <section className={`Page-main`}>
               <h1>{`待播清單`}</h1>
-              <div className={`Queue Queue--playlist`}>
+              <div className={`Queue Queue--w620`}>
                 <div className={`Queue-head`}>
                   <div>歌名</div>
                   <div>演唱者</div>
@@ -82,7 +83,7 @@ class PlaylistPage extends Component {
             <Filter />
             <section className={`Page-main`}>
               <h1>{`已播清單`}</h1>
-              <div className={`Queue Queue--playlist`}>
+              <div className={`Queue Queue--w620`}>
                 <div className={`Queue-head`}>
                   <div>歌名</div>
                   <div>演唱者</div>
@@ -98,7 +99,11 @@ class PlaylistPage extends Component {
           </div>
         );
       default:
-        history.replaceState({}, `/playlist?list=current`);
+        return (
+          <div className={`Page-content`}>
+            <h2>Select a label</h2>
+          </div>
+        );
     }
   }
 
