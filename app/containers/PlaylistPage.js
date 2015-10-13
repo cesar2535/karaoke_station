@@ -97,7 +97,6 @@ class PlaylistPage extends Component {
         );
       default:
         history.replaceState({}, `/playlist?list=current`);
-        throw new Error('Location query is incorrect.');
     }
   }
 
