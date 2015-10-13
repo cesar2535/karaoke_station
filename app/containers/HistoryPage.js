@@ -14,7 +14,12 @@ class HistoryPage extends Component {
     super(props);
   }
 
+  componentWillMount() {
+    this.props.loadHistory();
+  }
+
   render() {
+    const { historyInfo, songsInHistory } = this.props;
     return (
       <div className={`Page Page--history`}>
         <SideNav />
@@ -29,9 +34,9 @@ class HistoryPage extends Component {
                 <div>時間</div>
               </div>
               <List className={`List--history History-body`}
-                    items={[]}
+                    items={songsInHistory}
                     renderItem={this.renderListItem.bind(this)}
-                    isFetching={true} />
+                    isFetching={historyInfo.isFetching} />
             </div>
           </div>
           <Pager />
@@ -41,14 +46,29 @@ class HistoryPage extends Component {
   }
 
   renderListItem(item, index) {
-
+    return (
+      <div key={index} className={`Song`}>
+        <span>{item.name}</span>
+        <span>{item.artist}</span>
+        <span>{item.date}</span>
+      </div>
+    );
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
+  const {
+    pagination: { songsFromPlaylist },
+    entities: { songsByDate }
+  } = state;
 
+  const historyInfo = songsFromPlaylist['history'] || { ids: [], page: 0 };
+  const songsInHistory = historyInfo.ids.map(id => songsByDate[id]);
+
+  return {
+    historyInfo,
+    songsInHistory
   };
 }
 
-export default connect(mapStateToProps)(HistoryPage);
+export default connect(mapStateToProps, { loadHistory })(HistoryPage);
