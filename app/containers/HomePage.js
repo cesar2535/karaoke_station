@@ -3,37 +3,44 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { ROOT } from '../constants/Config';
-import { loadPlaylist } from '../actions/playlist';
+import { loadPlaylist, loadHistory } from '../actions/playlist';
 
 import Slider from '../components/Slider';
 import List from '../components/List';
 
+
+function loadData(props) {
+  props.loadPlaylist('current');
+  props.loadPlaylist('finished');
+  props.loadHistory();
+}
+
 class HomePage extends Component {
 
   componentWillMount() {
-
+    loadData(this.props);
   }
 
   render() {
     const {
-      queue, queueState,
-      favorites, favoritesState,
-      historyList, historyListState
+      songsInQueue, queueInfo,
+      listInFavorites, favoritesInfo,
+      songsInHistory, historyInfo
     } = this.props;
 
     return (
       <div className={`Page Page--home`}>
         <Slider>
-          {this.renderFavorites(favorites, favoritesState)}
+          {this.renderFavorites(listInFavorites, favoritesInfo)}
           {this.renderSongBook()}
-          {this.renderQueue(queue, queueState)}
-          {this.renderHistory(historyList, historyListState)}
+          {this.renderQueue(songsInQueue, queueInfo)}
+          {this.renderHistory(songsInHistory, historyInfo)}
         </Slider>
       </div>
     )
   }
 
-  renderFavorites(favorites = [], favoritesState = {}) {
+  renderFavorites(listInFavorites = [], favoritesInfo = {}) {
     return (
       <section className={`Favorites`}>
         <h1>
@@ -41,9 +48,9 @@ class HomePage extends Component {
           <Link className={``} to={`${ROOT}/favorite`}>最愛歌曲</Link>
         </h1>
         <List className={`List--favorite`}
-              items={favorites.slice(0, 8)}
+              items={listInFavorites.slice(0, 8)}
               renderItem={this.renderListInFavorites.bind(this)}
-              isFetching={favoritesState.isFetching} />
+              isFetching={favoritesInfo.isFetching} />
       </section>
     );
   }
@@ -66,10 +73,10 @@ class HomePage extends Component {
           <span className={``}>點歌本</span>
         </h1>
         <div className={``}>
-          <Link className={``} to={`${ROOT}/songbook/category/male`}>
+          <Link className={``} to={`${ROOT}/songbook/artists`} query={{ type: `artist`, category: `male`}}>
             <h2>依歌星找歌</h2>
           </Link>
-          <Link className={``} to={`${ROOT}/songbook/lang/Mandarin`}>
+          <Link className={``} to={`${ROOT}/songbook/songs`} query={{ type: `lang`, category: `Mandarin`}}>
             <h2>依語言找歌</h2>
           </Link>
         </div>
@@ -77,18 +84,18 @@ class HomePage extends Component {
     );
   }
 
-  renderQueue(queue = [], queueState = {}) {
+  renderQueue(songsInQueue = [], queueInfo = {}) {
     return (
       <section className={`Queue`}>
         <h1>
           <span className={`ic ic_menu_requestinglist`} />
-          <Link className={``} to={`${ROOT}/playlist/current`}>點歌清單</Link>
+          <Link className={``} to={`${ROOT}/playlist`} query={{ list: 'current' }}>點歌清單</Link>
         </h1>
         <List className={`List--queue`}
-              items={queue.slice(0, 8)}
+              items={songsInQueue.slice(0, 8)}
               renderItem={this.renderSongInQueue.bind(this)}
-              isFetching={queueState.isFetching} />
-        <Link to={`${ROOT}/playlist/current`}>More</Link>
+              isFetching={queueInfo.isFetching} />
+        <Link className={`Queue-more`} to={`${ROOT}/playlist`} query={{ list: 'current' }}>More</Link>
       </section>
     );
   }
@@ -102,7 +109,7 @@ class HomePage extends Component {
     );
   }
 
-  renderHistory(historyList = [], historyListState = {}) {
+  renderHistory(songsInHistory = [], historyInfo = {}) {
     return (
       <section className={`History`}>
         <h1>
@@ -110,9 +117,10 @@ class HomePage extends Component {
           <Link className={``} to={`${ROOT}/history`}>歷史紀錄</Link>
         </h1>
         <List className={`List--history`}
-              items={historyList.slice(0, 8)}
+              items={songsInHistory.slice(0, 8)}
               renderItem={this.renderSongInHistory.bind(this)}
-              isFetching={historyListState.isFetching} />
+              isFetching={historyInfo.isFetching} />
+        <Link className={`History-more`} to={`${ROOT}/history`}>More</Link>
       </section>
     );
   }
@@ -129,9 +137,22 @@ class HomePage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
+  const {
+    pagination: { songsFromPlaylist },
+    entities: { songsByDate , songsByOrder }
+  } = state;
 
+  const queueInfo = songsFromPlaylist['current'] || { ids: [], page: 0 };
+  const songsInQueue = queueInfo.ids.map(id => songsByOrder[id]);
+  const historyInfo = songsFromPlaylist['history'] || { ids: [], page: 0 };
+  const songsInHistory = historyInfo.ids.map(id => songsByDate[id]);
+
+  return {
+    queueInfo,
+    historyInfo,
+    songsInQueue,
+    songsInHistory
   };
 }
 
-export default connect(mapStateToProps, { loadPlaylist })(HomePage);
+export default connect(mapStateToProps, { loadPlaylist, loadHistory })(HomePage);
