@@ -28,32 +28,32 @@ class PlaylistPage extends Component {
 
   render() {
     const { query } = this.props.location;
-    const { queue, finished, songsInQueue, songsInFinished } = this.props;
+    const { songsInQueue, songsInFinished, queueInfo, finishedInfo } = this.props;
 
     return (
       <div className={`Page Page--playlist`}>
         <SideNav />
-        {this.renderTabs(queue, finished, songsInQueue, songsInFinished)}
+        {this.renderTabs(songsInQueue, songsInFinished, queueInfo, finishedInfo)}
         {this.renderContent(query, this.props)}
       </div>
     );
   }
 
-  renderTabs(queue, finished, songsInQueue, songsInFinished) {
+  renderTabs(songsInQueue, songsInFinished, queueInfo, finishedInfo) {
     return (
       <div className={`SideTab`}>
         <Link className={`SideTab-link`} to={`${ROOT}/playlist`} query={{ list: `current` }} activeClassName={`is-current`}>
-          {`待播清單 (${songsInQueue.total})`}
+          {`待播清單 (${queueInfo.total})`}
         </Link>
         <Link className={`SideTab-link`} to={`${ROOT}/playlist`} query={{ list: `finished` }} activeClassName={`is-current`}>
-          {`已播清單 (${songsInFinished.total})`}
+          {`已播清單 (${finishedInfo.total})`}
         </Link>
       </div>
     );
   }
 
   renderContent(query, props) {
-    const { queue, finished, songsInQueue, songsInFinished, history } = props;
+    const { songsInQueue, songsInFinished, queueInfo, finishedInfo, history } = props;
 
     switch (query.list) {
       case 'current':
@@ -68,13 +68,13 @@ class PlaylistPage extends Component {
                   <div>演唱者</div>
                 </div>
                 <List className={`List--queue Queue-body`}
-                      items={queue}
+                      items={songsInQueue}
                       renderItem={this.renderListItem.bind(this)}
-                      isFetching={songsInQueue.isFetching}
+                      isFetching={queueInfo.isFetching}
                       onLoadMore={this.loadQueue.bind(this)} />
               </div>
             </section>
-            <Pager currentLen={queue.length} totalLen={songsInQueue.total} />
+            <Pager currentLen={songsInQueue.length} totalLen={queueInfo.total} />
           </div>
         );
       case 'finished':
@@ -89,13 +89,13 @@ class PlaylistPage extends Component {
                   <div>演唱者</div>
                 </div>
                 <List className={`List--queue Queue-body`}
-                      items={finished}
+                      items={songsInFinished}
                       renderItem={this.renderListItem.bind(this)}
-                      isFetching={songsInFinished.isFetching}
+                      isFetching={finishedInfo.isFetching}
                       onLoadMore={this.loadFinished.bind(this)} />
               </div>
             </section>
-            <Pager currentLen={finished.length} totalLen={songsInFinished.total} />
+            <Pager currentLen={songsInFinished.length} totalLen={finishedInfo.total} />
           </div>
         );
       default:
@@ -117,21 +117,21 @@ class PlaylistPage extends Component {
   }
 
   loadQueue() {
-    const { queue, songsInQueue, loadPlaylist } = this.props;
-    if ( queue.length >= songsInQueue.total ) {
+    const { songsInQueue, queueInfo, loadPlaylist } = this.props;
+    if ( songsInQueue.length >= queueInfo.total ) {
       return ;
     }
 
-    loadPlaylist('current', songsInQueue.page + 1);
+    loadPlaylist('current', queueInfo.page + 1);
   }
 
   loadFinished() {
-    const { finished, songsInFinished, loadPlaylist } = this.props;
-    if ( finished.length >= songsInFinished.total ) {
+    const { songsInFinished, finishedInfo, loadPlaylist } = this.props;
+    if ( songsInFinished.length >= finishedInfo.total ) {
       return ;
     }
 
-    loadPlaylist('finished', songsInFinished.page + 1);
+    loadPlaylist('finished', finishedInfo.page + 1);
   }
 }
 
@@ -141,16 +141,16 @@ function mapStateToProps(state, ownProps) {
     entities: { songsByOrder, songsByDate }
   } = state;
 
-  const songsInQueue = songsFromPlaylist['current'] || { ids: [], page: 0 };
-  const songsInFinished = songsFromPlaylist['finished'] || { ids: [], page: 0 };
-  const queue = songsInQueue.ids.map(id => songsByOrder[id]);
-  const finished = songsInFinished.ids.map(id => songsByDate[id]);
+  const queueInfo = songsFromPlaylist['current'] || { ids: [], page: 0 };
+  const finishedInfo = songsFromPlaylist['finished'] || { ids: [], page: 0 };
+  const songsInQueue = queueInfo.ids.map(id => songsByOrder[id]);
+  const songsInFinished = finishedInfo.ids.map(id => songsByDate[id]);
 
   return {
+    queueInfo,
+    finishedInfo,
     songsInQueue,
-    songsInFinished,
-    queue,
-    finished
+    songsInFinished
   };
 }
 
