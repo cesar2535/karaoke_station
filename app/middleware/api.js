@@ -49,13 +49,13 @@ function getPageInfo(json) {
   return info;
 }
 
-function callApi({ endpoint, schema, method, body }) {
+function callApi({ endpoint, schema, method, body = {} }) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
   switch (method) {
     case 'GET':
       return fetch(fullUrl).then(
-        response => response.json().then( json => ({ json, response }))
+        response => response.json().then( json => ({ json, response }) )
       ).then( ({ json, response }) => {
         if (!response.ok) {
           return Promise.reject(json);
@@ -70,7 +70,32 @@ function callApi({ endpoint, schema, method, body }) {
       });
     case 'POST':
     case 'PUT':
+      const form = new FormData();
+      Object.keys(body).forEach( item => {
+        form.append(item, body[item]);
+      });
+      return fetch(fullUrl, {
+        method: 'POST',
+        body: form
+      }).then(
+        response => response.json().then( json => ({ json, response }) )
+      ).then( ({ json, response }) => {
+        if (!response.ok) {
+          return Promise.reject(json);
+        }
+        const camelizedJSON = camelizeKeys(json);
+        return Object.assign({}, camelizedJSON);
+      })
     case 'DELETE':
+      return fetch(fullUrl).then(
+        response => response.json().then( json => ({ json, response }) )
+      ).then( ({ json, response }) => {
+        if (!response.ok) {
+          return Promise.reject(json);
+        }
+        const camelizedJSON = camelizeKeys(json);
+        return Object.assign({}, camelizedJSON);
+      });
     default:
       throw new Error('Unrecognized request method. Please make a correct one.');
   }
