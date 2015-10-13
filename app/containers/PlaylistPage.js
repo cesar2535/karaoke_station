@@ -27,32 +27,32 @@ class PlaylistPage extends Component {
 
   render() {
     const { query } = this.props.location;
-    const { queue, finished } = this.props;
+    const { queue, finished, songsInQueue, songsInFinished } = this.props;
 
     return (
       <div className={`Page Page--playlist`}>
         <SideNav />
-        {this.renderTabs(queue, finished)}
+        {this.renderTabs(queue, finished, songsInQueue, songsInFinished)}
         {this.renderContent(query, this.props)}
       </div>
     );
   }
 
-  renderTabs(queue, finished) {
+  renderTabs(queue, finished, songsInQueue, songsInFinished) {
     return (
       <div className={`SideTab`}>
         <Link className={`SideTab-link`} to={`${ROOT}/playlist`} query={{ list: `current` }} activeClassName={`is-current`}>
-          {`待播清單 (${queue.length})`}
+          {`待播清單 (${songsInQueue.total})`}
         </Link>
         <Link className={`SideTab-link`} to={`${ROOT}/playlist`} query={{ list: `finished` }} activeClassName={`is-current`}>
-          {`已播清單 (${finished.length})`}
+          {`已播清單 (${songsInFinished.total})`}
         </Link>
       </div>
     );
   }
 
   renderContent(query, props) {
-    const { queue, finished, songsByQueue, songsByFinished, history } = props;
+    const { queue, finished, songsInQueue, songsInFinished, history } = props;
 
     switch (query.list) {
       case 'current':
@@ -69,7 +69,8 @@ class PlaylistPage extends Component {
                 <List className={`List--queue Queue-body`}
                       items={queue}
                       renderItem={this.renderListItem.bind(this)}
-                      isFetching={songsByQueue.isFetching} />
+                      isFetching={songsInQueue.isFetching}
+                      onLoadMore={this.loadQueue.bind(this)} />
               </div>
             </section>
             <Pager />
@@ -89,7 +90,8 @@ class PlaylistPage extends Component {
                 <List className={`List--queue Queue-body`}
                       items={finished}
                       renderItem={this.renderListItem.bind(this)}
-                      isFetching={songsByFinished.isFetching} />
+                      isFetching={songsInFinished.isFetching}
+                      onLoadMore={this.loadFinished.bind(this)} />
               </div>
             </section>
             <Pager />
@@ -108,22 +110,40 @@ class PlaylistPage extends Component {
       </div>
     );
   }
+
+  loadQueue() {
+    const { queue, songsInQueue, loadPlaylist } = this.props;
+    if ( queue.length >= songsInQueue.total ) {
+      return ;
+    }
+
+    loadPlaylist('current', songsInQueue.page + 1);
+  }
+
+  loadFinished() {
+    const { finished, songsInFinished, loadPlaylist } = this.props;
+    if ( finished.length >= songsInFinished.total ) {
+      return ;
+    }
+
+    loadPlaylist('finished', songsInFinished.page + 1);
+  }
 }
 
 function mapStateToProps(state, ownProps) {
   const {
     pagination: { songsFromPlaylist },
-    entities: { songsInPlaylist }
+    entities: { songsByOrder, songsByDate }
   } = state;
 
-  const songsByQueue = songsFromPlaylist['current'] || { ids: [], page: 0 };
-  const songsByFinished = songsFromPlaylist['finished'] || { ids: [], page: 0 };
-  const queue = songsByQueue.ids.map(id => songsInPlaylist[id]);
-  const finished = songsByFinished.ids.map(id => songsInPlaylist[id]);
+  const songsInQueue = songsFromPlaylist['current'] || { ids: [], page: 0 };
+  const songsInFinished = songsFromPlaylist['finished'] || { ids: [], page: 0 };
+  const queue = songsInQueue.ids.map(id => songsByOrder[id]);
+  const finished = songsInFinished.ids.map(id => songsByDate[id]);
 
   return {
-    songsByQueue,
-    songsByFinished,
+    songsInQueue,
+    songsInFinished,
     queue,
     finished
   };

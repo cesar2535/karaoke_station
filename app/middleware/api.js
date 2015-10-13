@@ -10,7 +10,11 @@ const songSchema = new Schema('songs', {
   idAttribute: 'id'
 });
 
-const songInPlaylistSchema = new Schema('songsInPlaylist', {
+const songByOrderSchema = new Schema('songsByOrder', {
+  idAttribute: 'index'
+});
+
+const songByDateSchema = new Schema('songsByDate', {
   idAttribute: 'date'
 });
 
@@ -27,8 +31,10 @@ export const Schemas = {
   SONG_ARRAY: arrayOf(songSchema),
   SONG_S: songSchemaS,
   SONG_ARRAY_S: arrayOf(songSchemaS),
-  SONG_IN_PLAYLIST: songInPlaylistSchema,
-  PLAYLIST: arrayOf(songInPlaylistSchema),
+  SONG_BY_ORDER: songByOrderSchema,
+  SONG_ARRAY_BY_ORDER: arrayOf(songByOrderSchema),
+  SONG_BY_DATE: songByDateSchema,
+  SONG_ARRAY_BY_DATE: arrayOf(songByDateSchema),
   ARTIST: artistSchema,
   ARTIST_ARRAY: arrayOf(artistSchema)
 };
