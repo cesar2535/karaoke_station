@@ -37,7 +37,7 @@ class FavoritePage extends Component {
   }
 
   render() {
-    const { favorId, favoriteInfo, listsInFavorite, listInfo, songsInFavorite } = this.props;
+    const { favorName, favoriteInfo, listsInFavorite, listInfo, songsInFavorite } = this.props;
     return (
       <div className={`Page Page--favorite`}>
         <SideNav />
@@ -45,7 +45,7 @@ class FavoritePage extends Component {
         <div className={`Page-content`}>
           <Filter />
           <div className={`Page-main`}>
-            <h1>{`我的歌本 ${favorId}`}</h1>
+            <h1>{favorName}</h1>
             <div className={`Favorite Favorite--w620`}>
               <div className={`Favorite-head`}>
                 <div>歌名</div>
@@ -73,7 +73,7 @@ class FavoritePage extends Component {
 
   renderTabItem(item, index) {
     return (
-      <Link key={index} className={`SideTab-link`} to={`${ROOT}/favorite`} query={{ list: item.id }} activeClassName={`is-current`}>
+      <Link key={index} className={`SideTab-link`} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }} activeClassName={`is-current`}>
         {`${item.name} (${item.nSongs})`}
       </Link>
     );
@@ -97,7 +97,7 @@ class FavoritePage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { query: { list } } = ownProps.location;
+  const { query: { favorId, favorName } } = ownProps.location;
   const {
     pagination: { listsFromFavorite, songsFromFavorite },
     entities: { lists, songs }
@@ -105,12 +105,13 @@ function mapStateToProps(state, ownProps) {
 
   const favoriteInfo = listsFromFavorite['list'] || { ids: [] };
   const listsInFavorite = favoriteInfo.ids.map(id => lists[id]);
-  const listInfo = songsFromFavorite[list] || { ids: [] };
+  const listInfo = songsFromFavorite[favorId] || { ids: [] };
   const songsInFavorite = listInfo.ids.map(id => songs[id]);
 
 
   return {
-    favorId: list,
+    favorId,
+    favorName,
     favoriteInfo,
     listsInFavorite,
     listInfo,
