@@ -73,7 +73,7 @@ class PlaylistPage extends Component {
                       onLoadMore={this.loadQueue.bind(this)} />
               </div>
             </section>
-            <Pager />
+            <Pager currentLen={queue.length} totalLen={songsInQueue.total} />
           </div>
         );
       case 'finished':
@@ -94,7 +94,7 @@ class PlaylistPage extends Component {
                       onLoadMore={this.loadFinished.bind(this)} />
               </div>
             </section>
-            <Pager />
+            <Pager currentLen={finished.length} totalLen={songsInFinished.total} />
           </div>
         );
       default:

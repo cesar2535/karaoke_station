@@ -1,8 +1,18 @@
 .Pager {
+  display flex
+  justify-content space-between
+  align-items center
   background-color #1b1b1b
   height 30px
   position absolute
   left 0
   bottom 0
   right 0
+}
+
+.Pager-left, .Pager-right {
+
+  & > * {
+    padding 0 10px
+  }
 }
