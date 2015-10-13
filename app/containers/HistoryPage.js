@@ -39,7 +39,7 @@ class HistoryPage extends Component {
                     isFetching={historyInfo.isFetching} />
             </div>
           </div>
-          <Pager />
+          <Pager currentLen={songsInHistory.length} />
         </div>
       </div>
     );
