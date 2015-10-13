@@ -27,7 +27,7 @@ class SideNav extends Component {
           <span className={`ic ic_menu_requestinglist`} />
           <p>點歌清單</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${ROOT}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/history`} activeClassName={`is-current`}>
           <span className={`ic ic_menu_history`} />
           <p>歷史紀錄</p>
         </Link>
