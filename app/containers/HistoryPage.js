@@ -27,7 +27,7 @@ class HistoryPage extends Component {
           <Filter />
           <div className={`Page-main`}>
             <h1>{`歷史紀錄`}</h1>
-            <div className={`History History--w620`}>
+            <div className={`History History--w60`}>
               <div className={`History-head`}>
                 <div>歌名</div>
                 <div>演唱者</div>
