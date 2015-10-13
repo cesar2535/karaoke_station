@@ -42,7 +42,7 @@ class HomePage extends Component {
 
   renderFavorites(listInFavorites = [], favoritesInfo = {}) {
     return (
-      <section className={`Favorites`}>
+      <section className={`Favorite`}>
         <h1>
           <span className={`ic ic_menu_favorite`} />
           <Link className={``} to={`${ROOT}/favorite`}>最愛歌曲</Link>
