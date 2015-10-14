@@ -46,7 +46,7 @@ module.exports = {
       exclude: /node_modules/
     }, {
       test: /\.(png|jpg|svg|ttf|woff|eot)$/,
-      loaders: ['file', 'url?limit=1000000'],
+      loaders: ['file'],
       exclude: /node_modules/
     }]
   },
