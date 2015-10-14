@@ -99,11 +99,11 @@ class FavoritePage extends Component {
 function mapStateToProps(state, ownProps) {
   const { query: { favorId, favorName } } = ownProps.location;
   const {
-    pagination: { listsFromFavorite, songsFromFavorite },
+    pagination: { listsElse, songsFromFavorite },
     entities: { lists, songs }
   } = state;
 
-  const favoriteInfo = listsFromFavorite['list'] || { ids: [] };
+  const favoriteInfo = listsElse['favorite'] || { ids: [] };
   const listsInFavorite = favoriteInfo.ids.map(id => lists[id]);
   const listInfo = songsFromFavorite[favorId] || { ids: [] };
   const songsInFavorite = listInfo.ids.map(id => songs[id]);
