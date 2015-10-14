@@ -22,8 +22,7 @@ export default (
     <Route path={`${ROOT}/`} component={App}>
       <IndexRoute component={HomePage}></IndexRoute>
       <Route path={`songbook`} component={SongbookPage}>
-        <Route path={`artists`} component={SongbookContent} />
-        <Route path={`songs`} component={SongbookContent} />
+        <Route path={`:type`} component={SongbookContent} />
       </Route>
       <Route path={`favorite`} component={FavoritePage} />
       <Route path={`playlist`} component={PlaylistPage} />

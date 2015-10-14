@@ -59,7 +59,7 @@ class SongbookPage extends Component {
 
   renderArtistType(item, index) {
     return (
-      <Link key={index} className={`SideTab-link`} to={`${ROOT}/songbook/artists`} query={{ type: item }} activeClassName={`is-current`}>
+      <Link key={index} className={`SideTab-link`} to={`${ROOT}/songbook/artists`} query={{ artistType: item }} activeClassName={`is-current`}>
         {item}
       </Link>
     )
@@ -81,7 +81,7 @@ class SongbookPage extends Component {
 
   renderLang(item, index) {
     return (
-      <Link key={index} className={`SideTab-link`} to={`${ROOT}/songbook/songs`} query={{ type: item }} activeClassName={`is-current`}>
+      <Link key={index} className={`SideTab-link`} to={`${ROOT}/songbook/songs`} query={{ lang: item }} activeClassName={`is-current`}>
         {item}
       </Link>
     );

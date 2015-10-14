@@ -26,12 +26,41 @@ class SongbookContent extends Component {
       return;
     }
   }
+
+  renderSongsContent() {
+    return (
+      <section className={`Page-main`}>
+        <h1></h1>
+        <div className={`Songbook Songbook--w620`}>
+          <div className={`Songbook-head`}>
+            <div>歌名</div>
+            <div>演唱者</div>
+          </div>
+          <List className={`List--song Songbook-body`} />
+        </div>
+      </section>
+    );
+  }
+
+  renderArtistsContent() {
+    return (
+      <section className={`Page-main`}>
+        <h1></h1>
+        <div className={`Songbook`}>
+          <List className={`List--artist Songbook-body`} />
+        </div>
+      </section>
+    );
+  }
 }
 
 function mapStateToProps(state, ownProps) {
-  const { stroke } = ownProps.location.query;
+  const { query } = ownProps.location;
+  const { type } = ownProps.params;
+
   return {
-    stroke
+    ...query,
+    type
   };
 }
 
