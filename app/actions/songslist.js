@@ -2,7 +2,8 @@ import { CALL_API, Schemas } from '../middleware/api';
 import {
   SONGS_BY_ARTIST_REQUEST, SONGS_BY_ARTIST_SUCCESS, SONGS_BY_ARTIST_FAILURE,
   SONGS_BY_LANG_REQUEST, SONGS_BY_LANG_SUCCESS, SONGS_BY_LANG_FAILURE,
-  SONGS_BY_KEYWORD_REQUEST, SONGS_BY_KEYWORD_SUCCESS, SONGS_BY_KEYWORD_FAILURE
+  SONGS_BY_KEYWORD_REQUEST, SONGS_BY_KEYWORD_SUCCESS, SONGS_BY_KEYWORD_FAILURE,
+  LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE
 } from '../constants/ActionTypes';
 
 function fetchSongsByArtist({ page = 1, count = 20, artists, nsongs }) {
@@ -56,5 +57,41 @@ function fetchSongsByKeyword({ page = 1, count = 20, keywords, queryWho, nsongs 
 export function loadSongsByKeyword(args) {
   return dispatch => {
     return dispatch(fetchSongsByKeyword({ ...args }));
+  };
+};
+
+function fetchArtistTypes() {
+  return {
+    name: 'artistTypes',
+    [CALL_API]: {
+      types: [LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE],
+      endpoint: `/songlist/artists`,
+      schema: Schemas.LIST_ARRAY,
+      method: 'GET'
+    }
+  };
+}
+
+export function loadArtistTypes() {
+  return dispatch => {
+    return dispatch(fetchArtistTypes());
+  };
+};
+
+function fetchLangs() {
+  return {
+    name: 'langs',
+    [CALL_API]: {
+      types: [LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE],
+      endpoint: `/songlist/languages`,
+      schema: Schemas.LIST_ARRAY,
+      method: 'GET'
+    }
+  };
+}
+
+export function loadLangs() {
+  return dispatch => {
+    return dispatch(fetchLangs());
   };
 };
