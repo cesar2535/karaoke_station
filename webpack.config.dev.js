@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var poststylus = require('poststylus');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'eval',
@@ -20,7 +21,13 @@ module.exports = {
         'NODE_ENV': JSON.stringify('development')
       }
     }),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Ocean KTV',
+      filename: 'index.html',
+      template: 'index.template.html',
+      favicon: path.join(__dirname, 'app', 'assets', 'favicon.ico')
+    })
   ],
   resolve: {
     extensions: ['', '.js']
