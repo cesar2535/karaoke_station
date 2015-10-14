@@ -44,7 +44,7 @@ class FavoritePage extends Component {
         {this.renderTabs(listsInFavorite)}
         <div className={`Page-content`}>
           <Filter />
-          <div className={`Page-main`}>
+          <section className={`Page-main`}>
             <h1>{favorName}</h1>
             <div className={`Favorite Favorite--w620`}>
               <div className={`Favorite-head`}>
@@ -56,7 +56,7 @@ class FavoritePage extends Component {
                     renderItem={this.renderListItem.bind(this)}
                     isFetching={listInfo.isFetching} />
             </div>
-          </div>
+          </section>
           <Pager currentLen={songsInFavorite.length} totalLen={listInfo.total} />
         </div>
       </div>
