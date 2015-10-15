@@ -23,9 +23,9 @@ const pagination = combineReducers({
     mapActionToKey: action => action.name,
     types: [ActionTypes.LOAD_PLAYLIST_REQUEST, ActionTypes.LOAD_PLAYLIST_SUCCESS, ActionTypes.LOAD_PLAYLIST_FAILURE]
   }),
-  listsFromFavorite: paginate({
-    mapActionToKey: action => 'list',
-    types: [ActionTypes.LISTS_FROM_FAVORITE_REQUEST, ActionTypes.LISTS_FROM_FAVORITE_SUCCESS, ActionTypes.LISTS_FROM_FAVORITE_FAILURE]
+  listsElse: paginate({
+    mapActionToKey: action => action.name,
+    types: [ActionTypes.LISTS_ELSE_REQUEST, ActionTypes.LISTS_ELSE_SUCCESS, ActionTypes.LISTS_ELSE_FAILURE]
   })
 });
 

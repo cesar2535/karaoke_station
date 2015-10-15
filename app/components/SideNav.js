@@ -19,7 +19,7 @@ class SideNav extends Component {
           <span className={`ic ic_menu_favorite`} />
           <p>最愛歌曲</p>
         </Link>
-        <Link className={`SideNav-link`} to={`${ROOT}/`}>
+        <Link className={`SideNav-link`} to={`${ROOT}/songbook`} activeClassName={`is-current`}>
           <span className={`ic ic_menu_requestbook`} />
           <p>點歌本</p>
         </Link>
