@@ -25,7 +25,7 @@ export default (
         <Route path={`:type`} component={SongbookContent} />
       </Route>
       <Route path={`favorite`} component={FavoritePage} />
-      <Route path={`playlist`} component={PlaylistPage} />
+      <Route path={`playlist`} component={PlaylistPage} onEnter={ (nextState, replaceState) => nextState.location.query.list ? null : replaceState(null, `${ROOT}/playlist?list=current`) } />
       <Route path={`history`} component={HistoryPage} />
     </Route>
   </Router>
