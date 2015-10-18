@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux';
 
 import Header from '../components/Header';
@@ -10,12 +11,19 @@ class App extends Component {
     const { children } = this.props;
     return (
       <div className={`App`}>
-        <Header />
+        <Header toggleSearch={this.toggleSearch.bind(this)} />
         {children}
-        <SlidePanel />
+        <SlidePanel ref="slidePanel" className={`SlidePanel`} />
         <Footer />
       </div>
     );
+  }
+
+  toggleSearch(evt) {
+    const { slidePanel } = this.refs;
+    findDOMNode(slidePanel).classList.add('is-visible');
+    evt.stopPropagation();
+    evt.nativeEvent.stopImmediatePropagation();
   }
 }
 
