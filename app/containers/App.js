@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SlidePanel from './SlidePanel';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
       <div className={`App`}>
         <Header />
         {children}
+        <SlidePanel />
         <Footer />
       </div>
     );
