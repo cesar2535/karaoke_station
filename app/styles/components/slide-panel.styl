@@ -1,0 +1,54 @@
+@css {
+  @import 'suitcss-utils-display';
+}
+
+.SlidePanel {
+  width 100%
+  height 100%
+  position fixed
+  top 0
+  left 0
+  visibility hidden
+  transition visibility 0s .6s
+
+  &:after {
+    /* Overlay layer */
+    content ""
+    background-color rgba(#000, 0)
+    width 100%
+    height 100%
+    position absolute
+    top 0
+    left 0
+    box-sizing border-box
+    transition background .3s .3s
+  }
+
+  &.is-visible {
+    visibility visible
+    transition visibility 0s 0s
+
+    &:after {
+      background-color rgba(#000, 0.6)
+      transition background .3s 0s
+    }
+  }
+}
+
+
+.SlideContainer {
+  background-color #FFF
+  width 80vw
+  height 100%
+  position absolute
+  top 0
+  right 0
+  z-index 1
+  transform translateX(100%)
+  transition transform .3s .3s
+
+  .is-visible & {
+    transform translateX(0)
+    transition-delay 0s
+  }
+}
