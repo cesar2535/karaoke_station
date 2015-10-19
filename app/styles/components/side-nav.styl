@@ -5,7 +5,8 @@
 $SideNav-link-color = alpha(#fff, 0.4);
 
 .SideNav {
-  background-image linear-gradient(135deg, $c-violet, $c-razzmatazz)
+  // background-image linear-gradient(135deg, $c-violet, $c-razzmatazz)
+  background-color #000
   width 100px
   height 100%
   overflow-y auto
@@ -20,13 +21,12 @@ $SideNav-link-color = alpha(#fff, 0.4);
   transition-duration 0.3s
 
   &:hover {
-    background alpha(#fff, 15%)
+    background-color #06244a
   }
 
   &.is-current {
-    background-color alpha(#fff, 30%)
+    background-color #0c4993
     color #fff
-    border-left 3px solid #fff
   }
 
   & > .ic {

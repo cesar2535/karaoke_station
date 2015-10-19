@@ -2,10 +2,11 @@
   @import 'suitcss-utils-display';
 }
 
-$SideTab-bgImg = linear-gradient(to top, rgba(255, 0, 0, 0), #370228);
+$SideTab-bgImg = linear-gradient(to bottom, #2d4269, #142e51, #29567a);
 
 .SideTab {
   background-image $SideTab-bgImg
+  font-size 15px
   width 169px
   overflow-x hidden
   overflow-y auto
@@ -13,20 +14,19 @@ $SideTab-bgImg = linear-gradient(to top, rgba(255, 0, 0, 0), #370228);
 
 .SideTab-link {
   display block
-  font-size 0.9em
-  padding 10px 0 10px 20px
+  padding 8px 0 8px 20px
   transition-duration 0.5s
   &:hover {
-    background-color alpha(#fff, 15%)
+    background-color #1a748e
   }
 
   &.is-current {
-    background-color alpha(#fff, 30%)
+    color #0ff
   }
 }
 
 .SideTab-title {
-  padding 10px 0
+  padding 8px 0
   .ic:before {
     padding-right 10px
   }
@@ -35,4 +35,8 @@ $SideTab-bgImg = linear-gradient(to top, rgba(255, 0, 0, 0), #370228);
 .SideTab-block {
   display block
   margin 10px
+}
+
+.SideTab-list {
+  font-size 14px
 }
