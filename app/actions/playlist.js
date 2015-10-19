@@ -47,7 +47,7 @@ export function loadHistory(page, count, order) {
 export function postSongToQueue(songid) {
   return {
     [CALL_API]: {
-      types: ['POST_SONG_REQUEST', 'POST_SONG_SUCCESS', 'POST_SONG_FAILURE'],
+      types: [POST_SONG_REQUEST, POST_SONG_SUCCESS, POST_SONG_FAILURE],
       endpoint: `/playlist`,
       body: { songid },
       method: 'POST'
