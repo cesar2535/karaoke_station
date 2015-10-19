@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 import { ROOT } from '../constants/Config';
 import { loadPlaylist, loadHistory } from '../actions/playlist';
@@ -130,7 +131,7 @@ class HomePage extends Component {
       <div key={index} className={`Song Song--history`}>
         <span className={`Song-title`}>{item.name}</span>
         <span className={`Song-artist`}>{item.artist}</span>
-        <span className={`Song-time`}>{item.date}</span>
+        <span className={`Song-time`}>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
       </div>
     );
   }

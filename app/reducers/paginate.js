@@ -24,12 +24,20 @@ export default function paginate({ types, mapActionToKey }) {
       case requestType:
         return merge({}, state, { isFetching: true });
       case successType:
-        return merge({}, state, {
+        if (action.page > 1) {
+          return merge({}, state, {
+            isFetching: false,
+            ids: union(state.ids, action.response.result),
+            page: action.page,
+            total: action.response.total
+          });
+        }
+        return {
           isFetching: false,
-          ids: union(state.ids, action.response.result),
+          ids: action.response.result,
           page: action.page,
           total: action.response.total
-        });
+        };
       case failureType:
         return merge({}, state, { isFetching: false });
       default:
@@ -46,8 +54,7 @@ export default function paginate({ types, mapActionToKey }) {
         if (typeof key !== 'string') {
           throw new Error('Expected key to be a string.');
         }
-
-        return merge({}, state, {
+        return Object.assign({}, state, {
           [key]: updatePagination(state[key], action)
         });
       default:

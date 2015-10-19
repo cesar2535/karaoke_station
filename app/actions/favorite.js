@@ -4,21 +4,21 @@ import {
   LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE
 } from '../constants/ActionTypes';
 
-function fetchSongsFromFavorite(favorId) {
+function fetchSongsFromFavorite(favorId, page = 1, count = 20) {
   return {
     favorId,
     [CALL_API]: {
       types: [SONGS_FROM_FAVORITE_REQUEST, SONGS_FROM_FAVORITE_SUCCESS, SONGS_FROM_FAVORITE_FAILURE],
-      endpoint: `/favorite/${favorId}`,
+      endpoint: `/favorite/${favorId}?page=${page}&count=${count}`,
       schema: Schemas.SONG_ARRAY,
       method: 'GET'
     }
   };
 }
 
-export function loadSongsFromFavorite(favorId) {
+export function loadSongsFromFavorite(favorId, page, count) {
   return dispatch => {
-    return dispatch(fetchSongsFromFavorite(favorId));
+    return dispatch(fetchSongsFromFavorite(favorId, page, count));
   };
 };
 

@@ -42,9 +42,9 @@ export function loadSongsByLang({ page, count, lang, nsongs }) {
   };
 };
 
-function fetchSongsByKeyword({ page = 1, count = 20, keywords, queryWho, nsongs }) {
+function fetchSongsByKeyword({ page = 1, count = 20, keyword, queryWho, nsongs }) {
   return {
-    keywords,
+    keyword,
     [CALL_API]: {
       types: [SONGS_BY_KEYWORD_REQUEST, SONGS_BY_KEYWORD_SUCCESS, SONGS_BY_KEYWORD_FAILURE],
       endpoint: `/songlist?query_who=${queryWho}&page=${page}&count=${count}&keywords=${keywords}&nsongs=${nsongs}`,
