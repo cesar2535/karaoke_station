@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ClassNames from 'classnames';
 
 import SearchForm from '../components/SearchForm';
+import List from '../components/List';
 
 class SlidePanel extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class SlidePanel extends Component {
     return (
       <div ref='panel' className={className}>
         <div className={`SlideContainer`} onClick={this.stopPropagation.bind(this)}>
-
+          <SearchForm options={[{label: '歌手', value: 'artist'}, {label: '歌曲', value: 'song'}]} onSubmit={ (evt, result) => console.log(evt, result)} />
         </div>
       </div>
     );

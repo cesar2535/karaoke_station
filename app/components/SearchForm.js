@@ -5,7 +5,8 @@ import Select from 'react-select';
 class SearchForm extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    options: PropTypes.array.isRequired,
+    onSubmit: PropTypes.func.isRequired
   }
 
   state = {
@@ -39,11 +40,11 @@ class SearchForm extends Component {
     );
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(evt) {
+    evt.preventDefault();
     const { select } = this.state;
     const input = this.getInputValue();
-    this.props.onChange({input, select});
+    this.props.onSubmit(evt, {input, select});
   }
 
   handleSelect(newVal) {
