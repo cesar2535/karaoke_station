@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 import List from '../components/List';
 import SideNav from '../components/SideNav';
@@ -50,7 +51,7 @@ class HistoryPage extends Component {
       <div key={index} className={`Song`}>
         <span>{item.name}</span>
         <span>{item.artist}</span>
-        <span>{item.date}</span>
+        <span>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
       </div>
     );
   }
