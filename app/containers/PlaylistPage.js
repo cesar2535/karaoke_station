@@ -63,6 +63,7 @@ class PlaylistPage extends Component {
               <h1>{`待播清單`}</h1>
               <div className={`Queue Queue--w620`}>
                 <div className={`Queue-head`}>
+                  <div className='ic' />
                   <div>歌名</div>
                   <div>演唱者</div>
                 </div>
@@ -84,6 +85,7 @@ class PlaylistPage extends Component {
               <h1>{`已播清單`}</h1>
               <div className={`Queue Queue--w620`}>
                 <div className={`Queue-head`}>
+                  <div className='ic' />
                   <div>歌名</div>
                   <div>演唱者</div>
                 </div>
@@ -109,6 +111,7 @@ class PlaylistPage extends Component {
   renderListItem(item, index) {
     return (
       <div key={index} className={`Song`}>
+        <span className={`ic ${item.state === 'PLAYING' ? 'ic_songlist_nowplaying' : ''}`} />
         <span className={``}>{item.name}</span>
         <span className={``}>{item.artist}</span>
       </div>

@@ -4,8 +4,9 @@
 
 .Song {
   display flex
+  align-items center
   background-color alpha(#000, 0.7)
-  padding 10px 30px
+  padding 10px 20px
   margin 2px 0
 
   &:nth-child(odd) {
@@ -26,6 +27,13 @@
 
   & > * {
     flex 1
+    padding 0 10px
+  }
+
+  .ic {
+    flex 0
+    font-size 1.5em
+    padding-right 1em
   }
 }
 
