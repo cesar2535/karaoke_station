@@ -4,7 +4,7 @@ import * as ActionTypes from '../constants/ActionTypes';
 
 const pagination = combineReducers({
   songsByKeyword: paginate({
-    mapActionToKey: action => action.keywords,
+    mapActionToKey: action => action.keyword,
     types: [ActionTypes.SONGS_BY_KEYWORD_REQUEST, ActionTypes.SONGS_BY_KEYWORD_SUCCESS, ActionTypes.SONGS_BY_KEYWORD_FAILURE]
   }),
   songsByArtist: paginate({
@@ -22,6 +22,14 @@ const pagination = combineReducers({
   songsFromPlaylist: paginate({
     mapActionToKey: action => action.name,
     types: [ActionTypes.LOAD_PLAYLIST_REQUEST, ActionTypes.LOAD_PLAYLIST_SUCCESS, ActionTypes.LOAD_PLAYLIST_FAILURE]
+  }),
+  artistsByKeyword: paginate({
+    mapActionToKey: action => action.keyword,
+    types: []
+  }),
+  artistsByType: paginate({
+    mapActionToKey: action => action.artistType,
+    types: []
   }),
   listsElse: paginate({
     mapActionToKey: action => action.name,
