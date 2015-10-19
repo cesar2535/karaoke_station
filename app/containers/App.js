@@ -21,7 +21,7 @@ class App extends Component {
 
   toggleSearch(evt) {
     const { slidePanel } = this.refs;
-    findDOMNode(slidePanel).classList.add('is-visible');
+    findDOMNode(slidePanel).classList.toggle('is-visible');
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
   }

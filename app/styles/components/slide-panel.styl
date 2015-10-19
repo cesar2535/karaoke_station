@@ -21,7 +21,7 @@
     top 0
     left 0
     box-sizing border-box
-    transition background .3s .3s
+    transition background .3s 0s
   }
 
   &.is-visible {
@@ -39,13 +39,18 @@
 .SlideContainer {
   background-color #FFF
   width 80vw
-  height 100%
+  height calc(100% - 130px)
+  border-top 1px solid #ddd
+  border-bottom 1px solid #ddd
+  margin-top 60px
+  margin-bottom 70px
+  box-sizing border-box
   position absolute
   top 0
   right 0
   z-index 1
   transform translateX(100%)
-  transition transform .3s .3s
+  transition transform .3s 0s
 
   .is-visible & {
     transform translateX(0)
