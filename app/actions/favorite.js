@@ -39,3 +39,34 @@ export function loadListFromFavorite() {
     return dispatch(fetchListFromFavorite());
   };
 };
+
+export function putSongToFavorite(favorId, songId) {
+  return {
+    [CALL_API]: {
+      types: [PUT_SONG_REQUEST, PUT_SONG_SUCCESS, PUT_SONG_FAILURE],
+      endpoint: `/favorite/${favorId}?songid=${songId}`,
+      method: 'PUT'
+    }
+  };
+};
+
+export function postNameToFavorite(favorId, name) {
+  return {
+    [CALL_API]: {
+      types: [POST_NAME_REQUEST, POST_NAME_SUCCESS, POST_NAME_FAILURE],
+      endpoint: `/favorite/${favorId}`,
+      body: { name },
+      method: 'POST'
+    }
+  };
+};
+
+export function deleteSongFromFavorite(favorId, songId) {
+  return {
+    [CALL_API]: {
+      types: [DELETE_SONG_REQUEST, DELETE_SONG_SUCCESS, DELETE_SONG_FAILURE],
+      endpoint: `/favorite/${favorId}?songid=${songId}`,
+      method: 'DELETE'
+    }
+  };
+};

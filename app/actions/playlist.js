@@ -15,7 +15,8 @@ function fetchPlaylist(name, page = 1, count = 20, schema) {
 }
 
 export function loadPlaylist(name, page, count) {
-  return dispatch => {
+  return (dispatch, getState) => {
+
     if (name === 'current') {
       return dispatch(fetchPlaylist(name, page, count, Schemas.SONG_ARRAY_BY_ORDER));
     }
@@ -40,5 +41,37 @@ function fetchHistory(page = 1, count = 20, order= 'asc') {
 export function loadHistory(page, count, order) {
   return dispatch => {
     return dispatch(fetchHistory(page, count, order));
+  };
+};
+
+export function postSongToQueue(songid) {
+  return {
+    [CALL_API]: {
+      types: ['POST_SONG_REQUEST', 'POST_SONG_SUCCESS', 'POST_SONG_FAILURE'],
+      endpoint: `/playlist`,
+      body: { songid },
+      method: 'POST'
+    }
+  };
+};
+
+export function putSongToQueue(songid) {
+  return {
+    [CALL_API]: {
+      types: [PUT_SONG_REQUEST, PUT_SONG_SUCCESS, PUT_SONG_FAILURE],
+      endpoint: `/playlist`,
+      body: { songid },
+      method: 'PUT'
+    }
+  };
+};
+
+export function deleteSongFromQueue(songid, index) {
+  return {
+    [CALL_API]: {
+      types: [DELETE_SONG_REQUEST, DELETE_SONG_SUCCESS, DELETE_SONG_FAILURE],
+      endpoint: `/playlist?songid=${songid}&index=${index}`,
+      method: 'DELETE'
+    }
   };
 };

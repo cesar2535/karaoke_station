@@ -8,6 +8,7 @@ import List from '../components/List';
 import SideNav from '../components/SideNav';
 import Filter from '../components/Filter';
 import Pager from '../components/Pager';
+import ActionPanel from '../components/ActionPanel';
 
 import { loadPlaylist } from '../actions/playlist';
 
@@ -21,8 +22,25 @@ class PlaylistPage extends Component {
     super(props);
   }
 
+  state = {
+    interval: ''
+  }
+
   componentWillMount() {
     loadData(this.props);
+  }
+
+  componentDidMount() {
+    // this.setState({
+    //   interval: setInterval(function () {
+    //     loadData(this.props);
+    //   }.bind(this), 5000)
+    // });
+  }
+
+  componentWillUnmount() {
+    const { interval } = this.state;
+    clearInterval(interval);
   }
 
   render() {

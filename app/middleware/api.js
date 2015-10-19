@@ -81,7 +81,7 @@ function callApi({ endpoint, schema, method, body = {} }) {
         form.append(item, body[item]);
       });
       return fetch(fullUrl, {
-        method: 'POST',
+        method,
         body: form
       }).then(
         response => response.json().then( json => ({ json, response }) )
@@ -93,7 +93,9 @@ function callApi({ endpoint, schema, method, body = {} }) {
         return Object.assign({}, camelizedJSON);
       })
     case 'DELETE':
-      return fetch(fullUrl).then(
+      return fetch(fullUrl, {
+        method: 'DELETE'
+      }).then(
         response => response.json().then( json => ({ json, response }) )
       ).then( ({ json, response }) => {
         if (!response.ok) {
