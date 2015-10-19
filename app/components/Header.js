@@ -16,7 +16,7 @@ class Header extends Component {
           </Link>
         </div>
         <div className={`Header-right`}>
-          <button className={`ic ic_topbar_Search_normal`} onClick={this.props.toggleSearch} />
+          <button className={`Header-btn ic ic_topbar_Search_normal`} onClick={this.props.toggleSearch} />
         </div>
       </header>
     );
