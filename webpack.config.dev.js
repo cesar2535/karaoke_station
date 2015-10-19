@@ -26,7 +26,7 @@ module.exports = {
       title: 'Ocean KTV',
       filename: 'index.html',
       template: 'index.template.html',
-      favicon: path.join(__dirname, 'app', 'assets', 'favicon.ico')
+      favicon: path.join(__dirname, 'app', 'assets', 'images', 'favicon.ico')
     })
   ],
   resolve: {
