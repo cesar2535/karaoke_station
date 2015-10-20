@@ -7,6 +7,7 @@ import List from '../components/List';
 import SideNav from '../components/SideNav';
 import Filter from '../components/Filter';
 import Pager from '../components/Pager';
+import ActionPanel from '../components/ActionPanel';
 
 import { loadHistory } from '../actions/playlist';
 
@@ -37,10 +38,11 @@ class HistoryPage extends Component {
               <List className={`List--history History-body`}
                     items={songsInHistory}
                     renderItem={this.renderListItem.bind(this)}
-                    isFetching={historyInfo.isFetching} />
+                    isFetching={historyInfo.isFetching}
+                    onLoadMore={this.loadMore.bind(this)} />
             </div>
           </div>
-          <Pager currentLen={songsInHistory.length} />
+          <Pager currentLen={songsInHistory.length} totalLen={historyInfo.total} />
         </div>
       </div>
     );
@@ -49,11 +51,22 @@ class HistoryPage extends Component {
   renderListItem(item, index) {
     return (
       <div key={index} className={`Song`}>
-        <span>{item.name}</span>
-        <span>{item.artist}</span>
-        <span>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
+        <div className={`Song-info`}>
+          <span>{item.name}</span>
+          <span>{item.artist}</span>
+          <span>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
+        </div>
+        <ActionPanel data={{ songId: item.id }} />
       </div>
     );
+  }
+
+  loadMore(evt) {
+    const { songsInHistory, historyInfo, loadHistory } = this.props;
+    if ( songsInHistory.length >= historyInfo.total ) {
+      return ;
+    }
+    loadHistory(historyInfo.page + 1, 20);
   }
 }
 

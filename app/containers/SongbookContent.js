@@ -35,7 +35,7 @@ class SongbookContent extends Component {
     if ( songbookType === 'songs' && (lang === 'Mandarin' || lang === 'Taiwanese' || lang === 'Cantonese') && typeof stroke === 'undefined' ) {
       return this.renderStrokeOptions();
     }
-    
+
     return this.renderSongsContent();
   }
 
@@ -79,7 +79,7 @@ class SongbookContent extends Component {
   renderStrokeOption(item, index) {
     const { lang } = this.props;
     return (
-      <Link className={`Stroke`} to={`${ROOT}/songbook/songs`} query={{ lang, stroke: item.value }}>
+      <Link key={index} className={`Stroke`} to={`${ROOT}/songbook/songs`} query={{ lang, stroke: item.value }}>
         {item.label}
       </Link>
     );
@@ -102,7 +102,7 @@ class SongbookContent extends Component {
 
   renderSong(item, index) {
     return (
-      <div className={`Song`}>
+      <div key={index} className={`Song`}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
@@ -125,7 +125,7 @@ class SongbookContent extends Component {
 
   renderArtist(item, index) {
     return (
-      <div className={``}>
+      <div key={index} className={``}>
         <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
         <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
         <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
