@@ -1,7 +1,10 @@
 import { CALL_API, Schemas } from '../middleware/api';
 import {
   SONGS_FROM_FAVORITE_REQUEST, SONGS_FROM_FAVORITE_SUCCESS, SONGS_FROM_FAVORITE_FAILURE,
-  LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE
+  LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE,
+  POST_REQUEST, POST_SUCCESS, POST_FAILURE,
+  PUT_REQUEST, PUT_SUCCESS, PUT_FAILURE,
+  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE
 } from '../constants/ActionTypes';
 
 function fetchSongsFromFavorite(favorId, page = 1, count = 20) {
@@ -43,7 +46,7 @@ export function loadListFromFavorite() {
 export function putSongToFavorite(favorId, songId) {
   return {
     [CALL_API]: {
-      types: [PUT_SONG_REQUEST, PUT_SONG_SUCCESS, PUT_SONG_FAILURE],
+      types: [PUT_REQUEST, PUT_SUCCESS, PUT_FAILURE],
       endpoint: `/favorite/${favorId}?songid=${songId}`,
       method: 'PUT'
     }
@@ -53,7 +56,7 @@ export function putSongToFavorite(favorId, songId) {
 export function postNameToFavorite(favorId, name) {
   return {
     [CALL_API]: {
-      types: [POST_NAME_REQUEST, POST_NAME_SUCCESS, POST_NAME_FAILURE],
+      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
       endpoint: `/favorite/${favorId}`,
       body: { name },
       method: 'POST'
@@ -64,7 +67,7 @@ export function postNameToFavorite(favorId, name) {
 export function deleteSongFromFavorite(favorId, songId) {
   return {
     [CALL_API]: {
-      types: [DELETE_SONG_REQUEST, DELETE_SONG_SUCCESS, DELETE_SONG_FAILURE],
+      types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE],
       endpoint: `/favorite/${favorId}?songid=${songId}`,
       method: 'DELETE'
     }

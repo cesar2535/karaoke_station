@@ -1,5 +1,10 @@
 import { CALL_API, Schemas } from '../middleware/api';
-import { LOAD_PLAYLIST_REQUEST, LOAD_PLAYLIST_SUCCESS, LOAD_PLAYLIST_FAILURE } from '../constants/ActionTypes';
+import {
+  LOAD_PLAYLIST_REQUEST, LOAD_PLAYLIST_SUCCESS, LOAD_PLAYLIST_FAILURE,
+  POST_REQUEST, POST_SUCCESS, POST_FAILURE,
+  PUT_REQUEST, PUT_SUCCESS, PUT_FAILURE,
+  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE
+} from '../constants/ActionTypes';
 
 function fetchPlaylist(name, page = 1, count = 20, schema) {
   return {
@@ -47,7 +52,7 @@ export function loadHistory(page, count, order) {
 export function postSongToQueue(songid) {
   return {
     [CALL_API]: {
-      types: [POST_SONG_REQUEST, POST_SONG_SUCCESS, POST_SONG_FAILURE],
+      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
       endpoint: `/playlist`,
       body: { songid },
       method: 'POST'
@@ -58,7 +63,7 @@ export function postSongToQueue(songid) {
 export function putSongToQueue(songid) {
   return {
     [CALL_API]: {
-      types: [PUT_SONG_REQUEST, PUT_SONG_SUCCESS, PUT_SONG_FAILURE],
+      types: [PUT_REQUEST, PUT_SUCCESS, PUT_FAILURE],
       endpoint: `/playlist`,
       body: { songid },
       method: 'PUT'
@@ -69,7 +74,7 @@ export function putSongToQueue(songid) {
 export function deleteSongFromQueue(songid, index) {
   return {
     [CALL_API]: {
-      types: [DELETE_SONG_REQUEST, DELETE_SONG_SUCCESS, DELETE_SONG_FAILURE],
+      types: [DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE],
       endpoint: `/playlist?songid=${songid}&index=${index}`,
       method: 'DELETE'
     }
