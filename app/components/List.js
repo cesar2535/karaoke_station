@@ -15,7 +15,7 @@ class List extends Component {
   }
 
   static defaultProps = {
-    isFetching: true
+    isFetching: false
   }
 
   constructor(props) {

@@ -2,10 +2,22 @@
   @import 'suitcss-utils-display';
 }
 
-.Song {
+$ListItem {
   background-color alpha(#000, 0.7)
-  height 50px
   margin 2px 0
+
+  &:nth-child(odd) {
+    background-color alpha(#0a0000, 40%)
+  }
+
+  &:hover {
+    background-color alpha(#1a748e, 0.3)
+  }
+}
+
+.Song {
+  @extend $ListItem
+  height 50px
   position relative
   transition height 0.3s 0s
   overflow hidden
@@ -51,5 +63,11 @@
 }
 
 .Artist {
+  @extend $ListItem
+}
 
+.Stroke {
+  @extend $ListItem
+  display block
+  padding 10px 10px
 }
