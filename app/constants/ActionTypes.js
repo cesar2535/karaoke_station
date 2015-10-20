@@ -30,3 +30,15 @@ export const LISTS_ELSE_FAILURE = 'LISTS_ELSE_FAILURE';
 export const PLAY_REQUEST = 'PLAY_REQUEST';
 export const PAUSE_REQUEST = 'PAUSE_REQUEST';
 export const REPLAY_REQUEST = 'REPLAY_REQUEST';
+
+export const POST_REQUEST = 'POST_REQUEST';
+export const POST_SUCCESS = 'POST_SUCCESS';
+export const POST_FAILURE = 'POST_FAILURE';
+
+export const PUT_REQUEST = 'PUT_REQUEST';
+export const PUT_SUCCESS = 'PUT_SUCCESS';
+export const PUT_FAILURE = 'PUT_FAILURE';
+
+export const DELETE_REQUEST = 'DELETE_REQUEST';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
+export const DELETE_FAILURE = 'DELETE_FAILURE';
