@@ -83,7 +83,7 @@ class FavoritePage extends Component {
   renderListItem(item, index) {
     const { favorId } = this.props;
     return (
-      <div key={index} className={`Song`} onClick={this.toggleSong.bind(this)}>
+      <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
@@ -93,7 +93,7 @@ class FavoritePage extends Component {
     );
   }
 
-  toggleSong(evt) {
+  toggleActionPanel(evt) {
     evt.currentTarget.classList.toggle('is-expanded');
     evt.currentTarget.classList.toggle('is-selected');
   }

@@ -102,7 +102,7 @@ class SongbookContent extends Component {
 
   renderSong(item, index) {
     return (
-      <div key={index} className={`Song`}>
+      <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
@@ -131,6 +131,11 @@ class SongbookContent extends Component {
         <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
       </div>
     );
+  }
+
+  toggleActionPanel(evt) {
+    evt.currentTarget.classList.toggle('is-expanded');
+    evt.currentTarget.classList.toggle('is-selected');
   }
 }
 

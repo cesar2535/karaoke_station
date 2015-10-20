@@ -30,7 +30,7 @@ export function loadPlaylist(name, page, count) {
   };
 };
 
-function fetchHistory(page = 1, count = 20, order= 'asc') {
+function fetchHistory(page = 1, count = 20, order= 'desc') {
   return {
     name: 'history',
     page,

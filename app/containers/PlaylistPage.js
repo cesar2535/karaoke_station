@@ -128,7 +128,7 @@ class PlaylistPage extends Component {
 
   renderListItem(item, index) {
     return (
-      <div key={index} className={`Song`} onClick={this.toggleSong.bind(this)}>
+      <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span className={`ic ${item.state === 'PLAYING' ? 'ic_songlist_nowplaying' : ''}`} />
           <span className={``}>{item.name}</span>
@@ -139,7 +139,7 @@ class PlaylistPage extends Component {
     );
   }
 
-  toggleSong(evt) {
+  toggleActionPanel(evt) {
     evt.currentTarget.classList.toggle('is-expanded');
     evt.currentTarget.classList.toggle('is-selected');
   }

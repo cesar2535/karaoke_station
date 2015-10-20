@@ -50,7 +50,7 @@ class HistoryPage extends Component {
 
   renderListItem(item, index) {
     return (
-      <div key={index} className={`Song`}>
+      <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
@@ -59,6 +59,11 @@ class HistoryPage extends Component {
         <ActionPanel data={{ songId: item.id }} />
       </div>
     );
+  }
+
+  toggleActionPanel(evt) {
+    evt.currentTarget.classList.toggle('is-expanded');
+    evt.currentTarget.classList.toggle('is-selected');
   }
 
   loadMore(evt) {

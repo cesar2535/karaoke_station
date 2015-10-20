@@ -8,7 +8,7 @@ import { loadPlaylist, loadHistory } from '../actions/playlist';
 
 import Slider from '../components/Slider';
 import List from '../components/List';
-
+import ActionPanel from '../components/ActionPanel';
 
 function loadData(props) {
   props.loadPlaylist('current');
@@ -58,7 +58,7 @@ class HomePage extends Component {
 
   renderListInFavorites(item, index) {
     return (
-      <Link className={``} to={`${ROOT}/favorite/${item.name}`}>
+      <Link className={``} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }}>
         <span>{item.name}</span>
         <div className={`divider`}></div>
         <span>{`${item.nSongs} ${item.nSongs === 1 ? 'song' : 'songs' }`}</span>
@@ -103,9 +103,12 @@ class HomePage extends Component {
 
   renderSongInQueue(item, index) {
     return (
-      <div key={index} className={`Song Song--queue`}>
-        <span className={`Song-title`}>{item.name}</span>
-        <span className={`Song-artist`}>{item.artist}</span>
+      <div key={index} className={`Song Song--queue`} onClick={this.toggleActionPanel.bind(this)}>
+        <div className={`Song-info`}>
+          <span className={`Song-title`}>{item.name}</span>
+          <span className={`Song-artist`}>{item.artist}</span>
+        </div>
+        <ActionPanel data={{ songId: item.id }} isInQueue={true} />
       </div>
     );
   }
@@ -118,7 +121,7 @@ class HomePage extends Component {
           <Link className={``} to={`${ROOT}/history`}>歷史紀錄</Link>
         </h1>
         <List className={`List--history`}
-              items={songsInHistory.slice(0, 8)}
+              items={songsInHistory.slice(0, 7)}
               renderItem={this.renderSongInHistory.bind(this)}
               isFetching={historyInfo.isFetching} />
         <Link className={`History-more`} to={`${ROOT}/history`}>More</Link>
@@ -128,12 +131,20 @@ class HomePage extends Component {
 
   renderSongInHistory(item, index) {
     return (
-      <div key={index} className={`Song Song--history`}>
-        <span className={`Song-title`}>{item.name}</span>
-        <span className={`Song-artist`}>{item.artist}</span>
-        <span className={`Song-time`}>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
+      <div key={index} className={`Song Song--history`} onClick={this.toggleActionPanel.bind(this)}>
+        <div className={`Song-info`}>
+          <span className={`Song-title`}>{item.name}</span>
+          <span className={`Song-artist`}>{item.artist}</span>
+          <span className={`Song-time`}>{moment.unix(item.date).format('YYYY/MM/DD HH:mm')}</span>
+        </div>
+        <ActionPanel data={{ songId: item.id }} />
       </div>
     );
+  }
+
+  toggleActionPanel(evt) {
+    evt.currentTarget.classList.toggle('is-expanded');
+    evt.currentTarget.classList.toggle('is-selected');
   }
 }
 
