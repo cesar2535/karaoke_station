@@ -128,12 +128,20 @@ class PlaylistPage extends Component {
 
   renderListItem(item, index) {
     return (
-      <div key={index} className={`Song`}>
-        <span className={`ic ${item.state === 'PLAYING' ? 'ic_songlist_nowplaying' : ''}`} />
-        <span className={``}>{item.name}</span>
-        <span className={``}>{item.artist}</span>
+      <div key={index} className={`Song`} onClick={this.toggleSong.bind(this)}>
+        <div className={`Song-info`}>
+          <span className={`ic ${item.state === 'PLAYING' ? 'ic_songlist_nowplaying' : ''}`} />
+          <span className={``}>{item.name}</span>
+          <span className={``}>{item.artist}</span>
+        </div>
+        <ActionPanel data={{ songId: item.id }} isInQueue={ typeof item.index === 'undefined' ? false : true} />
       </div>
     );
+  }
+
+  toggleSong(evt) {
+    evt.currentTarget.classList.toggle('is-expanded');
+    evt.currentTarget.classList.toggle('is-selected');
   }
 
   loadQueue() {

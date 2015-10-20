@@ -8,6 +8,7 @@ import List from '../components/List';
 import SideNav from '../components/SideNav';
 import Filter from '../components/Filter';
 import Pager from '../components/Pager';
+import ActionPanel from '../components/ActionPanel';
 
 import { loadSongsFromFavorite, loadListFromFavorite } from '../actions/favorite';
 
@@ -80,12 +81,21 @@ class FavoritePage extends Component {
   }
 
   renderListItem(item, index) {
+    const { favorId } = this.props;
     return (
-      <div key={index} className={`Song`}>
-        <span>{item.name}</span>
-        <span>{item.artist}</span>
+      <div key={index} className={`Song`} onClick={this.toggleSong.bind(this)}>
+        <div className={`Song-info`}>
+          <span>{item.name}</span>
+          <span>{item.artist}</span>
+        </div>
+        <ActionPanel data={{ songId: item.id, favorId }} isInFavorite={true} />
       </div>
     );
+  }
+
+  toggleSong(evt) {
+    evt.currentTarget.classList.toggle('is-expanded');
+    evt.currentTarget.classList.toggle('is-selected');
   }
 
   loadSongs(props) {

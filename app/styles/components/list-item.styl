@@ -3,11 +3,12 @@
 }
 
 .Song {
-  display flex
-  align-items center
   background-color alpha(#000, 0.7)
-  padding 10px 20px
+  height 50px
   margin 2px 0
+  position relative
+  transition height 0.3s 0s
+  overflow hidden
 
   &:nth-child(odd) {
     background-color alpha(#0a0000, 40%)
@@ -21,16 +22,28 @@
     background-color alpha(#1a748e, 0.75)
   }
 
+  &.is-expanded {
+    height 130px
+  }
+
   &--queue {
 
   }
+}
 
-  & > * {
+.Song-info {
+  display flex
+  align-items center
+  height 50px
+  padding 10px 20px
+  box-sizing border-box
+
+  & > span {
     flex 1
     padding 0 10px
   }
 
-  .ic {
+  & > .ic {
     flex 0
     font-size 1.5em
     padding-right 1em
