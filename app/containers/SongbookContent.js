@@ -35,10 +35,8 @@ class SongbookContent extends Component {
     if ( songbookType === 'songs' && (lang === 'Mandarin' || lang === 'Taiwanese' || lang === 'Cantonese') && typeof stroke === 'undefined' ) {
       return this.renderStrokeOptions();
     }
-
-    if ( songbookType === 'songs' && artistId ) {
-      return this.renderSongsContent();
-    }
+    
+    return this.renderSongsContent();
   }
 
   renderStrokeOptions() {
