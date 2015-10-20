@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist && rm -f target/*",
-    "deploy": "npm run clean && npm run build"
+    "deploy": "npm run clean && npm run build",
     "build": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "start": "node devServer.js",
     "test": "cd ./app && NODE_ENV=test mocha --recursive --compilers js:babel/register",
