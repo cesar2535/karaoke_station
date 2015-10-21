@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import unzip from 'lodash/array/unzip';
+import chunk from 'lodash/array/chunk';
 
 import { ROOT } from '../constants/Config';
-import { loadSongsByArtist, loadSongsByLang } from '../actions/songslist';
+import { loadSongsByArtist, loadSongsByLang, loadArtistsByArtistType } from '../actions/songslist';
 
 import List from '../components/List';
 import Filter from '../components/Filter';
@@ -20,50 +22,114 @@ function checkSongbookType(songbookType) {
   }
 }
 
+function checkLang(lang) {
+  switch (lang) {
+    case 'Mandarin':
+    case 'Taiwanese':
+    case 'Cantonese':
+      return true;
+    default:
+      return false;
+  }
+}
+
+function loadData(props) {
+  const { query } = props;
+  const { artistType, artistId, lang, stroke } = query;
+
+  if (artistType) {
+    return props.loadArtistsByArtistType({ artistType });
+  }
+
+  if (checkLang(lang) && typeof stroke === 'number') {
+    return props.loadSongsByLang({ lang, nsongs: stroke });
+  } else if (checkLang(lang)) {
+    return ;
+  }
+
+  if (lang) {
+    return props.loadSongsByLang({ lang });
+  }
+
+  if (artistId) {
+    return props.loadSongsByArtist({ artistId });
+  }
+}
+
 class SongbookContent extends Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    const { songbookType, history } = this.props;
+    const {
+      songbookType, history
+    } = this.props;
+    loadData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
+    const {
+      songbookType, query,
+      loadArtistsByArtistType, loadSongsByArtist, loadSongsByLang
+    } = nextProps;
 
+    if (songbookType === 'artists' && query.artistType && (query.artistType !== this.props.query.artistType)) {
+      return loadArtistsByArtistType({ artistType: query.artistType });
+    }
+
+    if (songbookType === 'songs' && query.artistId && (query.artistId !== this.props.query.artistId)) {
+      return loadSongsByArtist({
+        artistId: query.artistId,
+        artistName: query.artistName
+      });
+    }
+
+    if (songbookType === 'songs' && query.lang && (query.lang !== this.props.query.lang)) {
+      if (typeof query.stroke === 'number') {
+        return loadSongsByLang({
+          lang: query.lang,
+          nsongs: query.stroke
+        });
+      }
+
+      if (checkLang(query.lang)) {
+        return ;
+      }
+
+      loadSongsByLang({ lang: query.lang }) ;
+    }
   }
 
   render() {
-    return (
-      <div className={`Page-content`}>
-        <Filter />
-        {this.renderContent(this.props)}
-        <Pager />
-      </div>
-    )
+    return this.renderContent(this.props);
   }
 
   renderContent(props) {
-    const { songbookType, lang, stroke, artistType, artistId } = props;
-    console.log(lang, stroke, artistType);
+    const {
+      songbookType, query,
+      songsInfo, songsInSongbook,
+      artistsInfo, artistsInSongbook
+    } = props;
 
-    if ( songbookType === 'artists' && artistType ) {
-      return this.renderArtistsContent();
+    if ( songbookType === 'artists' && query.artistType ) {
+      const artistsDist = unzip(chunk(artistsInSongbook, 3));
+      return this.renderArtistsContent(artistsDist, artistsInfo, artistsInSongbook.length);
     }
 
-    if ( songbookType === 'songs' && (lang === 'Mandarin' || lang === 'Taiwanese' || lang === 'Cantonese') && typeof stroke === 'undefined' ) {
+    if ( songbookType === 'songs' && checkLang(query.lang) && typeof query.stroke === 'undefined' ) {
       return this.renderStrokeOptions();
     }
 
     if (!checkSongbookType(songbookType)) {
       return (
-        <section className={`Page-main`}>
-          <h1>NOTHING HERE!</h1>
-        </section>
+        <div className={`Page-content`}>
+          <h1>NOTHING HERE!!</h1>
+        </div>
       );
     }
 
-    return this.renderSongsContent();
+    return this.renderSongsContent(songsInSongbook, songsInfo);
   }
 
   renderStrokeOptions() {
@@ -94,17 +160,19 @@ class SongbookContent extends Component {
     }];
 
     return (
-      <section className={`Page-main`}>
-        <h1>字部</h1>
-        <div className={`Songbook Songbook--w60`}>
-          <List className={`List--stroke Songbook-body`} items={strokes} renderItem={this.renderStrokeOption.bind(this)} />
-        </div>
-      </section>
+      <div className={`Page-content`}>
+        <section className={`Page-main`}>
+          <h1>字部</h1>
+          <div className={`Songbook Songbook--w60`}>
+            <List className={`List--stroke Songbook-body`} items={strokes} renderItem={this.renderStrokeOption.bind(this)} />
+          </div>
+        </section>
+      </div>
     );
   }
 
   renderStrokeOption(item, index) {
-    const { lang } = this.props;
+    const { query: { lang } } = this.props;
     return (
       <Link key={index} className={`Stroke`} to={`${ROOT}/songbook/songs`} query={{ lang, stroke: item.value }}>
         {item.label}
@@ -112,18 +180,22 @@ class SongbookContent extends Component {
     );
   }
 
-  renderSongsContent(songs = []) {
+  renderSongsContent(songs = [], songsInfo) {
     return (
-      <section className={`Page-main`}>
-        <h1></h1>
-        <div className={`Songbook Songbook--w620`}>
-          <div className={`Songbook-head`}>
-            <div>歌名</div>
-            <div>演唱者</div>
+      <div className={`Page-content`}>
+        <Filter />
+        <section className={`Page-main`}>
+          <h1></h1>
+          <div className={`Songbook Songbook--w620`}>
+            <div className={`Songbook-head`}>
+              <div>歌名</div>
+              <div>演唱者</div>
+            </div>
+            <List className={`List--song Songbook-body`} items={songs} renderItem={this.renderSong.bind(this)}/>
           </div>
-          <List className={`List--song Songbook-body`} items={songs} renderItem={this.renderSong.bind(this)}/>
-        </div>
-      </section>
+        </section>
+        <Pager currentLen={songs.length} totalLen={songsInfo.total} />
+      </div>
     );
   }
 
@@ -139,23 +211,27 @@ class SongbookContent extends Component {
     );
   }
 
-  renderArtistsContent(artists = []) {
+  renderArtistsContent(artists = [], artistsInfo, currentLen) {
     return (
-      <section className={`Page-main`}>
-        <h1></h1>
-        <div className={`Songbook`}>
-          <List className={`List--artist Songbook-body`} items={artists} renderItem={this.renderArtist.bind(this)} />
-        </div>
-      </section>
+      <div className={`Page-content`}>
+        <Filter />
+        <section className={`Page-main`}>
+          <h1></h1>
+          <div className={`Songbook`}>
+            <List className={`List--artist Songbook-body`} items={artists} renderItem={this.renderArtist.bind(this)} />
+          </div>
+        </section>
+        <Pager currentLen={currentLen} totalLen={artistsInfo.total} />
+      </div>
     );
   }
 
   renderArtist(item, index) {
     return (
       <div key={index} className={``}>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artist: '', artistId: '' }}>test</Link>
+        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[0].name, artistId: item[0].id }}>{item[0].name}</Link>
+        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[1].name, artistId: item[1].id }}>{item[1].name}</Link>
+        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[2].name, artistId: item[2].id }}>{item[2].name}</Link>
       </div>
     );
   }
@@ -169,11 +245,32 @@ class SongbookContent extends Component {
 function mapStateToProps(state, ownProps) {
   const { query } = ownProps.location;
   const { songbookType } = ownProps.params;
+  const {
+    entities: { songs, artists },
+    pagination: { artistsByType, songsByLang, songsByArtist }
+  } = state
+
+  let songsInfo = { ids: [], page: 0 };
+
+  if (query.artistId) {
+    songsInfo = songsByArtist[query.artistId] || { ids: [], page: 0 };
+  } else if (query.lang) {
+    songsInfo = songsByLang[query.lang] || { ids: [], page: 0 };
+  }
+
+  const songsInSongbook = songsInfo.ids.map(id => songs[id]);
+  const artistsInfo = artistsByType[query.artistType] || { ids: [], page: 0 };
+  const artistsInSongbook = artistsInfo.ids.map(id => artists[id]);
+
 
   return {
-    ...query,
-    songbookType
+    query,
+    songbookType,
+    songsInfo,
+    artistsInfo,
+    songsInSongbook,
+    artistsInSongbook
   };
 }
 
-export default connect(mapStateToProps)(SongbookContent);
+export default connect(mapStateToProps, { loadSongsByArtist, loadSongsByLang, loadArtistsByArtistType })(SongbookContent);
