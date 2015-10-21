@@ -3,15 +3,34 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { ROOT } from '../constants/Config';
+import { loadSongsByArtist, loadSongsByLang } from '../actions/songslist';
 
 import List from '../components/List';
 import Filter from '../components/Filter';
 import Pager from '../components/Pager';
 import ActionPanel from '../components/ActionPanel';
 
+function checkSongbookType(songbookType) {
+  switch (songbookType) {
+    case 'songs':
+    case 'artists':
+      return true;
+    default:
+      return false;
+  }
+}
+
 class SongbookContent extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    const { songbookType, history } = this.props;
+  }
+
+  componentWillReceiveProps(nextProps) {
+
   }
 
   render() {
@@ -34,6 +53,14 @@ class SongbookContent extends Component {
 
     if ( songbookType === 'songs' && (lang === 'Mandarin' || lang === 'Taiwanese' || lang === 'Cantonese') && typeof stroke === 'undefined' ) {
       return this.renderStrokeOptions();
+    }
+
+    if (!checkSongbookType(songbookType)) {
+      return (
+        <section className={`Page-main`}>
+          <h1>NOTHING HERE!</h1>
+        </section>
+      );
     }
 
     return this.renderSongsContent();

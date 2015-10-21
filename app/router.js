@@ -21,7 +21,7 @@ export default (
   <Router history={history}>
     <Route path={`${ROOT}/`} component={App}>
       <IndexRoute component={HomePage}></IndexRoute>
-      <Route path={`songbook`} component={SongbookPage}>
+      <Route path={`songbook`} component={SongbookPage} onEnter={ (nextState, replaceState) => nextState.params.songbookType ? null : replaceState(null, `${ROOT}/songbook/artists?artistType=male`)}>
         <Route path={`:songbookType`} component={SongbookContent} />
       </Route>
       <Route path={`favorite`} component={FavoritePage} />
