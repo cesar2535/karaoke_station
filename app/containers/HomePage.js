@@ -75,11 +75,11 @@ class HomePage extends Component {
           <span className={`ic ic_menu_requestbook`} />
           <span className={``}>點歌本</span>
         </h1>
-        <div className={``}>
-          <Link className={``} to={`${ROOT}/songbook/artists`} query={{ type: `artist`, category: `male`}}>
+        <div className={`Songbook-navs`}>
+          <Link className={`Songbook-link Songbook-link--bgImage-01`} to={`${ROOT}/songbook/artists`} query={{ artistType: `male` }}>
             <h2>依歌星找歌</h2>
           </Link>
-          <Link className={``} to={`${ROOT}/songbook/songs`} query={{ type: `lang`, category: `Mandarin`}}>
+          <Link className={`Songbook-link Songbook-link--bgImage-02`} to={`${ROOT}/songbook/songs`} query={{ lang: `Mandarin` }}>
             <h2>依語言找歌</h2>
           </Link>
         </div>
