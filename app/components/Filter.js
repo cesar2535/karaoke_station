@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 
 class Filter extends Component {
   constructor(props) {
@@ -9,10 +9,10 @@ class Filter extends Component {
   render() {
     const { className } = this.props;
 
-    const classes = ClassNames(`Filter`, className);
+    const ClassName = classnames(`Filter`, className);
 
     return (
-      <div className={classes}>
+      <div className={ClassName}>
 
       </div>
     );

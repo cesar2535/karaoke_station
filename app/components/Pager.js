@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 
 class Pager extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class Pager extends Component {
   render() {
     const { className, currentLen, totalLen } = this.props;
 
-    const classes = ClassNames(`Pager`, className);
+    const classes = classnames(`Pager`, className);
 
     return (
       <div className={classes}>

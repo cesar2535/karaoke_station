@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
-import ClassNames from 'classnames';
+import classnames from 'classnames';
 import debounce from 'lodash/function/debounce';
 import throttle from 'lodash/function/throttle';
 import spinnerImg from '../assets/images/spinner.svg';
@@ -32,25 +32,25 @@ class List extends Component {
       isFetching, pageCount, className
     } = this.props;
 
-    const classes = ClassNames(`List`, className);
+    const ClassName = classnames(`List`, className);
     const isEmpty = items.length === 0;
 
     if (isEmpty && isFetching) {
       return (
-        <div className={classes}>
+        <div className={ClassName}>
           {this.renderSpinner(isFetching)}
         </div>
       );
     } else if (isEmpty) {
       return (
-        <div className={classes}>
+        <div className={ClassName}>
           <h2><i>No Content</i></h2>
         </div>
       );
     }
 
     return (
-      <div ref="list" className={classes} onScroll={debounce(this.handleScroll.bind(this), 1000)}>
+      <div ref="list" className={ClassName} onScroll={debounce(this.handleScroll.bind(this), 1000)}>
         {this.renderSpinner(isFetching)}
         {items.map(renderItem)}
       </div>
