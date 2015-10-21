@@ -74,7 +74,7 @@ class ActionPanel extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
 
   };
