@@ -8,13 +8,14 @@ import {
   ARTISTS_BY_KEYWORD_REQUEST, ARTISTS_BY_KEYWORD_SUCCESS, ARTISTS_BY_KEYWORD_FAILURE
 } from '../constants/ActionTypes';
 
-function fetchSongsByArtist({ page = 1, count = 20, artistId, artistName, nsongs }) {
+function fetchSongsByArtist({ page = 1, count = 20, artistId, artistName }) {
   return {
     artistName,
     artistId,
+    page,
     [CALL_API]: {
       types: [SONGS_BY_ARTIST_REQUEST, SONGS_BY_ARTIST_SUCCESS, SONGS_BY_ARTIST_FAILURE],
-      endpoint: `/songlist?query_who=songs&page=${page}&count=${count}&artist_id=${artistId}&nsongs=${nsongs}`,
+      endpoint: `/songlist?query_who=songs&page=${page}&count=${count}&artist_id=${artistId}`,
       schema: Schemas.SONG_ARRAY,
       method: 'GET'
     }
@@ -28,11 +29,13 @@ export function loadSongsByArtist(args) {
 };
 
 function fetchSongsByLang({ page = 1, count = 20, lang, nsongs }) {
+  const nSongs = typeof nsongs === 'number' ? `&nsongs=${nsongs}` : ''
   return {
     lang,
+    page,
     [CALL_API]: {
       types: [SONGS_BY_LANG_REQUEST, SONGS_BY_LANG_SUCCESS, SONGS_BY_LANG_FAILURE],
-      endpoint: `/songlist?query_who=songs&page=${page}&count=${count}&lang=${lang}&nsongs=${nsongs}`,
+      endpoint: `/songlist?query_who=songs&page=${page}&count=${count}&lang=${lang}${nSongs}`,
       schema: Schemas.SONG_ARRAY,
       method: 'GET'
     }
@@ -48,6 +51,7 @@ export function loadSongsByLang(args) {
 function fetchSongsByKeyword({ page = 1, count = 20, keyword, nsongs }) {
   return {
     keyword,
+    page,
     [CALL_API]: {
       types: [SONGS_BY_KEYWORD_REQUEST, SONGS_BY_KEYWORD_SUCCESS, SONGS_BY_KEYWORD_FAILURE],
       endpoint: `/songlist?query_who=songs&page=${page}&count=${count}&keywords=${keyword}&nsongs=${nsongs}`,
@@ -63,12 +67,13 @@ export function loadSongsByKeyword(args) {
   };
 };
 
-function fetchArtistsByArtistType({ page = 1, count = 1, artistType }) {
+function fetchArtistsByArtistType({ page = 1, count = 20, artistType }) {
   return {
     artistType,
+    page,
     [CALL_API]: {
       types: [ARTISTS_BY_ARTISTTYPE_REQUEST, ARTISTS_BY_ARTISTTYPE_SUCCESS, ARTISTS_BY_ARTISTTYPE_FAILURE],
-      endpoint: `/songlist/artists/${artistType}`,
+      endpoint: `/songlist/artists/${artistType}?page=${page}&count=${count}`,
       schema: Schemas.ARTIST_ARRAY,
       method: 'GET'
     }
@@ -81,11 +86,12 @@ export function loadArtistsByArtistType(args) {
   };
 };
 
-function fetchArtistsByKeyword({ page = 1, count = 1, keyword }) {
+function fetchArtistsByKeyword({ page = 1, count = 20, keyword }) {
   return {
     keyword,
+    page,
     [CALL_API]: {
-      types: [ARTISTS_BY_ARTISTTYPE_REQUEST, ARTISTS_BY_ARTISTTYPE_SUCCESS, ARTISTS_BY_ARTISTTYPE_FAILURE],
+      types: [ARTISTS_BY_KEYWORD_REQUEST, ARTISTS_BY_KEYWORD_SUCCESS, ARTISTS_BY_KEYWORD_FAILURE],
       endpoint: `/songlist?query_who=artists&page=${page}&count=${count}&keywords=${keyword}`,
       schema: Schemas.ARTIST_ARRAY,
       method: 'GET'
