@@ -71,3 +71,30 @@ $ListItem {
   display block
   padding 10px 10px
 }
+
+.Favorites {
+  display inline-flex
+  flex-direction column
+  justify-content center
+  align-items center
+  background-color #333
+  background-position center
+  background-size cover
+  width 31%
+  height 150px
+  margin 5px
+}
+
+.Favorites-divider {
+  background-color alpha(#fff, 0.2)
+  width 75%
+  height 1px
+  margin-top 10px
+  margin-bottom 5px
+}
+
+for num in (1..8) {
+  .Favorites--bgImage{num} {
+    background-image url("../assets/images/img_favorite_cover0" + num + ".png")
+  }
+}

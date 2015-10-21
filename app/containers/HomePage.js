@@ -5,12 +5,14 @@ import moment from 'moment';
 
 import { ROOT } from '../constants/Config';
 import { loadPlaylist, loadHistory } from '../actions/playlist';
+import { loadListFromFavorite } from '../actions/favorite';
 
 import Slider from '../components/Slider';
 import List from '../components/List';
 import ActionPanel from '../components/ActionPanel';
 
 function loadData(props) {
+  props.loadListFromFavorite();
   props.loadPlaylist('current');
   props.loadPlaylist('finished');
   props.loadHistory();
@@ -48,7 +50,7 @@ class HomePage extends Component {
           <span className={`ic ic_menu_favorite`} />
           <Link className={``} to={`${ROOT}/favorite`}>最愛歌曲</Link>
         </h1>
-        <List className={`List--favorite`}
+        <List className={`List--favorites`}
               items={listInFavorites.slice(0, 8)}
               renderItem={this.renderListInFavorites.bind(this)}
               isFetching={favoritesInfo.isFetching} />
@@ -58,9 +60,9 @@ class HomePage extends Component {
 
   renderListInFavorites(item, index) {
     return (
-      <Link className={``} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }}>
+      <Link className={`Favorites Favorites--bgImage${index % 8 + 1}`} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }}>
         <span>{item.name}</span>
-        <div className={`divider`}></div>
+        <div className={`Favorites-divider`}></div>
         <span>{`${item.nSongs} ${item.nSongs === 1 ? 'song' : 'songs' }`}</span>
       </Link>
     );
@@ -93,7 +95,7 @@ class HomePage extends Component {
           <Link className={``} to={`${ROOT}/playlist`} query={{ list: 'current' }}>點歌清單</Link>
         </h1>
         <List className={`List--queue`}
-              items={songsInQueue.slice(0, 8)}
+              items={songsInQueue.slice(0, 7)}
               renderItem={this.renderSongInQueue.bind(this)}
               isFetching={queueInfo.isFetching} />
         <Link className={`Queue-more`} to={`${ROOT}/playlist`} query={{ list: 'current' }}>More</Link>
@@ -150,16 +152,20 @@ class HomePage extends Component {
 
 function mapStateToProps(state, ownProps) {
   const {
-    pagination: { songsFromPlaylist },
-    entities: { songsByDate , songsByOrder }
+    pagination: { songsFromPlaylist, listsElse },
+    entities: { songsByDate , songsByOrder, lists }
   } = state;
 
+  const favoritesInfo = listsElse['favorite'] || { ids: [] };
+  const listInFavorites = favoritesInfo.ids.map(id => lists[id]);
   const queueInfo = songsFromPlaylist['current'] || { ids: [], page: 0 };
   const songsInQueue = queueInfo.ids.map(id => songsByOrder[id]);
   const historyInfo = songsFromPlaylist['history'] || { ids: [], page: 0 };
   const songsInHistory = historyInfo.ids.map(id => songsByDate[id]);
 
   return {
+    favoritesInfo,
+    listInFavorites,
     queueInfo,
     historyInfo,
     songsInQueue,
@@ -167,4 +173,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { loadPlaylist, loadHistory })(HomePage);
+export default connect(mapStateToProps, { loadPlaylist, loadHistory, loadListFromFavorite })(HomePage);
