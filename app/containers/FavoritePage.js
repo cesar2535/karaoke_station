@@ -13,7 +13,7 @@ import ActionPanel from '../components/ActionPanel';
 import { loadSongsFromFavorite, loadListFromFavorite } from '../actions/favorite';
 
 function loadData(props) {
-  props.loadListFromFavorite();
+  return props.loadListFromFavorite();
 }
 
 class FavoritePage extends Component {
@@ -22,16 +22,22 @@ class FavoritePage extends Component {
   }
 
   componentWillMount() {
-    const { favorId } = this.props;
-    loadData(this.props);
-    if ( !favorId ) {
-      return;
-    }
-
+    const { favorId, history } = this.props;
+    loadData(this.props).then( result => {
+      const { response: { entities: { lists } } } = result
+      if ( !favorId ) {
+        history.replaceState(null, `${ROOT}/favorite?favorId=${1}&favorName=${lists[1].name}`);
+      }
+    });
     this.loadSongs(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if ( !nextProps.favorId ) {
+      return nextProps.history.replaceState(null, `${ROOT}/favorite?favorId=${1}&favorName=${nextProps.listsInFavorite[0].name}`);
+    }
+
     if (nextProps.favorId !== this.props.favorId) {
       this.loadSongs(nextProps);
     }

@@ -8,13 +8,26 @@ import SlidePanel from './SlidePanel';
 
 class App extends Component {
   render() {
-    const { children } = this.props;
+    const { children, errorMessage } = this.props;
+
+    if( errorMessage ) {
+      return this.renderError(errorMessage);
+    }
+
     return (
       <div className={`App`}>
         <Header toggleSearch={this.toggleSearch.bind(this)} />
         {children}
         <SlidePanel ref="slidePanel" className={`SlidePanel`} />
         <Footer />
+      </div>
+    );
+  }
+
+  renderError(errorMessage) {
+    return (
+      <div className={`App`}>
+        <span>{errorMessage}</span>
       </div>
     );
   }
@@ -28,8 +41,10 @@ class App extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
+  const { errorMessage } = state;
 
+  return {
+    errorMessage
   };
 }
 
