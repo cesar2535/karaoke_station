@@ -14,7 +14,14 @@ class ActionPanel extends Component {
       index:PropTypes.number
     }).isRequired,
     isInFavorite: PropTypes.bool,
-    isInQueue: PropTypes.bool
+    isInQueue: PropTypes.bool,
+    reflesh: PropTypes.shape({
+      refleshFunc: PropTypes.func,
+      refleshData: PropTypes.shape({
+        songId: PropTypes.number,
+        favorId: PropTypes.string
+      })
+    })
   }
 
   constructor(props) {
@@ -74,9 +81,12 @@ class ActionPanel extends Component {
   }
 
   removeFromFavorite(evt) {
-    const { data, deleteSongFromFavorite } = this.props;
+    const { data, deleteSongFromFavorite, reflesh } = this.props;
     evt.stopPropagation();
-    deleteSongFromFavorite(data.favorId, data.songId);
+    deleteSongFromFavorite(data.favorId, data.songId)
+    .then( () => {
+      reflesh.refleshFunc(reflesh.refleshData.favorId);
+    });
   }
 }
 

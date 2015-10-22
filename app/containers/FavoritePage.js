@@ -54,7 +54,7 @@ class FavoritePage extends Component {
         <SideNav />
         {this.renderTabs(listsInFavorite)}
         <div className={`Page-content`}>
-          <Filter />
+          <Filter isInFavorite={true} data={{ favorId: favorId }} />
           <section className={`Page-main`}>
             <h1>
               {favorName}
@@ -111,14 +111,25 @@ class FavoritePage extends Component {
   }
 
   renderListItem(item, index) {
-    const { favorId } = this.props;
+    const { favorId, favorActions } = this.props;
+    const data = {
+      songId: item.id,
+      favorId,
+      index,
+    };
+    const reflesh = {
+      refleshFunc: favorActions.loadSongsFromFavorite,
+      refleshData: {
+        favorId
+      }
+    }
     return (
       <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
         </div>
-        <ActionPanel data={{ songId: item.id, favorId, index }} isInFavorite={true} />
+        <ActionPanel data={data} reflesh={reflesh} isInFavorite={true} />
       </div>
     );
   }

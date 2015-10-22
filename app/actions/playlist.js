@@ -80,3 +80,14 @@ export function deleteSongFromQueue(songid, index) {
     }
   };
 };
+
+export function postFavoriteToQueue(favorId, random) {
+  return {
+    [CALL_API]: {
+      types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
+      endpoint: `/playlist/favorite/${favorId}`,
+      method: 'POST',
+      body: { random }
+    }
+  };
+};
