@@ -41,7 +41,7 @@ function loadData(props) {
     return props.loadArtistsByArtistType({ artistType });
   }
 
-  if (checkLang(lang) && typeof stroke === 'number') {
+  if (checkLang(lang) && stroke) {
     return props.loadSongsByLang({ lang, nsongs: stroke });
   } else if (checkLang(lang)) {
     return ;
@@ -85,19 +85,19 @@ class SongbookContent extends Component {
       });
     }
 
-    if (songbookType === 'songs' && query.lang && (query.lang !== this.props.query.lang)) {
-      if (typeof query.stroke === 'number') {
-        return loadSongsByLang({
-          lang: query.lang,
-          nsongs: query.stroke
-        });
-      }
+    if (query.stroke && query.stroke !== this.props.query.stroke) {
+      return loadSongsByLang({
+        lang: query.lang,
+        nsongs: query.stroke
+      });
+    }
 
-      if (checkLang(query.lang)) {
-        return ;
-      }
+    if (checkLang(query.lang) && query.lang !== this.props.query.lang) {
+      return ;
+    }
 
-      loadSongsByLang({ lang: query.lang }) ;
+    if (query.lang && query.lang !== this.props.query.lang) {
+      return loadSongsByLang({ lang: query.lang });
     }
   }
 
