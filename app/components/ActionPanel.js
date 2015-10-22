@@ -31,7 +31,7 @@ class ActionPanel extends Component {
       <div className={ClassNames}>
         {this.renderBtn(true, { className: `ActionPanel-btn ic ic_action_requesting`, children: '點播', onClick: this.addToQueue.bind(this) })}
         {this.renderBtn(true, { className: `ActionPanel-btn ic ic_action_inserting`, children: '插播', onClick: this.insertToQueue.bind(this) })}
-        {this.renderBtn(true, { className: `ActionPanel-btn ic ic_action_favorite`, children: '加入最愛', onClick: this.addToFavorite.bind(this) })}
+        {this.renderBtn(!isInFavorite, { className: `ActionPanel-btn ic ic_action_favorite`, children: '加入最愛', onClick: this.addToFavorite.bind(this) })}
         {this.renderBtn(isInQueue, { className: `ActionPanel-btn ic ic_action_remove`, children: '刪歌', onClick: this.removeFromQueue.bind(this) })}
         {this.renderBtn(isInFavorite, { className: `ActionPanel-btn ic ic_action_remove`, children: '移除最愛', onClick: this.removeFromFavorite.bind(this) })}
       </div>

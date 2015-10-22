@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { ROOT } from '../constants/Config';
+import { ROOT, MODAL_STYLE } from '../constants/Config';
 
 import List from '../components/List';
 import SideNav from '../components/SideNav';
@@ -30,6 +31,7 @@ class FavoritePage extends Component {
       }
     });
     this.loadSongs(this.props);
+    this.showModal = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,6 +68,19 @@ class FavoritePage extends Component {
           </section>
           <Pager currentLen={songsInFavorite.length} totalLen={listInfo.total} />
         </div>
+        <Modal
+          ariaHideApp={false}
+          style={MODAL_STYLE}
+          isOpen={false}
+          closeTimeoutMS={150} >
+          <button className="Modal-close" onClick={this._closeEditModal.bind(this)}>X</button>
+          <h4 className="Modal-head4">重新命名</h4>
+          <form onSubmit={this._handleSubmit.bind(this)}>
+            <input ref="editFavoriteInputSection" className="Modal-input" onChange={ (event) => this._handleInputChange(event)} defaultValue="這不是肯德基" />
+            <button type="submit" className="Modal-buttom">確定</button>
+            <button className="Modal-buttom" onClick={ () => this._closeEditModal() }>取消</button>
+          </form>
+        </Modal>
       </div>
     );
   }
@@ -81,7 +96,11 @@ class FavoritePage extends Component {
   renderTabItem(item, index) {
     return (
       <Link key={index} className={`SideTab-link`} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }} activeClassName={`is-current`}>
-        {`${item.name} (${item.nSongs})`}
+        <div>
+          <span>{`${item.name}`}</span>
+          <span>{` (${item.nSongs})`}</span>
+          <span className="ic ic_submenu_rename SideTab-link--edit" onClick={this._openEditModal.bind(this)} />
+        </div>
       </Link>
     );
   }
@@ -109,6 +128,22 @@ class FavoritePage extends Component {
     if (favorId) {
       props.loadSongsFromFavorite(favorId);
     }
+  }
+
+  _handleSubmit() {
+    console.log('Submit Yo!!!');
+  }
+
+  _handleInputChange(event) {
+    this.setState({favoriteModalInputValue: event.target.value});
+  }
+
+  _closeEditModal() {
+    this.showModal = false;
+  }
+
+  _openEditModal() {
+    this.showModal = true;
   }
 }
 
