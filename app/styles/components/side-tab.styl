@@ -16,12 +16,28 @@ $SideTab-bgImg = linear-gradient(to bottom, #2d4269, #142e51, #29567a);
   display block
   padding 8px 0 8px 20px
   transition-duration 0.5s
+
   &:hover {
     background-color #1a748e
   }
 
+  &:hover &--edit {
+    display block;
+  }
+
   &.is-current {
     color #0ff
+  }
+
+  &--edit {
+    display none
+    float right
+    margin-right 5px
+  }
+
+  &--listview-edit {
+    margin-left 10px
+    font-size 20px
   }
 }
 

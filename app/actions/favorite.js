@@ -4,7 +4,8 @@ import {
   LISTS_ELSE_REQUEST, LISTS_ELSE_SUCCESS, LISTS_ELSE_FAILURE,
   POST_REQUEST, POST_SUCCESS, POST_FAILURE,
   PUT_REQUEST, PUT_SUCCESS, PUT_FAILURE,
-  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE
+  DELETE_REQUEST, DELETE_SUCCESS, DELETE_FAILURE,
+  EDIT_FAVORITE_NAME_REQUEST, EDIT_FAVORITE_NAME_SUCCESS, EDIT_FAVORITE_NAME_FAILURE
 } from '../constants/ActionTypes';
 
 function fetchSongsFromFavorite(favorId, page = 1, count = 20) {
@@ -73,3 +74,21 @@ export function deleteSongFromFavorite(favorId, songId) {
     }
   };
 };
+
+function updateFavoriteName(favoriteId, name) {
+  return {
+    [CALL_API]: {
+      types: [ EDIT_FAVORITE_NAME_REQUEST, EDIT_FAVORITE_NAME_SUCCESS, EDIT_FAVORITE_NAME_FAILURE ],
+      endpoint: `/favorite/${favoriteId}`,
+      schema: '',
+      method: 'POST',
+      body: { name }
+    }
+  };
+}
+
+export function putFavoriteName(favoriteId, name) {
+  return (dispatch) => {
+    return dispatch(updateFavoriteName(favoriteId, name));
+  };
+}

@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 
-import { ROOT } from '../constants/Config';
+import { ROOT, MODAL_STYLE } from '../constants/Config';
 
 import List from '../components/List';
 import SideNav from '../components/SideNav';
@@ -10,10 +12,11 @@ import Filter from '../components/Filter';
 import Pager from '../components/Pager';
 import ActionPanel from '../components/ActionPanel';
 
-import { loadSongsFromFavorite, loadListFromFavorite } from '../actions/favorite';
+import * as favorActions from '../actions/favorite';
+import * as modalActions from '../actions/modal';
 
 function loadData(props) {
-  return props.loadListFromFavorite();
+  return props.favorActions.loadListFromFavorite();
 }
 
 class FavoritePage extends Component {
@@ -30,6 +33,7 @@ class FavoritePage extends Component {
       }
     });
     this.loadSongs(this.props);
+    this.showModal = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,7 +48,7 @@ class FavoritePage extends Component {
   }
 
   render() {
-    const { favorName, favoriteInfo, listsInFavorite, listInfo, songsInFavorite } = this.props;
+    const { favorName, favoriteInfo, listsInFavorite, listInfo, songsInFavorite, modalActions, modals } = this.props;
     return (
       <div className={`Page Page--favorite`}>
         <SideNav />
@@ -52,7 +56,10 @@ class FavoritePage extends Component {
         <div className={`Page-content`}>
           <Filter />
           <section className={`Page-main`}>
-            <h1>{favorName}</h1>
+            <h1>
+              {favorName}
+              <span className="ic ic_submenu_rename SideTab-link--listview-edit" onClick={ (event) => this._openEditModal(event) } />
+            </h1>
             <div className={`Favorite Favorite--w620`}>
               <div className={`Favorite-head`}>
                 <div>歌名</div>
@@ -66,6 +73,19 @@ class FavoritePage extends Component {
           </section>
           <Pager currentLen={songsInFavorite.length} totalLen={listInfo.total} />
         </div>
+        <Modal
+          ariaHideApp={false}
+          style={MODAL_STYLE}
+          isOpen={modals.showModal}
+          closeTimeoutMS={150} >
+          <button className="Modal-close" onClick={ (event) => this._closeEditModal(event) }>X</button>
+          <h4 className="Modal-head4">重新命名</h4>
+          <form onSubmit={this._handleSubmit.bind(this)}>
+            <input ref="editFavoriteInputSection" className="Modal-input" onChange={ (event) => this._handleInputChange(event)} defaultValue={modals.name} />
+            <button type="submit" className="Modal-buttom">確定</button>
+            <button className="Modal-buttom" onClick={ (event) => this._closeEditModal(event) }>取消</button>
+          </form>
+        </Modal>
       </div>
     );
   }
@@ -81,7 +101,11 @@ class FavoritePage extends Component {
   renderTabItem(item, index) {
     return (
       <Link key={index} className={`SideTab-link`} to={`${ROOT}/favorite`} query={{ favorId: item.id, favorName: item.name }} activeClassName={`is-current`}>
-        {`${item.name} (${item.nSongs})`}
+        <div>
+          <span>{`${item.name}`}</span>
+          <span>{` (${item.nSongs})`}</span>
+          <span className="ic ic_submenu_rename SideTab-link--edit" onClick={ (event) => this._openEditModal(event) } />
+        </div>
       </Link>
     );
   }
@@ -107,8 +131,39 @@ class FavoritePage extends Component {
   loadSongs(props) {
     const { favorId } = props;
     if (favorId) {
-      props.loadSongsFromFavorite(favorId);
+      props.favorActions.loadSongsFromFavorite(favorId);
     }
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+    const { modalActions, favorActions, history, favorId } = this.props;
+    favorActions.putFavoriteName(favorId, this.refs.editFavoriteInputSection.value)
+    .then( () => {
+      favorActions.loadListFromFavorite();
+    })
+    .then( () => {
+      history.replaceState(null, `${ROOT}/favorite?favorId=${favorId}&favorName=${this.refs.editFavoriteInputSection.value}`);
+      modalActions.toggleEditModal(-1);
+    })
+  }
+
+  _handleInputChange(event) {
+    this.setState({favoriteModalInputValue: event.target.value});
+  }
+
+  _closeEditModal(event) {
+    const { modalActions } = this.props;
+    event.stopPropagation();
+    event.preventDefault();
+    modalActions.toggleEditModal(-1)
+  }
+
+  _openEditModal(event) {
+    const { favorId, favorName, modalActions } = this.props;
+    event.stopPropagation();
+    event.preventDefault();
+    modalActions.toggleEditModal(favorId, favorName);
   }
 }
 
@@ -131,8 +186,16 @@ function mapStateToProps(state, ownProps) {
     favoriteInfo,
     listsInFavorite,
     listInfo,
-    songsInFavorite
+    songsInFavorite,
+    modals: state.modals
   };
 }
 
-export default connect(mapStateToProps, { loadSongsFromFavorite, loadListFromFavorite })(FavoritePage);
+function mapDispatchToProps(dispatch) {
+  return {
+    favorActions: bindActionCreators(favorActions, dispatch),
+    modalActions: bindActionCreators(modalActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritePage);
