@@ -22,10 +22,6 @@ class ActionPanel extends Component {
         afterRemoveFromFavorite: PropTypes.func,
         afterAddToFavorite: PropTypes.func,
         afterRemoveFromQueue: PropTypes.func
-      }),
-      nextData: PropTypes.shape({
-        songId: PropTypes.number,
-        favorId: PropTypes.string
       })
     })
   }
@@ -91,7 +87,7 @@ class ActionPanel extends Component {
     evt.stopPropagation();
     deleteSongFromFavorite(data.favorId, data.songId)
     .then( () => {
-      next.nextFunc.afterRemoveFromFavorite(next.nextData.favorId);
+      next.nextFunc.afterRemoveFromFavorite(evt);
     });
   }
 }

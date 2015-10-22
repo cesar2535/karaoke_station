@@ -119,7 +119,7 @@ class FavoritePage extends Component {
     };
     const next = {
       nextFunc: {
-        afterRemoveFromFavorite: favorActions.loadSongsFromFavorite
+        afterRemoveFromFavorite: this.handleAfterRemoveFromFavorite.bind(this)
       },
       nextData: {
         favorId
@@ -179,6 +179,12 @@ class FavoritePage extends Component {
     event.stopPropagation();
     event.preventDefault();
     modalActions.toggleEditModal(favorId, name);
+  }
+
+  handleAfterRemoveFromFavorite() {
+    const { favorId, favorActions } = this.props;
+    favorActions.loadSongsFromFavorite(favorId);
+    favorActions.loadListFromFavorite();
   }
 }
 
