@@ -118,7 +118,9 @@ class FavoritePage extends Component {
       index,
     };
     const reflesh = {
-      refleshFunc: favorActions.loadSongsFromFavorite,
+      refleshFunc: {
+        afterRemoveFromFavorite: favorActions.loadSongsFromFavorite
+      },
       refleshData: {
         favorId
       }
