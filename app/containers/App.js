@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom'
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -10,12 +11,13 @@ class App extends Component {
   render() {
     const { children, errorMessage } = this.props;
 
-    if( errorMessage ) {
+    if( process.env.NODE_ENV === 'production' && errorMessage ) {
       return this.renderError(errorMessage);
     }
+    const ClassName = classnames(`App`, `u-theme-default`);
 
     return (
-      <div className={`App`}>
+      <div className={ClassName}>
         <Header toggleSearch={this.toggleSearch.bind(this)} />
         {children}
         <SlidePanel ref="slidePanel" className={`SlidePanel`} />
