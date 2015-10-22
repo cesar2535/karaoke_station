@@ -117,11 +117,11 @@ class FavoritePage extends Component {
       favorId,
       index,
     };
-    const reflesh = {
-      refleshFunc: {
+    const next = {
+      nextFunc: {
         afterRemoveFromFavorite: favorActions.loadSongsFromFavorite
       },
-      refleshData: {
+      nextData: {
         favorId
       }
     }
@@ -131,7 +131,7 @@ class FavoritePage extends Component {
           <span>{item.name}</span>
           <span>{item.artist}</span>
         </div>
-        <ActionPanel data={data} reflesh={reflesh} isInFavorite={true} />
+        <ActionPanel data={data} next={next} isInFavorite={true} />
       </div>
     );
   }
