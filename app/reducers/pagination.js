@@ -8,7 +8,7 @@ const pagination = combineReducers({
     types: [ActionTypes.SONGS_BY_KEYWORD_REQUEST, ActionTypes.SONGS_BY_KEYWORD_SUCCESS, ActionTypes.SONGS_BY_KEYWORD_FAILURE]
   }),
   songsByArtist: paginate({
-    mapActionToKey: action => action.name,
+    mapActionToKey: action => action.artistId,
     types: [ActionTypes.SONGS_BY_ARTIST_REQUEST, ActionTypes.SONGS_BY_ARTIST_SUCCESS, ActionTypes.SONGS_BY_ARTIST_FAILURE]
   }),
   songsByLang: paginate({
@@ -25,11 +25,11 @@ const pagination = combineReducers({
   }),
   artistsByKeyword: paginate({
     mapActionToKey: action => action.keyword,
-    types: []
+    types: [ActionTypes.ARTISTS_BY_KEYWORD_REQUEST, ActionTypes.ARTISTS_BY_KEYWORD_SUCCESS, ActionTypes.ARTISTS_BY_KEYWORD_FAILURE]
   }),
   artistsByType: paginate({
     mapActionToKey: action => action.artistType,
-    types: []
+    types: [ActionTypes.ARTISTS_BY_ARTISTTYPE_REQUEST, ActionTypes.ARTISTS_BY_ARTISTTYPE_SUCCESS, ActionTypes.ARTISTS_BY_ARTISTTYPE_FAILURE]
   }),
   listsElse: paginate({
     mapActionToKey: action => action.name,
