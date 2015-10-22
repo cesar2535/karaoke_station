@@ -48,7 +48,7 @@ class FavoritePage extends Component {
   }
 
   render() {
-    const { favorName, favoriteInfo, listsInFavorite, listInfo, songsInFavorite, modalActions, modals } = this.props;
+    const { favorId, favorName, favoriteInfo, listsInFavorite, listInfo, songsInFavorite, modalActions, modals } = this.props;
     return (
       <div className={`Page Page--favorite`}>
         <SideNav />
@@ -58,7 +58,7 @@ class FavoritePage extends Component {
           <section className={`Page-main`}>
             <h1>
               {favorName}
-              <span className="ic ic_submenu_rename SideTab-link--listview-edit" onClick={ (event) => this._openEditModal(event) } />
+              <span className="ic ic_submenu_rename SideTab-link--listview-edit" onClick={ (event) => this._openEditModal(event, favorId, favorName) } />
             </h1>
             <div className={`Favorite Favorite--w620`}>
               <div className={`Favorite-head`}>
@@ -104,7 +104,7 @@ class FavoritePage extends Component {
         <div>
           <span>{`${item.name}`}</span>
           <span>{` (${item.nSongs})`}</span>
-          <span className="ic ic_submenu_rename SideTab-link--edit" onClick={ (event) => this._openEditModal(event) } />
+          <span className="ic ic_submenu_rename SideTab-link--edit" onClick={ (event) => this._openEditModal(event, item.id, item.name) } />
         </div>
       </Link>
     );
@@ -137,13 +137,15 @@ class FavoritePage extends Component {
 
   _handleSubmit(event) {
     event.preventDefault();
-    const { modalActions, favorActions, history, favorId } = this.props;
-    favorActions.putFavoriteName(favorId, this.refs.editFavoriteInputSection.value)
+    const { modalActions, favorActions, history, favorId, favorName, modals } = this.props;
+    favorActions.putFavoriteName(modals.favorId, this.refs.editFavoriteInputSection.value)
     .then( () => {
       favorActions.loadListFromFavorite();
     })
     .then( () => {
-      history.replaceState(null, `${ROOT}/favorite?favorId=${favorId}&favorName=${this.refs.editFavoriteInputSection.value}`);
+      const myFavoriteName = favorName === modals.name ? this.refs.editFavoriteInputSection.value : favorName;
+      const myFavoriteId = favorId === modals.favorId ? modals.favorId : favorId
+      history.replaceState(null, `${ROOT}/favorite?favorId=${myFavoriteId}&favorName=${myFavoriteName}`);
       modalActions.toggleEditModal(-1);
     })
   }
@@ -159,11 +161,11 @@ class FavoritePage extends Component {
     modalActions.toggleEditModal(-1)
   }
 
-  _openEditModal(event) {
-    const { favorId, favorName, modalActions } = this.props;
+  _openEditModal(event, favorId, name) {
+    const { modalActions } = this.props;
     event.stopPropagation();
     event.preventDefault();
-    modalActions.toggleEditModal(favorId, favorName);
+    modalActions.toggleEditModal(favorId, name);
   }
 }
 
