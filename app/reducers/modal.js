@@ -12,7 +12,7 @@ export default function showModal( state = initialState, action ) {
     case TOGGLE_EDIT_MODAL:
 			return {
 				showModal: !state.showModal,
-				favoriteId: action.favoriteId,
+				favorId: action.favorId,
 				name: action.name
 			};
 		case TOGGLE_ADD_TO_FAVORITE_MODAL:
