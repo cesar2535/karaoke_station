@@ -118,7 +118,7 @@ class FavoritePage extends Component {
           <span>{item.name}</span>
           <span>{item.artist}</span>
         </div>
-        <ActionPanel data={{ songId: item.id, favorId }} isInFavorite={true} />
+        <ActionPanel data={{ songId: item.id, favorId, index }} isInFavorite={true} />
       </div>
     );
   }
@@ -138,7 +138,7 @@ class FavoritePage extends Component {
   _handleSubmit(event) {
     event.preventDefault();
     const { modalActions, favorActions, history, favorId, favorName, modals } = this.props;
-    favorActions.putFavoriteName(modals.favorId, this.refs.editFavoriteInputSection.value)
+    favorActions.postNameToFavorite(modals.favorId, this.refs.editFavoriteInputSection.value)
     .then( () => {
       favorActions.loadListFromFavorite();
     })

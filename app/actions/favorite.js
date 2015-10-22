@@ -74,21 +74,3 @@ export function deleteSongFromFavorite(favorId, songId) {
     }
   };
 };
-
-function updateFavoriteName(favoriteId, name) {
-  return {
-    [CALL_API]: {
-      types: [ EDIT_FAVORITE_NAME_REQUEST, EDIT_FAVORITE_NAME_SUCCESS, EDIT_FAVORITE_NAME_FAILURE ],
-      endpoint: `/favorite/${favoriteId}`,
-      schema: '',
-      method: 'POST',
-      body: { name }
-    }
-  };
-}
-
-export function putFavoriteName(favoriteId, name) {
-  return (dispatch) => {
-    return dispatch(updateFavoriteName(favoriteId, name));
-  };
-}

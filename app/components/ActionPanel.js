@@ -9,8 +9,9 @@ import { putSongToFavorite, deleteSongFromFavorite } from '../actions/favorite';
 class ActionPanel extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      songId: PropTypes.string.isRequired,
-      favorId: PropTypes.string
+      songId: PropTypes.number.isRequired,
+      favorId: PropTypes.string,
+      index:PropTypes.number
     }).isRequired,
     isInFavorite: PropTypes.bool,
     isInQueue: PropTypes.bool
@@ -51,26 +52,31 @@ class ActionPanel extends Component {
   addToQueue(evt) {
     const { data, postSongToQueue } = this.props;
     evt.stopPropagation();
+    postSongToQueue(data.songId);
   }
 
   insertToQueue(evt) {
     const { data, putSongToQueue } = this.props;
     evt.stopPropagation();
+    putSongToQueue(data.songId);
   }
 
   addToFavorite(evt) {
     const { data, putSongToFavorite } = this.props;
     evt.stopPropagation();
+    putSongToFavorite(data.favorId, data.songId);
   }
 
   removeFromQueue(evt) {
     const { data, deleteSongFromQueue } = this.props;
     evt.stopPropagation();
+    deleteSongFromQueue(data.songId, data.index);
   }
 
   removeFromFavorite(evt) {
     const { data, deleteSongFromFavorite } = this.props;
     evt.stopPropagation();
+    deleteSongFromFavorite(data.favorId, data.songId);
   }
 }
 
