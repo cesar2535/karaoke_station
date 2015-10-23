@@ -67,7 +67,7 @@ export function loadSongsByKeyword(args) {
   };
 };
 
-function fetchArtistsByArtistType({ page = 1, count = 20, artistType }) {
+function fetchArtistsByArtistType({ page = 1, count = 60, artistType }) {
   return {
     artistType,
     page,
