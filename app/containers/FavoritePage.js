@@ -54,7 +54,7 @@ class FavoritePage extends Component {
         <SideNav />
         {this.renderTabs(listsInFavorite)}
         <div className={`Page-content`}>
-          <Filter />
+          <Filter isInFavorite={true} data={{ favorId: favorId }} />
           <section className={`Page-main`}>
             <h1>
               {favorName}
@@ -111,14 +111,20 @@ class FavoritePage extends Component {
   }
 
   renderListItem(item, index) {
-    const { favorId } = this.props;
+    const { favorId, favorActions } = this.props;
+    const data = {
+      songId: item.id,
+      favorId,
+      index,
+    };
+
     return (
       <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
         </div>
-        <ActionPanel data={{ songId: item.id, favorId }} isInFavorite={true} />
+        <ActionPanel data={data} onRemoveFromFavorite={this.onRemoveFromFavorite.bind(this)} isInFavorite={true} />
       </div>
     );
   }
@@ -138,7 +144,7 @@ class FavoritePage extends Component {
   _handleSubmit(event) {
     event.preventDefault();
     const { modalActions, favorActions, history, favorId, favorName, modals } = this.props;
-    favorActions.putFavoriteName(modals.favorId, this.refs.editFavoriteInputSection.value)
+    favorActions.postNameToFavorite(modals.favorId, this.refs.editFavoriteInputSection.value)
     .then( () => {
       favorActions.loadListFromFavorite();
     })
@@ -166,6 +172,15 @@ class FavoritePage extends Component {
     event.stopPropagation();
     event.preventDefault();
     modalActions.toggleEditModal(favorId, name);
+  }
+
+  onRemoveFromFavorite(evt, data, deleteSongFromFavorite) {
+    const { favorActions } = this.props;
+    const { favorId, songId } = data;
+    deleteSongFromFavorite(favorId, songId).then ( (result) => {
+      favorActions.loadSongsFromFavorite(favorId);
+      favorActions.loadListFromFavorite();
+    })
   }
 }
 

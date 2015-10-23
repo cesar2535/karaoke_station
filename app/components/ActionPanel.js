@@ -9,11 +9,17 @@ import { putSongToFavorite, deleteSongFromFavorite } from '../actions/favorite';
 class ActionPanel extends Component {
   static propTypes = {
     data: PropTypes.shape({
-      songId: PropTypes.string.isRequired,
-      favorId: PropTypes.string
+      songId: PropTypes.number.isRequired,
+      favorId: PropTypes.string,
+      index:PropTypes.number
     }).isRequired,
     isInFavorite: PropTypes.bool,
-    isInQueue: PropTypes.bool
+    isInQueue: PropTypes.bool,
+    onAddToQueue: PropTypes.func,
+    onInsertToQueue: PropTypes.func,
+    onAddToFavorite: PropTypes.func,
+    onRemoveFromQueue: PropTypes.func,
+    onRemoveFromFavorite: PropTypes.func
   }
 
   constructor(props) {
@@ -49,28 +55,54 @@ class ActionPanel extends Component {
   }
 
   addToQueue(evt) {
-    const { data, postSongToQueue } = this.props;
+    const { data, postSongToQueue, onAddToQueue } = this.props;
     evt.stopPropagation();
+    if (typeof onAddToQueue === 'function') {
+      return onAddToQueue(evt, data, postSongToQueue);
+    }
+
+    return postSongToQueue(data.songId)
   }
 
   insertToQueue(evt) {
-    const { data, putSongToQueue } = this.props;
+    const { data, putSongToQueue, onInsertToQueue } = this.props;
     evt.stopPropagation();
+    if (typeof onInsertToQueue === 'function') {
+      return onInsertToQueue(evt, data, putSongToQueue);
+    }
+
+    return putSongToQueue(data.songId);
   }
 
   addToFavorite(evt) {
-    const { data, putSongToFavorite } = this.props;
+    const { data, putSongToFavorite, onAddToFavorite } = this.props;
     evt.stopPropagation();
+    if (typeof onAddToFavorite === 'function') {
+      return onAddToFavorite(evt, data, putSongToFavorite);
+    }
+
+    return putSongToFavorite(data.favorId, data.songId);
   }
 
   removeFromQueue(evt) {
-    const { data, deleteSongFromQueue } = this.props;
+    const { data, deleteSongFromQueue, onRemoveFromQueue } = this.props;
     evt.stopPropagation();
+
+    if (typeof onRemoveFromQueue === 'function') {
+      return onRemoveFromQueue(evt, data, deleteSongFromQueue);
+    }
+
+    return deleteSongFromQueue(data.songId, data.index);
   }
 
   removeFromFavorite(evt) {
-    const { data, deleteSongFromFavorite } = this.props;
+    const { data, deleteSongFromFavorite, onRemoveFromFavorite } = this.props;
     evt.stopPropagation();
+    if (typeof onRemoveFromFavorite === 'function') {
+      return onRemoveFromFavorite(evt, data, deleteSongFromFavorite);
+    }
+
+    return deleteSongFromFavorite(data,favorId, data.songId);
   }
 }
 
