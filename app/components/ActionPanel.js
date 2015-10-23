@@ -15,15 +15,11 @@ class ActionPanel extends Component {
     }).isRequired,
     isInFavorite: PropTypes.bool,
     isInQueue: PropTypes.bool,
-    next: PropTypes.shape({
-      nextFunc: PropTypes.shape({
-        afterAddToQueue: PropTypes.func,
-        afterInsertToQueue: PropTypes.func,
-        afterRemoveFromFavorite: PropTypes.func,
-        afterAddToFavorite: PropTypes.func,
-        afterRemoveFromQueue: PropTypes.func
-      })
-    })
+    onAddToQueue: PropTypes.func,
+    onInsertToQueue: PropTypes.func,
+    onAddToFavorite: PropTypes.func,
+    onRemoveFromQueue: PropTypes.func,
+    onRemoveFromFavorite: PropTypes.func
   }
 
   constructor(props) {
@@ -59,36 +55,54 @@ class ActionPanel extends Component {
   }
 
   addToQueue(evt) {
-    const { data, postSongToQueue } = this.props;
+    const { data, postSongToQueue, onAddToQueue } = this.props;
     evt.stopPropagation();
-    postSongToQueue(data.songId);
+    if (typeof onAddToQueue === 'function') {
+      return onAddToQueue(evt, data, postSongToQueue);
+    }
+
+    return postSongToQueue(data.songId)
   }
 
   insertToQueue(evt) {
-    const { data, putSongToQueue } = this.props;
+    const { data, putSongToQueue, onInsertToQueue } = this.props;
     evt.stopPropagation();
-    putSongToQueue(data.songId);
+    if (typeof onInsertToQueue === 'function') {
+      return onInsertToQueue(evt, data, putSongToQueue);
+    }
+
+    return putSongToQueue(data.songId);
   }
 
   addToFavorite(evt) {
-    const { data, putSongToFavorite } = this.props;
+    const { data, putSongToFavorite, onAddToFavorite } = this.props;
     evt.stopPropagation();
-    putSongToFavorite(data.favorId, data.songId);
+    if (typeof onAddToFavorite === 'function') {
+      return onAddToFavorite(evt, data, putSongToFavorite);
+    }
+
+    return putSongToFavorite(data.favorId, data.songId);
   }
 
   removeFromQueue(evt) {
-    const { data, deleteSongFromQueue } = this.props;
+    const { data, deleteSongFromQueue, onRemoveFromQueue } = this.props;
     evt.stopPropagation();
-    deleteSongFromQueue(data.songId, data.index);
+
+    if (typeof onRemoveFromQueue === 'function') {
+      return onRemoveFromQueue(evt, data, deleteSongFromQueue);
+    }
+
+    return deleteSongFromQueue(data.songId, data.index);
   }
 
   removeFromFavorite(evt) {
-    const { data, deleteSongFromFavorite, next } = this.props;
+    const { data, deleteSongFromFavorite, onRemoveFromFavorite } = this.props;
     evt.stopPropagation();
-    deleteSongFromFavorite(data.favorId, data.songId)
-    .then( () => {
-      next.nextFunc.afterRemoveFromFavorite(evt);
-    });
+    if (typeof onRemoveFromFavorite === 'function') {
+      return onRemoveFromFavorite(evt, data, deleteSongFromFavorite);
+    }
+
+    return deleteSongFromFavorite(data,favorId, data.songId);
   }
 }
 

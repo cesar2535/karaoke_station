@@ -117,21 +117,14 @@ class FavoritePage extends Component {
       favorId,
       index,
     };
-    const next = {
-      nextFunc: {
-        afterRemoveFromFavorite: this.handleAfterRemoveFromFavorite.bind(this)
-      },
-      nextData: {
-        favorId
-      }
-    }
+
     return (
       <div key={index} className={`Song`} onClick={this.toggleActionPanel.bind(this)}>
         <div className={`Song-info`}>
           <span>{item.name}</span>
           <span>{item.artist}</span>
         </div>
-        <ActionPanel data={data} next={next} isInFavorite={true} />
+        <ActionPanel data={data} onRemoveFromFavorite={this.onRemoveFromFavorite.bind(this)} isInFavorite={true} />
       </div>
     );
   }
@@ -181,10 +174,13 @@ class FavoritePage extends Component {
     modalActions.toggleEditModal(favorId, name);
   }
 
-  handleAfterRemoveFromFavorite() {
-    const { favorId, favorActions } = this.props;
-    favorActions.loadSongsFromFavorite(favorId);
-    favorActions.loadListFromFavorite();
+  onRemoveFromFavorite(evt, data, deleteSongFromFavorite) {
+    const { favorActions } = this.props;
+    const { favorId, songId } = data;
+    deleteSongFromFavorite(favorId, songId).then ( (result) => {
+      favorActions.loadSongsFromFavorite(favorId);
+      favorActions.loadListFromFavorite();
+    })
   }
 }
 
