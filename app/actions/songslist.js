@@ -29,7 +29,7 @@ export function loadSongsByArtist(args) {
 };
 
 function fetchSongsByLang({ page = 1, count = 20, lang, nsongs }) {
-  const nSongs = typeof nsongs === 'number' ? `&nsongs=${nsongs}` : ''
+  const nSongs = nsongs ? `&nsongs=${nsongs}` : ''
   return {
     lang,
     page,
@@ -67,7 +67,7 @@ export function loadSongsByKeyword(args) {
   };
 };
 
-function fetchArtistsByArtistType({ page = 1, count = 20, artistType }) {
+function fetchArtistsByArtistType({ page = 1, count = 60, artistType }) {
   return {
     artistType,
     page,

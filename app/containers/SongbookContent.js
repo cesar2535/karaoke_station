@@ -41,7 +41,7 @@ function loadData(props) {
     return props.loadArtistsByArtistType({ artistType });
   }
 
-  if (checkLang(lang) && typeof stroke === 'number') {
+  if (checkLang(lang) && stroke) {
     return props.loadSongsByLang({ lang, nsongs: stroke });
   } else if (checkLang(lang)) {
     return ;
@@ -85,19 +85,19 @@ class SongbookContent extends Component {
       });
     }
 
-    if (songbookType === 'songs' && query.lang && (query.lang !== this.props.query.lang)) {
-      if (typeof query.stroke === 'number') {
-        return loadSongsByLang({
-          lang: query.lang,
-          nsongs: query.stroke
-        });
-      }
+    if (query.stroke && query.stroke !== this.props.query.stroke) {
+      return loadSongsByLang({
+        lang: query.lang,
+        nsongs: query.stroke
+      });
+    }
 
-      if (checkLang(query.lang)) {
-        return ;
-      }
+    if (checkLang(query.lang) && query.lang !== this.props.query.lang) {
+      return ;
+    }
 
-      loadSongsByLang({ lang: query.lang }) ;
+    if (query.lang && query.lang !== this.props.query.lang) {
+      return loadSongsByLang({ lang: query.lang });
     }
   }
 
@@ -114,7 +114,8 @@ class SongbookContent extends Component {
 
     if ( songbookType === 'artists' && query.artistType ) {
       const artistsDist = unzip(chunk(artistsInSongbook, 3));
-      return this.renderArtistsContent(artistsDist, artistsInfo, artistsInSongbook.length);
+      console.log(artistsDist);
+      return this.renderArtistsContent(artistsDist, artistsInfo, artistsInSongbook.length, query);
     }
 
     if ( songbookType === 'songs' && checkLang(query.lang) && typeof query.stroke === 'undefined' ) {
@@ -129,7 +130,7 @@ class SongbookContent extends Component {
       );
     }
 
-    return this.renderSongsContent(songsInSongbook, songsInfo);
+    return this.renderSongsContent(songsInSongbook, songsInfo, query);
   }
 
   renderStrokeOptions() {
@@ -164,7 +165,9 @@ class SongbookContent extends Component {
         <section className={`Page-main`}>
           <h1>字部</h1>
           <div className={`Songbook Songbook--w60`}>
-            <List className={`List--stroke Songbook-body`} items={strokes} renderItem={this.renderStrokeOption.bind(this)} />
+            <List className={`List--stroke Songbook-body`}
+                  items={strokes}
+                  renderItem={this.renderStrokeOption.bind(this)} />
           </div>
         </section>
       </div>
@@ -180,18 +183,33 @@ class SongbookContent extends Component {
     );
   }
 
-  renderSongsContent(songs = [], songsInfo) {
+  renderSongsContent(songs = [], songsInfo, query) {
+    const { lang, stroke, artistId, artistName } = query;
+    let title;
+
+    if ( artistId ) {
+      title = artistName;
+    } else if ( stroke ) {
+      title = `${stroke} 字部`;
+    } else if ( lang ) {
+      title = lang
+    }
+
     return (
       <div className={`Page-content`}>
         <Filter />
         <section className={`Page-main`}>
-          <h1></h1>
+          <h1>{title}</h1>
           <div className={`Songbook Songbook--w620`}>
             <div className={`Songbook-head`}>
               <div>歌名</div>
               <div>演唱者</div>
             </div>
-            <List className={`List--song Songbook-body`} items={songs} renderItem={this.renderSong.bind(this)}/>
+            <List className={`List--song Songbook-body`}
+                  items={songs}
+                  renderItem={this.renderSong.bind(this)}
+                  onLoadMore={this.loadMoreSongs.bind(this)}
+                  isFetching={songsInfo.isFetching} />
           </div>
         </section>
         <Pager currentLen={songs.length} totalLen={songsInfo.total} />
@@ -211,14 +229,19 @@ class SongbookContent extends Component {
     );
   }
 
-  renderArtistsContent(artists = [], artistsInfo, currentLen) {
+  renderArtistsContent(artists = [], artistsInfo, currentLen, query) {
+    const { artistType } = query;
     return (
       <div className={`Page-content`}>
         <Filter />
         <section className={`Page-main`}>
-          <h1></h1>
+          <h1>{artistType.toUpperCase()}</h1>
           <div className={`Songbook`}>
-            <List className={`List--artist Songbook-body`} items={artists} renderItem={this.renderArtist.bind(this)} />
+            <List className={`List--artist Songbook-body`}
+                  items={artists}
+                  renderItem={this.renderArtist.bind(this)}
+                  onLoadMore={this.loadMoreArtists.bind(this)}
+                  isFetching={artistsInfo.isFetching} />
           </div>
         </section>
         <Pager currentLen={currentLen} totalLen={artistsInfo.total} />
@@ -228,10 +251,13 @@ class SongbookContent extends Component {
 
   renderArtist(item, index) {
     return (
-      <div key={index} className={``}>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[0].name, artistId: item[0].id }}>{item[0].name}</Link>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[1].name, artistId: item[1].id }}>{item[1].name}</Link>
-        <Link className={``} to={`${ROOT}/songbook/songs`} query={{ artistName: item[2].name, artistId: item[2].id }}>{item[2].name}</Link>
+      <div key={index} className={`List-col`}>
+        {item.map((subItem, subIndex) => {
+          if (typeof subItem === 'undefined') {
+            return <a className={`Artist Artist--empty`} />;
+          }
+          return <Link key={subIndex} className={`Artist`} to={`${ROOT}/songbook/songs`} query={{ artistName: subItem.name, artistId: subItem.id }}>{subItem.name}</Link>
+        })}
       </div>
     );
   }
@@ -239,6 +265,32 @@ class SongbookContent extends Component {
   toggleActionPanel(evt) {
     evt.currentTarget.classList.toggle('is-expanded');
     evt.currentTarget.classList.toggle('is-selected');
+  }
+
+  loadMoreSongs(evt) {
+    const { query, songsInfo, songsInSongbook, loadSongsByLang, loadSongsByArtist } = this.props;
+    const { lang, stroke, artistId, artistName } = query;
+
+    if ( songsInSongbook.length >= songsInfo.total ) {
+      return ;
+    }
+
+    if (artistId) {
+      return loadSongsByArtist({ page: songsInfo.page + 1, artistId, artistName });
+    }
+
+    return loadSongsByLang({ page: songsInfo.page + 1, lang, nsongs: stroke });
+  }
+
+  loadMoreArtists(evt) {
+    const { query, artistsInfo, artistsInSongbook, loadArtistsByArtistType } = this.props;
+    const { artistType } = query
+
+    if ( artistsInSongbook.length >= artistsInfo.total ) {
+      return ;
+    }
+
+    return loadArtistsByArtistType({ page: artistsInfo.page + 1, artistType });
   }
 }
 
